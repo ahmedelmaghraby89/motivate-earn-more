@@ -213,7 +213,10 @@
     min-height:36px;
   }
   /* Ensure the favorite icon SVG renders */
-  .product-grid .product-card__favorite svg,
+  .product-grid .product-card__favorite svg {
+    width:20px;
+    height:20px;
+  }
   .product-grid .product-card__stepper-btn svg {
     width:100%;
     height:100%;
@@ -463,10 +466,11 @@
   .cart-loyalty-bar .clb-text { flex:1; font-size:12px; font-weight:600; color:var(--color-primary); line-height:16px; }
   .cart-loyalty-bar .clb-chevron { width:16px; height:16px; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:var(--color-primary); }
 
-  .cart-items-list { padding:0 16px; }
+  .cart-items-list { padding:0 16px; margin:8px 0; }
   .cart-item {
-    display:flex; gap:8px; padding:4px 0; align-items:center;
+    display:flex; gap:8px; padding:12px 0; align-items:center;
   }
+  #screen-cart .screen-scroll { display:flex; flex-direction:column; }
   .cart-item .ci-img {
     width:48px; height:48px; border-radius:4px;
     background:#F8F8F8; flex-shrink:0; overflow:hidden;
@@ -1040,7 +1044,7 @@ fetch('prototype/img/icons/icons.svg')
 
       <div class="cart-items-list" id="cartItemsList"></div>
 
-      <div id="cartEmpty" style="display:none;text-align:center;padding:var(--space-12) var(--space-4);color:var(--color-text-secondary);">
+      <div id="cartEmpty" style="display:none;flex:1;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:var(--space-4);color:var(--color-text-secondary);">
         <div style="font-size:48px;margin-bottom:var(--space-3);">&#128722;</div>
         <div style="font-size:16px;font-weight:600;margin-bottom:var(--space-1);">Your cart is empty</div>
         <div style="font-size:13px;">Browse products and add items to get started</div>
@@ -1815,7 +1819,7 @@ function renderCartItems() {
 
   if (entries.length === 0) {
     list.innerHTML = '';
-    empty.style.display = 'block';
+    empty.style.display = 'flex';
     bottom.style.display = 'none';
     if (recommend) recommend.style.display = 'none';
     if (peopleBuy && peopleBuy.classList.contains('cart-people-buy')) peopleBuy.style.display = 'none';
