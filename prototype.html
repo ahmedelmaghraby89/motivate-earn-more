@@ -1809,15 +1809,22 @@ function renderCartItems() {
   const bottom = document.getElementById('cartBottom');
   const entries = Object.entries(cart).filter(([_, qty]) => qty > 0);
 
+  const recommend = document.getElementById('cartRecommend');
+  const peopleBuy = recommend ? recommend.previousElementSibling : null;
+
   if (entries.length === 0) {
     list.innerHTML = '';
     empty.style.display = 'block';
     bottom.style.display = 'none';
+    if (recommend) recommend.style.display = 'none';
+    if (peopleBuy && peopleBuy.classList.contains('cart-people-buy')) peopleBuy.style.display = 'none';
     return;
   }
 
   empty.style.display = 'none';
   bottom.style.display = 'block';
+  if (recommend) recommend.style.display = '';
+  if (peopleBuy && peopleBuy.classList.contains('cart-people-buy')) peopleBuy.style.display = '';
 
   list.innerHTML = entries.map(([id, qty]) => {
     const p = products.find(x => x.id === parseInt(id));
