@@ -1,0 +1,276 @@
+/* ============================================
+   BREADFAST DESIGN SYSTEM — TOAST / SNACK BAR
+   Source: Figma / Breadfast Design System
+   Page: Toast/ Snack Bar (node 1915:6491)
+
+   Figma component name: "Toast - Confirmation"
+   Single-line notification bar with:
+     [icon 24px] [message text flex-1] [action button]
+   LTR = English, RTL = Arabic (auto-mirrored)
+
+   6 Status variants (each in LTR + RTL):
+     Error, Success, Warning,
+     Informative Dark, Informative Light,
+     Informative Magenta
+   ============================================ */
+
+/* ── BASE TOAST ──────────────────────────────── */
+/* Figma specs:
+   height ............ 44px
+   width ............. 343px (fills 375px - 16px margins)
+   border-radius ..... radius/radis-md-8  (8px) → --radius-sm
+   padding ........... 8px left, 16px right, 8px top/bottom
+   gap ............... spacing/spacing-8  (8px)
+   font .............. Label/X Small: 12px / 600 / 16px
+   border ............ NONE (no stroke in Figma)               */
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);                       /* 8px — Figma spacing/spacing-8 */
+  width: 100%;
+  height: 44px;
+  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-2);
+                                             /* 8px 16px 8px 8px — Figma asymmetric */
+  border-radius: var(--radius-sm);           /* 8px — Figma radius/radis-md-8 */
+  font-family: var(--font-family-en);
+  animation: toast-slide-in 0.3s ease-out;
+}
+
+/* ── VARIANTS ────────────────────────────────── */
+
+/* Error — bg: background/light/error #FFF1F1
+   text/icon: text/error #DA1E28                */
+.toast-error {
+  background-color: var(--color-bg-error);   /* #FFF1F1 */
+}
+
+/* Success — bg: background/light/success #E8FFED
+   text/icon: text/success #108723              */
+.toast-success {
+  background-color: var(--color-bg-success); /* #E8FFED */
+}
+
+/* Warning — bg: background/light/highlight #FCF4D6
+   text/icon: text/highlight #8E6A00            */
+.toast-warning {
+  background-color: var(--color-bg-highlight); /* #FCF4D6 */
+}
+
+/* Informative Dark — bg: background/heavy/dark-grey #212121
+   text/icon: text/inverse white                */
+.toast-dark {
+  background-color: var(--color-bg-dark);    /* #212121 */
+}
+
+/* Informative Light — bg: background/light/secondary #F3F4F5
+   text/icon: text/default #212121              */
+.toast-light {
+  background-color: var(--color-bg-secondary); /* #F3F4F5 */
+}
+
+/* Informative Magenta — bg: background/light/brand #FFF0F7
+   text/icon: interaction/text/default #AA0082  */
+.toast-brand {
+  background-color: var(--color-bg-brand);   /* #FFF0F7 */
+}
+
+/* ── ICON ────────────────────────────────────── */
+/* Figma: 24×24px, flex-shrink: 0               */
+
+.toast-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.toast-error .toast-icon {
+  color: var(--color-text-error);            /* #DA1E28 */
+}
+
+.toast-success .toast-icon {
+  color: var(--color-text-success);          /* #108723 */
+}
+
+.toast-warning .toast-icon {
+  color: var(--color-text-highlight);        /* #8E6A00 */
+}
+
+.toast-dark .toast-icon {
+  color: var(--color-text-inverse);          /* white */
+}
+
+.toast-light .toast-icon {
+  color: var(--color-text-default);          /* #212121 */
+}
+
+.toast-brand .toast-icon {
+  color: var(--color-interaction-text);      /* #AA0082 */
+}
+
+/* ── MESSAGE TEXT ────────────────────────────── */
+/* Figma: Label/X Small — 12px / semibold 600 / 16px
+   flex: 1, single line, color matches variant   */
+
+.toast-text {
+  flex: 1;
+  min-width: 0;
+  font-weight: var(--font-weight-semibold);  /* 600 */
+  font-size: var(--font-size-xs);            /* 12px */
+  line-height: var(--line-height-m);         /* 16px */
+  white-space: pre-wrap;
+}
+
+.toast-error .toast-text {
+  color: var(--color-text-error);            /* #DA1E28 */
+}
+
+.toast-success .toast-text {
+  color: var(--color-text-success);          /* #108723 */
+}
+
+.toast-warning .toast-text {
+  color: var(--color-text-highlight);        /* #8E6A00 */
+}
+
+.toast-dark .toast-text {
+  color: var(--color-text-inverse);          /* white */
+}
+
+.toast-light .toast-text {
+  color: var(--color-text-default);          /* #212121 */
+}
+
+.toast-brand .toast-text {
+  color: var(--color-interaction-text);      /* #AA0082 */
+}
+
+/* ── ACTION BUTTON ───────────────────────────── */
+/* Figma: Label/X Small — 12px / semibold 600 / 16px
+   No background, no border, gap 4px internal
+   Color matches the variant text color          */
+
+.toast-action {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);                       /* 4px — Figma spacing/spacing-4 */
+  padding: 0;
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-semibold);  /* 600 */
+  font-size: var(--font-size-xs);            /* 12px */
+  line-height: var(--line-height-m);         /* 16px */
+  text-align: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.toast-error .toast-action {
+  color: var(--color-text-error);            /* #DA1E28 */
+}
+
+.toast-success .toast-action {
+  color: var(--color-text-success);          /* #108723 */
+}
+
+.toast-warning .toast-action {
+  color: var(--color-text-highlight);        /* #8E6A00 */
+}
+
+.toast-dark .toast-action {
+  color: var(--color-text-inverse);          /* white */
+}
+
+.toast-light .toast-action {
+  color: var(--color-text-default);          /* #212121 */
+}
+
+.toast-brand .toast-action {
+  color: var(--color-interaction-primary);   /* #AA0082 */
+}
+
+/* ── CONTAINER (Positioning) ─────────────────── */
+
+.toast-container {
+  position: fixed;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);                       /* 8px */
+  pointer-events: none;
+}
+
+.toast-container > * {
+  pointer-events: auto;
+}
+
+/* Top */
+.toast-container--top {
+  top: var(--space-4);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Bottom (default for mobile) */
+.toast-container--bottom {
+  bottom: var(--space-20);
+  left: var(--space-4);
+  right: var(--space-4);
+}
+
+/* ── ANIMATIONS ──────────────────────────────── */
+
+@keyframes toast-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toast-slide-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+.toast-exiting {
+  animation: toast-slide-out 0.2s ease-in forwards;
+}
+
+/* ── BACKWARD COMPAT — old class names ───────── */
+/* Map removed classes to closest Figma variant   */
+
+.toast-info {
+  background-color: var(--color-bg-secondary); /* → Informative Light */
+}
+
+.toast-info .toast-icon { color: var(--color-text-default); }
+.toast-info .toast-text { color: var(--color-text-default); }
+.toast-info .toast-action { color: var(--color-text-default); }
+
+/* Legacy .toast-content / .toast-title / .toast-message
+   still work but prefer .toast-text for new code */
+.toast-content { flex: 1; min-width: 0; }
+
+.toast-title {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-m);
+}
+
+.toast-message {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-m);
+}

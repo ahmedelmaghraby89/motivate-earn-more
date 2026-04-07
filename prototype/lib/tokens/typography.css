@@ -1,0 +1,305 @@
+/* ============================================
+   BREADFAST DESIGN SYSTEM — TYPOGRAPHY TOKENS
+   Source: Figma / Breadfast Design System
+   Font Family: Faro (Lucky variants)
+   ============================================ */
+
+:root {
+  /* ──────────────────────────────────────────
+     FONT FAMILIES
+     ────────────────────────────────────────── */
+  --font-family-en: 'Faro', sans-serif;
+  --font-family-ar: 'Faro', sans-serif;
+  --font-family-mono: 'IBM Plex Mono', monospace;
+
+  /* ──────────────────────────────────────────
+     FONT WEIGHTS
+     Faro uses custom weight names:
+       Display Lucky = 800 (Extra Bold)
+       Bold Lucky    = 700 (Bold)
+       Semi-Bold Lucky = 600 (Semi Bold)
+       Regular Lucky = 400 (Regular)
+     ────────────────────────────────────────── */
+  --font-weight-display: 800;   /* display lucky */
+  --font-weight-bold: 700;      /* bold lucky */
+  --font-weight-semibold: 600;  /* semi-bold lucky */
+  --font-weight-regular: 400;   /* regular lucky */
+
+  /* ──────────────────────────────────────────
+     FONT SIZES
+     ────────────────────────────────────────── */
+  --font-size-xs: 12px;
+  --font-size-s: 14px;
+  --font-size-m: 16px;
+  --font-size-l: 18px;
+  --font-size-xl: 20px;
+  --font-size-xxl: 24px;
+  --font-size-xxxl: 28px;
+  --font-size-xxxl-2: 32px;
+  --font-size-xxxl-3: 36px;
+  --font-size-xxxl-4: 40px;
+  --font-size-xxxl-5: 44px;
+  --font-size-xxxl-6: 48px;
+  --font-size-xxxl-7: 52px;
+  --font-size-xxxl-8: 96px;
+
+  /* ──────────────────────────────────────────
+     LINE HEIGHTS
+     ────────────────────────────────────────── */
+  --line-height-xs: 12px;
+  --line-height-s: 16px;
+  --line-height-m: 16px;
+  --line-height-l: 18px;
+  --line-height-xl: 20px;
+  --line-height-xxl: 24px;
+  --line-height-xxxl: 28px;
+  --line-height-xxxl-3: 32px;
+  --line-height-xxxl-4: 36px;
+  --line-height-xxxl-5: 40px;
+  --line-height-xxxl-6: 44px;
+  --line-height-xxxl-7: 48px;
+  --line-height-xxxl-8: 52px;
+  --line-height-xxxl-9: 56px;
+  --line-height-xxxl-10: 100px;
+  --line-height-xxxl-11: 34px;
+}
+
+/* ================================================
+   TYPOGRAPHY CLASSES
+   ================================================ */
+
+/* ── DISPLAY ─────────────────────────────────── */
+
+.text-display-lg {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-display);
+  font-size: var(--font-size-xxxl-8);       /* 96px */
+  line-height: var(--line-height-xxxl-10);   /* 100px */
+  letter-spacing: 0;
+}
+
+.text-display-md {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xxxl-7);       /* 52px */
+  line-height: var(--line-height-xxxl-9);    /* 56px */
+  letter-spacing: 0;
+}
+
+.text-display-sm {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xxxl-5);       /* 44px */
+  line-height: var(--line-height-xxxl-7);    /* 48px */
+  letter-spacing: 0;
+}
+
+.text-display-xs {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-display);
+  font-size: var(--font-size-xxxl-3);       /* 36px */
+  line-height: var(--line-height-xxxl-5);    /* 40px */
+  letter-spacing: 0;
+}
+
+/* ── HEADING ─────────────────────────────────── */
+
+.text-heading-xxl {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xxxl-4);       /* 40px */
+  line-height: var(--line-height-xxxl-8);    /* 52px */
+  letter-spacing: 0;
+}
+
+.text-heading-xl {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xxxl-3);       /* 36px */
+  line-height: var(--line-height-xxxl-6);    /* 44px */
+  letter-spacing: 0;
+}
+
+.text-heading-lg {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xxxl-2);       /* 32px */
+  line-height: var(--line-height-xxxl-5);    /* 40px */
+  letter-spacing: 0;
+}
+
+.text-heading-md {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xxxl);         /* 28px */
+  line-height: var(--line-height-xxxl-4);    /* 36px */
+  letter-spacing: 0;
+}
+
+.text-heading-sm {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xxl);          /* 24px */
+  line-height: var(--line-height-xxxl-3);    /* 32px */
+  letter-spacing: 0;
+}
+
+.text-heading-xs {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xl);           /* 20px */
+  line-height: var(--line-height-xxxl);      /* 28px */
+  letter-spacing: 0;
+}
+
+/* ── LABEL ───────────────────────────────────── */
+
+.text-label-lg {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-l);            /* 18px */
+  line-height: var(--line-height-xxl);       /* 24px */
+  letter-spacing: 0;
+}
+
+.text-label-md {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-m);            /* 16px */
+  line-height: var(--line-height-xl);        /* 20px */
+  letter-spacing: 0;
+}
+
+.text-label-sm {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-s);            /* 14px */
+  line-height: var(--line-height-m);         /* 16px */
+  letter-spacing: 0;
+}
+
+.text-label-xs {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-xs);           /* 12px */
+  line-height: var(--line-height-m);         /* 16px */
+  letter-spacing: 0;
+}
+
+/* ── PARAGRAPH ───────────────────────────────── */
+
+.text-paragraph-xxl {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-xxxl);         /* 28px */
+  line-height: var(--line-height-xxxl-5);    /* 40px */
+  letter-spacing: 0;
+}
+
+.text-paragraph-xl {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-xxl);          /* 24px */
+  line-height: var(--line-height-xxxl-3);    /* 32px */
+  letter-spacing: 0;
+}
+
+.text-paragraph-lg {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-l);            /* 18px */
+  line-height: var(--line-height-xxxl);      /* 28px */
+  letter-spacing: 0;
+}
+
+.text-paragraph-md {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-m);            /* 16px */
+  line-height: var(--line-height-xxl);       /* 24px */
+  letter-spacing: 0;
+}
+
+.text-paragraph-sm {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-s);            /* 14px */
+  line-height: var(--line-height-xl);        /* 20px */
+  letter-spacing: 0;
+}
+
+.text-paragraph-xs {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-xs);           /* 12px */
+  line-height: var(--line-height-l);         /* 18px */
+  letter-spacing: 0;
+}
+
+/* ── PRICING — NUMERIC ───────────────────────── */
+
+.text-price-numeric-lg {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xxxl-4);       /* 40px */
+  line-height: var(--line-height-xxxl-8);    /* 52px */
+  letter-spacing: 0;
+}
+
+.text-price-numeric-md {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xxxl-2);       /* 32px */
+  line-height: var(--line-height-xxxl-5);    /* 40px */
+  letter-spacing: 0;
+}
+
+.text-price-numeric-sm {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xl);           /* 20px */
+  line-height: var(--line-height-xxxl);      /* 28px */
+  letter-spacing: 0;
+}
+
+.text-price-numeric-xs {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-m);            /* 16px */
+  line-height: var(--line-height-xl);        /* 20px */
+  letter-spacing: 0;
+}
+
+/* ── PRICING — DECIMAL ───────────────────────── */
+
+.text-price-decimal-lg {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-xl);           /* 20px */
+  line-height: var(--line-height-xxxl-11);   /* 34px */
+  letter-spacing: 0;
+}
+
+.text-price-decimal-md {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-xl);           /* 20px */
+  line-height: var(--line-height-xxxl-3);    /* 32px */
+  letter-spacing: 0;
+}
+
+.text-price-decimal-sm {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-s);            /* 14px */
+  line-height: var(--line-height-xxl);       /* 24px */
+  letter-spacing: 0;
+}
+
+.text-price-decimal-xs {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-semibold);
+  font-size: 12px;
+  line-height: var(--line-height-l);         /* 18px */
+  letter-spacing: 0;
+}

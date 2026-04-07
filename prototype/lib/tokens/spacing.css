@@ -1,0 +1,47 @@
+/* ============================================
+   BREADFAST DESIGN SYSTEM — SPACING & RADIUS
+   Source: Figma / Breadfast Design System
+   ============================================ */
+
+:root {
+  /* ──────────────────────────────────────────
+     SPACING SCALE (4px base grid)
+     ────────────────────────────────────────── */
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* ──────────────────────────────────────────
+     BORDER RADIUS
+     Extracted from Figma variable: border/radius/*
+     ────────────────────────────────────────── */
+  --radius-none: 0px;
+  --radius-xs: 4px;
+  --radius-sm: 8px;     /* Figma: border/radius/md (used by Input fields) */
+  --radius-md: 12px;    /* Figma: border/radius/lg (used by Buttons) */
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* ──────────────────────────────────────────
+     SHADOWS (Elevation)
+     ────────────────────────────────────────── */
+  --shadow-sm: 0px 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0px 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0px 4px 16px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0px 8px 32px rgba(0, 0, 0, 0.16);
+}

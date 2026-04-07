@@ -1,0 +1,181 @@
+/* ============================================
+   BREADFAST DESIGN SYSTEM — COLOR TOKENS
+   Source: Figma / Breadfast Design System
+   File: MVeQUACdqB9ao5K8XMBzB9 (Color Tokens)
+   ============================================ */
+
+:root {
+  /* ──────────────────────────────────────────
+     BRAND — Magenta
+     ────────────────────────────────────────── */
+  --color-primary: #AA0082;
+  --color-primary-dark: #9C0062;
+  --color-primary-darker: #7C0E52;
+  --color-primary-light: #FBB3E1;
+  --color-primary-lighter: #FFD6E8;
+  --color-primary-lightest: #FFF0F7;
+
+  /* ──────────────────────────────────────────
+     SEMANTIC — Success (Green)
+     ────────────────────────────────────────── */
+  --color-success: #108723;
+  --color-success-dark: #0E6027;
+  --color-success-darker: #044317;
+  --color-success-light: #6FDC8C;
+  --color-success-lighter: #A7F0BA;
+  --color-success-lightest: #E8FFED;
+
+  /* ──────────────────────────────────────────
+     SEMANTIC — Error (Red)
+     ────────────────────────────────────────── */
+  --color-error: #DA1E28;
+  --color-error-dark: #A2191F;
+  --color-error-darker: #750E13;
+  --color-error-light: #FFB3B8;
+  --color-error-lighter: #FFD7D9;
+  --color-error-lightest: #FFF1F1;
+
+  /* ──────────────────────────────────────────
+     SEMANTIC — Warning (Orange)
+     ────────────────────────────────────────── */
+  --color-warning: #BA4E00;
+  --color-warning-dark: #8A3800;
+  --color-warning-darker: #5E2900;
+  --color-warning-light: #FFB784;
+  --color-warning-lighter: #FFD9BE;
+  --color-warning-lightest: #FFF2E8;
+
+  /* ──────────────────────────────────────────
+     SEMANTIC — Highlight (Yellow)
+     ────────────────────────────────────────── */
+  --color-highlight: #8E6A00;
+  --color-highlight-dark: #684E00;
+  --color-highlight-darker: #483700;
+  --color-highlight-light: #F1C21B;
+  --color-highlight-lighter: #FDDC69;
+  --color-highlight-lightest: #FCF4D6;
+
+  /* ──────────────────────────────────────────
+     SEMANTIC — Progress (Blue)
+     ────────────────────────────────────────── */
+  --color-progress: #0F62FE;
+  --color-progress-dark: #0043CE;
+  --color-progress-darker: #002D9C;
+  --color-progress-light: #A6C8FF;
+  --color-progress-lighter: #D0E2FF;
+  --color-progress-lightest: #EDF5FF;
+
+  /* ──────────────────────────────────────────
+     SEMANTIC — Premium (Teal)
+     ────────────────────────────────────────── */
+  --color-premium: #088A86;
+  --color-premium-dark: #005D5D;
+  --color-premium-darker: #004144;
+  --color-premium-light: #3DDBD9;
+  --color-premium-lighter: #9EF0F0;
+  --color-premium-lightest: #D9FBFB;
+
+  /* ──────────────────────────────────────────
+     NEUTRAL
+     ────────────────────────────────────────── */
+  --color-neutral: #B7B7B7;
+  --color-neutral-dark: #6F6F6F;
+  --color-neutral-darker: #4E4E4E;
+  --color-neutral-light: #D8D8D8;
+  --color-neutral-lighter: #EBEBEB;
+  --color-neutral-lightest: #F3F4F5;
+
+  /* ──────────────────────────────────────────
+     BASE
+     ────────────────────────────────────────── */
+  --color-base-black: #212121;
+  --color-base-white: #FFFFFF;
+
+  /* ──────────────────────────────────────────
+     TEXT
+     ────────────────────────────────────────── */
+  --color-text-default: #212121;
+  --color-text-secondary: #6F6F6F;
+  --color-text-tertiary: #B7B7B7;
+  --color-text-disabled: #D8D8D8;
+  --color-text-inverse: #FFFFFF;
+  --color-text-success: #108723;
+  --color-text-error: #DA1E28;
+  --color-text-warning: #BA4E00;
+  --color-text-highlight: #8E6A00;
+  --color-text-progress: #0F62FE;
+  --color-text-premium: #088A86;
+
+  /* ──────────────────────────────────────────
+     BACKGROUND — Light Mode
+     ────────────────────────────────────────── */
+  --color-bg-default: #FFFFFF;
+  --color-bg-secondary: #F3F4F5;
+  --color-bg-tertiary: #EBEBEB;
+  --color-bg-success: #E8FFED;
+  --color-bg-error: #FFF1F1;
+  --color-bg-warning: #FFF2E8;
+  --color-bg-highlight: #FCF4D6;
+  --color-bg-brand: #FFF0F7;
+  --color-bg-progress: #EDF5FF;
+  --color-bg-premium: #D9FBFB;
+  --color-bg-info: #EDF5FF;
+
+  /* ──────────────────────────────────────────
+     BACKGROUND — Heavy / Dark
+     ────────────────────────────────────────── */
+  --color-bg-dark: #212121;
+  --color-bg-dark-secondary: #4E4E4E;
+  --color-bg-overlay: rgba(33, 33, 33, 0.5);
+
+  /* ──────────────────────────────────────────
+     BORDER
+     ────────────────────────────────────────── */
+  --color-border-default: #EBEBEB;
+  --color-border-secondary: #D8D8D8;
+  --color-border-inverse: #FFFFFF;
+  --color-border-brand: #AA0082;
+  --color-border-success: #108723;
+  --color-border-error: #DA1E28;
+  --color-border-warning: #BA4E00;
+  --color-border-highlight: #8E6A00;
+  --color-border-progress: #0F62FE;
+  --color-border-premium: #088A86;
+  --color-border-focus: #AA0082;
+
+  /* ──────────────────────────────────────────
+     INTERACTION
+     ────────────────────────────────────────── */
+  --color-interaction-primary: #AA0082;
+  --color-interaction-primary-pressed: #9C0062;
+  --color-interaction-primary-disabled: #D8D8D8;
+  --color-interaction-primary-inverse: #FFFFFF;
+  --color-interaction-secondary: #FFF0F7;
+  --color-interaction-secondary-pressed: #FFD6E8;
+  --color-interaction-secondary-disabled: #F3F4F5;
+  --color-interaction-secondary-inverse: #FFFFFF;
+  --color-interaction-text: #AA0082;
+  --color-interaction-text-pressed: #9C0062;
+  --color-interaction-text-disabled: #6F6F6F;
+
+  /* ──────────────────────────────────────────
+     ICON
+     ────────────────────────────────────────── */
+  --color-icon-default: #212121;
+  --color-icon-secondary: #B7B7B7;
+  --color-icon-tertiary: #D8D8D8;
+  --color-icon-inverse: #FFFFFF;
+  --color-icon-success: #108723;
+  --color-icon-error: #DA1E28;
+  --color-icon-warning: #BA4E00;
+  --color-icon-highlight: #8E6A00;
+  --color-icon-progress: #0F62FE;
+  --color-icon-premium: #088A86;
+
+  /* ──────────────────────────────────────────
+     SURFACE (Cards, Sheets)
+     ────────────────────────────────────────── */
+  --color-surface-default: #FFFFFF;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-sunken: #F3F4F5;
+}
