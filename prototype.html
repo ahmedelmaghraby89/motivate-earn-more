@@ -49,16 +49,24 @@
 
   @font-face { font-family:'Faro'; src:local('Faro'); font-weight:100 900; font-style:normal; }
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-  html, body {
+  html {
+    height: 100%;
+  }
+  body {
     font-family:'Faro',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
     background:#E8E8E8; color:var(--color-text-default);
-    overflow-x:hidden; height:100dvh; -webkit-font-smoothing:antialiased;
+    overflow-x:hidden; -webkit-font-smoothing:antialiased;
+    /* Make body taller than viewport so browser can hide its toolbar on scroll */
+    min-height: calc(100% + 1px);
+    overflow-y: scroll;
   }
 
   /* Device frame */
   .device-frame {
-    width:390px; max-width:100vw; height:100dvh; margin:0 auto;
-    background:var(--color-bg-default); position:relative; overflow:hidden;
+    width:390px; max-width:100vw; height:100dvh;
+    /* Fixed so it stays in place regardless of body scroll position */
+    position:fixed; top:0; left:50%; transform:translateX(-50%);
+    background:var(--color-bg-default); overflow:hidden;
     display:flex; flex-direction:column;
   }
 
@@ -645,7 +653,7 @@
 
   /* More screen */
   /* More screen — spacing matches Figma node 6660:18282 */
-  .more-header { padding:47px var(--space-4) var(--space-2); display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--space-4); }
+  .more-header { padding:var(--space-3) var(--space-4) var(--space-2); display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--space-4); }
   .more-header h1 { font-size:28px; font-weight:700; line-height:36px; }
   .more-header .qr-btn {
     width:40px; height:40px; border-radius:var(--radius-full);
@@ -943,7 +951,6 @@ fetch('prototype/img/icons/icons.svg')
       </div>
     </div>
 
-    <div class="tabbar tab-bar-cat"></div>
   </div>
 
   <!-- ==================== PDP SCREEN ==================== -->
@@ -1246,8 +1253,6 @@ fetch('prototype/img/icons/icons.svg')
 
   <!-- ==================== ORDER PLACED SCREEN ==================== -->
   <div class="screen" id="screen-orderPlaced">
-    <!-- Nav bar (47px spacer for status bar + 56px nav) -->
-    <div style="height:47px;flex-shrink:0;background:#fff;"></div>
     <div class="op-nav">
       <button class="op-nav-back" onclick="navigateToHomeAfterOrder()">
         <img src="prototype/img/order-placed/ic-back.svg" style="width:9px;height:16px;" alt="">
