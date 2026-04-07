@@ -1002,11 +1002,11 @@ fetch('prototype/img/icons/icons.svg')
         <div class="product-name" id="pdpName">Product Name</div>
         <div class="product-meta">
           <span id="pdpWeight">400g</span>
-          <svg class="icon icon--sm icon--secondary"><use href="prototype/img/icons/icons.svg#icon-info"></use></svg>
+          <svg class="icon icon--sm icon--secondary"><use href="#icon-info"></use></svg>
         </div>
         <div class="brand-row">
           <span class="brand" id="pdpBrand">Brand</span>
-          <svg class="icon icon--md icon--secondary" style="cursor:pointer;"><use href="prototype/img/icons/icons.svg#icon-heart"></use></svg>
+          <svg class="icon icon--md icon--secondary" style="cursor:pointer;"><use href="#icon-heart"></use></svg>
         </div>
       </div>
       <div class="pdp-details-card">
@@ -1132,7 +1132,7 @@ fetch('prototype/img/icons/icons.svg')
       <div class="checkout-section">
         <div class="sec-title">Delivery address</div>
         <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:12px;">
-          <svg class="icon icon--md" style="flex-shrink:0;margin-top:2px;"><use href="prototype/img/icons/icons.svg#icon-location-pin"></use></svg>
+          <svg class="icon icon--md" style="flex-shrink:0;margin-top:2px;"><use href="#icon-location-pin"></use></svg>
           <div>
             <div style="font-weight:700;font-size:16px;line-height:24px;color:#212121;">Home</div>
             <div style="font-size:14px;font-weight:400;color:var(--color-text-secondary);line-height:20px;">115 S, Hadayek El Ahram, Giza, Floor 2, Apt. 3</div>
@@ -1442,7 +1442,7 @@ fetch('prototype/img/icons/icons.svg')
                       <img src="prototype/img/order-placed/ic-star-coin-b.svg" alt="">
                     </div>
                   </div>
-                  <span class="op-eligible-text">Eligible for 225 points</span>
+                  <span class="op-eligible-text" id="osEligible">Eligible for 225 points</span>
                 </div>
               </div>
             </div>
@@ -1479,12 +1479,12 @@ fetch('prototype/img/icons/icons.svg')
         <span class="lc-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span>
       </div>
       <div class="menu-list">
-        <div class="menu-item"><span class="mi-icon"><svg class="icon icon--md"><use href="prototype/img/icons/icons.svg#icon-activity-history"></use></svg></span><span class="mi-label">Activity History</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
-        <div class="menu-item"><span class="mi-icon"><svg class="icon icon--md"><use href="prototype/img/icons/icons.svg#icon-heart"></use></svg></span><span class="mi-label">Favorites</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
+        <div class="menu-item"><span class="mi-icon"><svg class="icon icon--md"><use href="#icon-activity-history"></use></svg></span><span class="mi-label">Activity History</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
+        <div class="menu-item"><span class="mi-icon"><svg class="icon icon--md"><use href="#icon-heart"></use></svg></span><span class="mi-label">Favorites</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
         <div class="menu-item"><span class="mi-icon"><img src="prototype/img/icons/ic-bundleup.svg" alt=""></span><span class="mi-label">BundleUp</span><span class="mi-badge">NEW</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
         <div class="menu-item"><span class="mi-icon"><img src="prototype/img/icons/ic-gift.svg" alt=""></span><span class="mi-label">Free Credit</span><span class="mi-value">EGP 100</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
-        <div class="menu-item"><span class="mi-icon"><svg class="icon icon--md"><use href="prototype/img/icons/icons.svg#icon-settings"></use></svg></span><span class="mi-label">Account Settings</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
-        <div class="menu-item"><span class="mi-icon"><svg class="icon icon--md"><use href="prototype/img/icons/icons.svg#icon-alert-circle"></use></svg></span><span class="mi-label">Help</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
+        <div class="menu-item"><span class="mi-icon"><svg class="icon icon--md"><use href="#icon-settings"></use></svg></span><span class="mi-label">Account Settings</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
+        <div class="menu-item"><span class="mi-icon"><svg class="icon icon--md"><use href="#icon-alert-circle"></use></svg></span><span class="mi-label">Help</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
         <div class="menu-item"><span class="mi-icon"><img src="prototype/img/icons/ic-language.svg" alt=""></span><span class="mi-label">Language</span><span class="mi-value">English</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
         <div class="menu-item"><span class="mi-icon"><img src="prototype/img/icons/ic-country.svg" alt=""></span><span class="mi-label">Country</span><span class="mi-value">Egypt</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
         <div class="menu-item"><span class="mi-icon"><img src="prototype/img/icons/ic-chat.svg" alt=""></span><span class="mi-label">Talk to us</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
@@ -1629,15 +1629,15 @@ const products = [
   { id:6, name:'Classic Chicken Caesar Salad', brand:'Breadfast Kitchen', price:65, oldPrice:null, weight:'350g', img:'prototype/img/products/caesar-salad.png', bg:'#F1F8E9', isPrivateLabel:false, badge:null, desc:'Grilled chicken, romaine lettuce, croutons, and Caesar dressing.' },
   { id:7, name:'Signature Tuna Sandwich', brand:'Breadfast Kitchen', price:55, oldPrice:null, weight:'250g', img:'prototype/img/products/tuna-sandwich.png', bg:'#FFF8E1', isPrivateLabel:false, badge:null, desc:'Tuna salad with fresh vegetables in toasted bread.' },
   { id:8, name:'Turkey & Cheese Sandwich', brand:'Breadfast Kitchen', price:45, oldPrice:null, weight:'220g', img:'prototype/img/products/turkey-cheese-sandwich.png', bg:'#FFF3E0', isPrivateLabel:false, badge:null, desc:'Smoked turkey breast with Swiss cheese in artisan bread.' },
-  { id:9, name:'Juhayna Full Cream Milk (1.5L)', brand:'Juhayna', price:35, oldPrice:null, weight:'1.5L', img:'prototype/img/products/italiano-pasta.png', bg:'#E3F2FD', isPrivateLabel:false, badge:null, desc:'Fresh full cream milk from Juhayna.' },
-  { id:10, name:'Simply 3 Ply Facial Tissue Pack', brand:'Simply', price:25, oldPrice:null, weight:'550 sheets', img:'prototype/img/products/molto-magnum.png', bg:'#F5F5F5', isPrivateLabel:false, badge:null, desc:'Soft 3-ply facial tissues for everyday use.' },
-  { id:11, name:'Breadfast Classic Millefeuille Cup', brand:'Breadfast', price:50, oldPrice:null, weight:'150g', img:'prototype/img/products/afia-oil.png', bg:'#FFF8E1', isPrivateLabel:true, badge:'2x', desc:'Handcrafted millefeuille with layers of flaky pastry and cream.' },
-  { id:12, name:'Breadfast Belgian Dark Chocolate (75g)', brand:'Breadfast', price:50, oldPrice:null, weight:'75g', img:'prototype/img/products/molto-magnum.png', bg:'#EFEBE9', isPrivateLabel:true, badge:'2x', desc:'Premium 70% dark Belgian chocolate bar.' },
+  { id:9, name:'Juhayna Full Cream Milk (1.5L)', brand:'Juhayna', price:35, oldPrice:null, weight:'1.5L', img:'prototype/img/products/juhayna-milk.png', bg:'#E3F2FD', isPrivateLabel:false, badge:null, desc:'Fresh full cream milk from Juhayna.' },
+  { id:10, name:'Simply 3 Ply Facial Tissue Pack', brand:'Simply', price:25, oldPrice:null, weight:'550 sheets', img:'prototype/img/products/facial-tissue.png', bg:'#F5F5F5', isPrivateLabel:false, badge:null, desc:'Soft 3-ply facial tissues for everyday use.' },
+  { id:11, name:'Breadfast Classic Millefeuille Cup', brand:'Breadfast', price:50, oldPrice:null, weight:'150g', img:'prototype/img/products/millefeuille.png', bg:'#FFF8E1', isPrivateLabel:true, badge:'2x', desc:'Handcrafted millefeuille with layers of flaky pastry and cream.' },
+  { id:12, name:'Breadfast Belgian Dark Chocolate (75g)', brand:'Breadfast', price:50, oldPrice:null, weight:'75g', img:'prototype/img/products/dark-chocolate.png', bg:'#EFEBE9', isPrivateLabel:true, badge:'2x', desc:'Premium 70% dark Belgian chocolate bar.' },
   { id:13, name:'Pink Lemonade', brand:'V7', price:35, oldPrice:null, weight:'300ml', img:'prototype/img/products/pink-lemonade.png', bg:'#FCE4EC', isPrivateLabel:false, badge:null, desc:'Refreshing pink lemonade by Dara\'s.' },
   { id:14, name:'Smoked Salmon Bagel', brand:'Breadfast Kitchen', price:65, oldPrice:null, weight:'280g', img:'prototype/img/products/smoked-salmon-bagel.png', bg:'#FFF3E0', isPrivateLabel:false, badge:null, desc:'Smoked salmon with cream cheese and capers on a fresh bagel.' },
-  { id:15, name:'Sella Basmati Rice (1kg)', brand:'Sella', price:42, oldPrice:null, weight:'1kg', img:'prototype/img/products/italiano-pasta.png', bg:'#FFFDE7', isPrivateLabel:false, badge:null, desc:'Premium long-grain basmati rice, perfect for everyday cooking.' },
-  { id:16, name:'Heinz Tomato Paste (135g)', brand:'Heinz', price:18, oldPrice:22, weight:'135g', img:'prototype/img/products/afia-oil.png', bg:'#FFEBEE', isPrivateLabel:false, badge:null, desc:'Rich concentrated tomato paste for cooking sauces and stews.' },
-  { id:17, name:'Sana Pure Ghee (400g)', brand:'Sana', price:85, oldPrice:null, weight:'400g', img:'prototype/img/products/afia-oil.png', bg:'#FFF8E1', isPrivateLabel:false, badge:null, desc:'100% pure clarified butter ghee for rich and authentic flavour.' },
+  { id:15, name:'Sella Basmati Rice (1kg)', brand:'Sella', price:42, oldPrice:null, weight:'1kg', img:'prototype/img/products/rice-sella.png', bg:'#FFFDE7', isPrivateLabel:false, badge:null, desc:'Premium long-grain basmati rice, perfect for everyday cooking.' },
+  { id:16, name:'Heinz Tomato Paste (135g)', brand:'Heinz', price:18, oldPrice:22, weight:'135g', img:'prototype/img/products/tomato-paste.png', bg:'#FFEBEE', isPrivateLabel:false, badge:null, desc:'Rich concentrated tomato paste for cooking sauces and stews.' },
+  { id:17, name:'Sana Pure Ghee (400g)', brand:'Sana', price:85, oldPrice:null, weight:'400g', img:'prototype/img/products/ghee-rawaby.png', bg:'#FFF8E1', isPrivateLabel:false, badge:null, desc:'100% pure clarified butter ghee for rich and authentic flavour.' },
 ];
 
 // ==================== STATE ====================
@@ -2361,7 +2361,7 @@ function renderProductGrid() {
       ${badge}
       <button class="product-card__favorite" type="button" aria-label="Add to favorites" onclick="event.stopPropagation();">
         <span class="icon icon-md icon-tertiary">
-          <svg viewBox="0 0 20.05 17.85"><use href="prototype/img/icons/icons.svg#icon-heart"></use></svg>
+          <svg viewBox="0 0 20.05 17.85"><use href="#icon-heart"></use></svg>
         </span>
       </button>
     </div>
@@ -2431,7 +2431,7 @@ function renderMiniCard(p, idx) {
       ${badge}
       <button class="product-card__favorite" type="button" aria-label="Add to favorites" onclick="event.stopPropagation();">
         <span class="icon icon-md icon-tertiary">
-          <svg viewBox="0 0 20.05 17.85"><use href="prototype/img/icons/icons.svg#icon-heart"></use></svg>
+          <svg viewBox="0 0 20.05 17.85"><use href="#icon-heart"></use></svg>
         </span>
       </button>
     </div>
