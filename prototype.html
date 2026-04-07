@@ -410,13 +410,6 @@
     width:100%; height:auto; display:block;
   }
 
-  .cashback-bar {
-    background:var(--color-primary-light); margin:var(--space-3) var(--space-4);
-    padding:var(--space-3) var(--space-4); border-radius:var(--radius-sm);
-    display:flex; align-items:center; justify-content:space-between;
-    font-size:13px; font-weight:600; color:var(--color-primary);
-  }
-
   /* PDP screen */
   .pdp-img {
     width:100%; height:300px; background:#FDF6EE;
@@ -967,10 +960,6 @@ fetch('prototype/img/icons/icons.svg')
 
       <div class="product-grid" id="productGrid"></div>
 
-      <div class="cashback-bar" style="margin-top:var(--space-3);margin-bottom:var(--space-6);">
-        <span>&#11088; Earn points on every order</span>
-        <span>Learn more &gt;</span>
-      </div>
     </div>
 
   </div>
@@ -1621,23 +1610,23 @@ const rewards = [
 
 // ==================== PRODUCT DATA (12+ products) ====================
 const products = [
-  { id:1, name:'Italiano Big Rings Pasta (400g)', brand:'Sante', price:24, oldPrice:16.75, weight:'400g', img:'prototype/img/products/italiano-pasta.png', bg:'#FFF8E1', isPrivateLabel:false, badge:'new', desc:'Premium Italian pasta made with 100% durum wheat semolina.' },
-  { id:2, name:'Molto Mini Magnum Chocolate Hazelnut (84g)', brand:'Molto', price:26, oldPrice:28, weight:'84g', img:'prototype/img/products/molto-magnum.png', bg:'#FFF3E0', isPrivateLabel:false, badge:null, desc:'Rich chocolate hazelnut cream-filled cake bar.' },
+  { id:1, name:'Mini Chef Farfalle Pasta (400g)', brand:'Mini Chef', price:24, oldPrice:16.75, weight:'400g', img:'prototype/img/products/italiano-pasta.png', bg:'#FFF8E1', isPrivateLabel:false, badge:'new', desc:'Fun-shaped farfalle pasta made from 100% durum wheat semolina.' },
+  { id:2, name:'Molto Mini Magnum Choco Hazelnut (6pcs)', brand:'Molto', price:26, oldPrice:28, weight:'84g', img:'prototype/img/products/molto-magnum.png', bg:'#FFF3E0', isPrivateLabel:false, badge:null, desc:'Mini croissants filled with rich chocolate and hazelnut paste.' },
   { id:3, name:'Afia Sunflower Oil (800ml)', brand:'Afia', price:45, oldPrice:null, weight:'800ml', img:'prototype/img/products/afia-oil.png', bg:'#FFFDE7', isPrivateLabel:false, badge:null, desc:'Pure sunflower oil for everyday cooking and frying.' },
-  { id:4, name:'Iced Cinnamon White Mocha', brand:'Breadfast Coffee', price:75, oldPrice:null, weight:'400ml', img:'prototype/img/products/cinnamon-mocha.png', bg:'#EFEBE9', isPrivateLabel:true, badge:'2x', desc:'Smooth iced white mocha with cinnamon and full cream milk.' },
-  { id:5, name:'Iced Matcha Spanish Latte', brand:'Breadfast Coffee', price:70, oldPrice:null, weight:'400ml', img:'prototype/img/products/matcha-latte.png', bg:'#E8F5E9', isPrivateLabel:true, badge:'2x', desc:'Premium Japanese matcha blended with sweetened condensed milk.' },
-  { id:6, name:'Classic Chicken Caesar Salad', brand:'Breadfast Kitchen', price:65, oldPrice:null, weight:'350g', img:'prototype/img/products/caesar-salad.png', bg:'#F1F8E9', isPrivateLabel:false, badge:null, desc:'Grilled chicken, romaine lettuce, croutons, and Caesar dressing.' },
-  { id:7, name:'Signature Tuna Sandwich', brand:'Breadfast Kitchen', price:55, oldPrice:null, weight:'250g', img:'prototype/img/products/tuna-sandwich.png', bg:'#FFF8E1', isPrivateLabel:false, badge:null, desc:'Tuna salad with fresh vegetables in toasted bread.' },
-  { id:8, name:'Turkey & Cheese Sandwich', brand:'Breadfast Kitchen', price:45, oldPrice:null, weight:'220g', img:'prototype/img/products/turkey-cheese-sandwich.png', bg:'#FFF3E0', isPrivateLabel:false, badge:null, desc:'Smoked turkey breast with Swiss cheese in artisan bread.' },
-  { id:9, name:'Juhayna Full Cream Milk (1.5L)', brand:'Juhayna', price:35, oldPrice:null, weight:'1.5L', img:'prototype/img/products/juhayna-milk.png', bg:'#E3F2FD', isPrivateLabel:false, badge:null, desc:'Fresh full cream milk from Juhayna.' },
-  { id:10, name:'Simply 3 Ply Facial Tissue Pack', brand:'Simply', price:25, oldPrice:null, weight:'550 sheets', img:'prototype/img/products/facial-tissue.png', bg:'#F5F5F5', isPrivateLabel:false, badge:null, desc:'Soft 3-ply facial tissues for everyday use.' },
-  { id:11, name:'Breadfast Classic Millefeuille Cup', brand:'Breadfast', price:50, oldPrice:null, weight:'150g', img:'prototype/img/products/millefeuille.png', bg:'#FFF8E1', isPrivateLabel:true, badge:'2x', desc:'Handcrafted millefeuille with layers of flaky pastry and cream.' },
-  { id:12, name:'Breadfast Belgian Dark Chocolate (75g)', brand:'Breadfast', price:50, oldPrice:null, weight:'75g', img:'prototype/img/products/dark-chocolate.png', bg:'#EFEBE9', isPrivateLabel:true, badge:'2x', desc:'Premium 70% dark Belgian chocolate bar.' },
-  { id:13, name:'Pink Lemonade', brand:'V7', price:35, oldPrice:null, weight:'300ml', img:'prototype/img/products/pink-lemonade.png', bg:'#FCE4EC', isPrivateLabel:false, badge:null, desc:'Refreshing pink lemonade by Dara\'s.' },
-  { id:14, name:'Smoked Salmon Bagel', brand:'Breadfast Kitchen', price:65, oldPrice:null, weight:'280g', img:'prototype/img/products/smoked-salmon-bagel.png', bg:'#FFF3E0', isPrivateLabel:false, badge:null, desc:'Smoked salmon with cream cheese and capers on a fresh bagel.' },
-  { id:15, name:'Sella Basmati Rice (1kg)', brand:'Sella', price:42, oldPrice:null, weight:'1kg', img:'prototype/img/products/rice-sella.png', bg:'#FFFDE7', isPrivateLabel:false, badge:null, desc:'Premium long-grain basmati rice, perfect for everyday cooking.' },
-  { id:16, name:'Heinz Tomato Paste (135g)', brand:'Heinz', price:18, oldPrice:22, weight:'135g', img:'prototype/img/products/tomato-paste.png', bg:'#FFEBEE', isPrivateLabel:false, badge:null, desc:'Rich concentrated tomato paste for cooking sauces and stews.' },
-  { id:17, name:'Sana Pure Ghee (400g)', brand:'Sana', price:85, oldPrice:null, weight:'400g', img:'prototype/img/products/ghee-rawaby.png', bg:'#FFF8E1', isPrivateLabel:false, badge:null, desc:'100% pure clarified butter ghee for rich and authentic flavour.' },
+  { id:4, name:'Iced Strawberry Lemonade', brand:'Breadfast Coffee', price:75, oldPrice:null, weight:'400ml', img:'prototype/img/products/cinnamon-mocha.png', bg:'#FCE4EC', isPrivateLabel:true, badge:'2x', desc:'Refreshing iced strawberry lemonade with a bright citrus finish.' },
+  { id:5, name:'Iced Caramel Latte', brand:'Breadfast Coffee', price:70, oldPrice:null, weight:'400ml', img:'prototype/img/products/matcha-latte.png', bg:'#EFEBE9', isPrivateLabel:true, badge:'2x', desc:'Smooth cold brew espresso with rich caramel and fresh milk.' },
+  { id:6, name:'Chocolate Chip Cookies (200g)', brand:'Breadfast', price:65, oldPrice:null, weight:'200g', img:'prototype/img/products/caesar-salad.png', bg:'#FFF3E0', isPrivateLabel:true, badge:'2x', desc:'Soft-baked cookies loaded with Belgian chocolate chips.' },
+  { id:7, name:'Grilled Chicken Sandwich', brand:'Breadfast Kitchen', price:55, oldPrice:null, weight:'250g', img:'prototype/img/products/tuna-sandwich.png', bg:'#FFF8E1', isPrivateLabel:false, badge:null, desc:'Spiced grilled chicken with cheddar, lettuce, and mustard sauce.' },
+  { id:8, name:'Chocolate Croissant', brand:'Breadfast', price:45, oldPrice:null, weight:'120g', img:'prototype/img/products/turkey-cheese-sandwich.png', bg:'#FFF3E0', isPrivateLabel:true, badge:'2x', desc:'Flaky buttery croissant generously filled with rich dark chocolate.' },
+  { id:9, name:'Juhayna Full Cream Milk (1.5L)', brand:'Juhayna', price:35, oldPrice:null, weight:'1.5L', img:'prototype/img/products/juhayna-milk.png', bg:'#E3F2FD', isPrivateLabel:false, badge:null, desc:'Fresh full cream milk, 100% natural with no powder milk.' },
+  { id:10, name:'Cadbury Dairy Milk Bubbly (box)', brand:'Cadbury', price:120, oldPrice:null, weight:'168g', img:'prototype/img/products/facial-tissue.png', bg:'#4A148C', isPrivateLabel:false, badge:null, desc:'Airy milk chocolate with a light bubbly texture, box of 24.' },
+  { id:11, name:'Whole Grain Toast Bread Loaf', brand:'Breadfast', price:50, oldPrice:null, weight:'500g', img:'prototype/img/products/millefeuille.png', bg:'#FFF8E1', isPrivateLabel:true, badge:'2x', desc:'Soft whole grain sliced bread, freshly baked every morning.' },
+  { id:12, name:'Juhayna Skimmed Milk Multipack (6x1L)', brand:'Juhayna', price:120, oldPrice:130, weight:'6x1L', img:'prototype/img/products/dark-chocolate.png', bg:'#E3F2FD', isPrivateLabel:false, badge:null, desc:'Skimmed milk multipack — 0.5% fat, 100% natural, no powder.' },
+  { id:13, name:'Breadfast Hibiscus Drink (500ml)', brand:'Breadfast', price:35, oldPrice:null, weight:'500ml', img:'prototype/img/products/pink-lemonade.png', bg:'#FCE4EC', isPrivateLabel:true, badge:'2x', desc:'Natural hibiscus (كركديه) cold drink, lightly sweetened.' },
+  { id:14, name:'Turkey Ham & Cheese Sub', brand:'Breadfast Kitchen', price:65, oldPrice:null, weight:'280g', img:'prototype/img/products/smoked-salmon-bagel.png', bg:'#FFF3E0', isPrivateLabel:false, badge:null, desc:'Generous turkey ham with melted cheddar and pickled vegetables.' },
+  { id:15, name:'Masreya Spaghetti (400g)', brand:'Masreya', price:12, oldPrice:null, weight:'400g', img:'prototype/img/products/rice-sella.png', bg:'#FFFDE7', isPrivateLabel:false, badge:null, desc:'Classic Egyptian spaghetti made from premium durum wheat.' },
+  { id:16, name:'Italiano Ziti Pasta (400g)', brand:'Italiano', price:24, oldPrice:null, weight:'400g', img:'prototype/img/products/tomato-paste.png', bg:'#FFF8E1', isPrivateLabel:false, badge:null, desc:'Premium durum wheat ziti pasta by Italiano.' },
+  { id:17, name:'Rawabi Vegetable Ghee (500g)', brand:'Rawabi', price:85, oldPrice:null, weight:'500g', img:'prototype/img/products/ghee-rawaby.png', bg:'#FFF8E1', isPrivateLabel:false, badge:null, desc:'Pure vegetable ghee for cooking, baking, and traditional recipes.' },
 ];
 
 // ==================== STATE ====================
