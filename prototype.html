@@ -770,16 +770,31 @@
   .hub-reward-item .rw-info .rw-name { font-size:13px; font-weight:600; margin-bottom:2px; }
   .hub-reward-item .rw-info .rw-pts { font-size:12px; color:var(--color-text-secondary); }
   .hub-reward-item .rw-info .rw-bar {
-    height:4px; background:var(--color-bg-tertiary); border-radius:2px; margin-top:4px; overflow:hidden; max-width:120px;
+    height:4px; background:var(--color-bg-tertiary); border-radius:2px; margin-top:6px; overflow:hidden;
   }
   .hub-reward-item .rw-info .rw-bar-fill { height:100%; border-radius:2px; }
-  .hub-reward-item .rw-status { flex-shrink:0; font-size:12px; font-weight:600; }
+  .hub-reward-item .rw-status { flex-shrink:0; font-size:12px; font-weight:600; text-align:right; }
+  .hub-reward-item.rw-item-unlocked { background:#F0FFF4; }
+  .rw-redeem-btn {
+    display:inline-flex; align-items:center; gap:4px;
+    background:var(--color-green); color:#fff;
+    font-size:11px; font-weight:700; padding:5px 10px;
+    border-radius:var(--radius-full); white-space:nowrap;
+  }
   .rw-unlocked { color:var(--color-green); }
+  .rw-almost { color:var(--color-warning); }
   .rw-locked { color:var(--color-text-tertiary); }
 
-  .hub-section-title {
-    padding:var(--space-4) var(--space-4) var(--space-2);
-    font-size:16px; font-weight:700;
+  .hub-reward-group {
+    padding:var(--space-3) var(--space-4) var(--space-1);
+    font-size:11px; font-weight:700; color:var(--color-text-secondary);
+    text-transform:uppercase; letter-spacing:0.6px;
+    background:var(--color-bg-secondary);
+    border-bottom:1px solid var(--color-border);
+  }
+
+  .hub-unlocked-count {
+    font-size:12px; color:var(--color-green); font-weight:600; margin-top:var(--space-1);
   }
 
   /* ===== ORDER COMPLETION BOTTOM SHEET ===== */
@@ -937,6 +952,7 @@ fetch('prototype/img/icons/icons.svg')
       </div>
       <div class="sub-tabs">
         <div class="sub-tab active">All</div>
+        <div class="sub-tab">Staples</div>
         <div class="sub-tab">Pasta</div>
         <div class="sub-tab">Oils</div>
         <div class="sub-tab">Dairy</div>
@@ -1508,9 +1524,10 @@ fetch('prototype/img/icons/icons.svg')
         </div>
         <div class="hub-next-reward" id="hubNextReward">Next: Free V Super Soda Cola Can</div>
         <div class="hub-next-pts" id="hubNextPts">300 more points to unlock</div>
+        <div class="hub-unlocked-count" id="hubUnlockedCount" style="display:none;"></div>
       </div>
 
-      <div style="position:relative;">
+      <div style="position:relative;" id="hubPinnedWrap">
         <div class="hub-pinned" id="hubPinned">
           <div class="pin-img">&#127867;</div>
           <div class="pin-info">
@@ -1519,10 +1536,9 @@ fetch('prototype/img/icons/icons.svg')
             <div class="pin-bar"><div class="pin-bar-fill" id="hubPinBar" style="width:80%;"></div></div>
           </div>
         </div>
-        <div style="position:absolute;top:6px;left:28px;background:var(--color-primary);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:var(--radius-xs);">Next reward</div>
+        <div class="pin-badge" style="position:absolute;top:-10px;left:28px;background:var(--color-primary);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:var(--radius-xs);">Next reward</div>
       </div>
 
-      <div class="hub-section-title">All rewards</div>
       <div id="hubRewardsList"></div>
     </div>
   </div>
@@ -1619,6 +1635,9 @@ const products = [
   { id:12, name:'Breadfast Belgian Dark Chocolate (75g)', brand:'Breadfast', price:50, oldPrice:null, weight:'75g', img:'prototype/img/products/molto-magnum.png', bg:'#EFEBE9', isPrivateLabel:true, badge:'2x', desc:'Premium 70% dark Belgian chocolate bar.' },
   { id:13, name:'Pink Lemonade', brand:'V7', price:35, oldPrice:null, weight:'300ml', img:'prototype/img/products/pink-lemonade.png', bg:'#FCE4EC', isPrivateLabel:false, badge:null, desc:'Refreshing pink lemonade by Dara\'s.' },
   { id:14, name:'Smoked Salmon Bagel', brand:'Breadfast Kitchen', price:65, oldPrice:null, weight:'280g', img:'prototype/img/products/smoked-salmon-bagel.png', bg:'#FFF3E0', isPrivateLabel:false, badge:null, desc:'Smoked salmon with cream cheese and capers on a fresh bagel.' },
+  { id:15, name:'Sella Basmati Rice (1kg)', brand:'Sella', price:42, oldPrice:null, weight:'1kg', img:'prototype/img/products/italiano-pasta.png', bg:'#FFFDE7', isPrivateLabel:false, badge:null, desc:'Premium long-grain basmati rice, perfect for everyday cooking.' },
+  { id:16, name:'Heinz Tomato Paste (135g)', brand:'Heinz', price:18, oldPrice:22, weight:'135g', img:'prototype/img/products/afia-oil.png', bg:'#FFEBEE', isPrivateLabel:false, badge:null, desc:'Rich concentrated tomato paste for cooking sauces and stews.' },
+  { id:17, name:'Sana Pure Ghee (400g)', brand:'Sana', price:85, oldPrice:null, weight:'400g', img:'prototype/img/products/afia-oil.png', bg:'#FFF8E1', isPrivateLabel:false, badge:null, desc:'100% pure clarified butter ghee for rich and authentic flavour.' },
 ];
 
 // ==================== STATE ====================
@@ -1770,42 +1789,98 @@ function updateAllUI() {
   updateLoyaltyHub(projected);
 }
 
+function renderRewardItem(r, projected) {
+  const progress = Math.min(projected / r.pts, 1);
+  const remaining = r.pts - projected;
+  const unlocked = projected >= r.pts;
+  const almost = !unlocked && progress >= 0.8;
+
+  let statusHtml, barColor, rowClass;
+  if (unlocked) {
+    statusHtml = `<div class="rw-status"><span class="rw-redeem-btn">&#10003; Redeem</span></div>`;
+    barColor = 'var(--color-green)';
+    rowClass = 'hub-reward-item rw-item-unlocked';
+  } else if (almost) {
+    statusHtml = `<div class="rw-status rw-almost">${fmtPts(remaining)} left</div>`;
+    barColor = 'var(--color-warning)';
+    rowClass = 'hub-reward-item';
+  } else {
+    statusHtml = `<div class="rw-status rw-locked">${fmtPts(remaining)} left</div>`;
+    barColor = 'var(--color-primary)';
+    rowClass = 'hub-reward-item';
+  }
+
+  return `
+    <div class="${rowClass}">
+      <div class="rw-img">${r.emoji}</div>
+      <div class="rw-info">
+        <div class="rw-name">${r.name}</div>
+        <div class="rw-pts">${fmtPts(r.pts)} points</div>
+        <div class="rw-bar"><div class="rw-bar-fill" style="width:${progress*100}%;background:${barColor};"></div></div>
+      </div>
+      ${statusHtml}
+    </div>
+  `;
+}
+
 function updateLoyaltyHub(projected) {
   const nextReward = getNextReward(projected);
+  const unlockedRewards = rewards.filter(r => projected >= r.pts);
+  const lockedRewards = rewards.filter(r => projected < r.pts);
+  const almostRewards = lockedRewards.filter(r => (projected / r.pts) >= 0.8);
+  const farRewards = lockedRewards.filter(r => (projected / r.pts) < 0.8);
+  const circumference = 326.7;
+
+  document.getElementById('hubPtsNum').textContent = fmtPts(projected);
+
+  const unlockedCountEl = document.getElementById('hubUnlockedCount');
+  if (unlockedRewards.length > 0) {
+    unlockedCountEl.style.display = '';
+    unlockedCountEl.textContent = `${unlockedRewards.length} reward${unlockedRewards.length > 1 ? 's' : ''} unlocked — redeem at checkout`;
+  } else {
+    unlockedCountEl.style.display = 'none';
+  }
 
   if (nextReward) {
     const remaining = nextReward.pts - projected;
     const progress = Math.min(projected / nextReward.pts, 1);
-    const circumference = 326.7;
     document.getElementById('hubRing').setAttribute('stroke-dashoffset', circumference * (1 - progress));
-    document.getElementById('hubPtsNum').textContent = fmtPts(projected);
     document.getElementById('hubNextReward').textContent = `Next: ${nextReward.name}`;
     document.getElementById('hubNextPts').textContent =
       remaining > 0 ? `${fmtPts(remaining)} more points to unlock` : 'Ready to redeem!';
+    document.getElementById('hubPinnedWrap').style.display = '';
     document.getElementById('hubPinName').textContent = nextReward.name;
     document.getElementById('hubPinPts').textContent = `${fmtPts(projected)} / ${fmtPts(nextReward.pts)} points`;
     document.getElementById('hubPinBar').style.width = (progress * 100) + '%';
     document.querySelector('#hubPinned .pin-img').innerHTML = nextReward.emoji;
+  } else {
+    document.getElementById('hubRing').setAttribute('stroke-dashoffset', '0');
+    document.getElementById('hubNextReward').textContent = 'All rewards unlocked!';
+    document.getElementById('hubNextPts').textContent = 'Redeem your rewards during checkout';
+    document.getElementById('hubPinnedWrap').style.display = 'none';
   }
 
-  // Rewards list
+  // Build grouped rewards list
   const list = document.getElementById('hubRewardsList');
-  list.innerHTML = rewards.map(r => {
-    const progress = Math.min(projected / r.pts, 1);
-    const unlocked = projected >= r.pts;
-    const remaining = r.pts - projected;
-    return `
-      <div class="hub-reward-item">
-        <div class="rw-img">${r.emoji}</div>
-        <div class="rw-info">
-          <div class="rw-name">${r.name}</div>
-          <div class="rw-pts">${fmtPts(r.pts)} points</div>
-          <div class="rw-bar"><div class="rw-bar-fill" style="width:${progress*100}%;background:${unlocked ? 'var(--color-green)' : 'var(--color-primary)'};"></div></div>
-        </div>
-        <div class="rw-status ${unlocked ? 'rw-unlocked' : 'rw-locked'}">${unlocked ? '&#10003; Redeem' : fmtPts(remaining) + ' left'}</div>
-      </div>
-    `;
-  }).join('');
+  let html = '';
+
+  if (unlockedRewards.length > 0) {
+    html += `<div class="hub-reward-group">Unlocked (${unlockedRewards.length})</div>`;
+    html += unlockedRewards.map(r => renderRewardItem(r, projected)).join('');
+  }
+
+  if (almostRewards.length > 0) {
+    html += `<div class="hub-reward-group">Almost there</div>`;
+    html += almostRewards.map(r => renderRewardItem(r, projected)).join('');
+  }
+
+  if (farRewards.length > 0) {
+    const groupLabel = (unlockedRewards.length > 0 || almostRewards.length > 0) ? 'More rewards' : 'All rewards';
+    html += `<div class="hub-reward-group">${groupLabel}</div>`;
+    html += farRewards.map(r => renderRewardItem(r, projected)).join('');
+  }
+
+  list.innerHTML = html;
 }
 
 function renderCartItems() {
@@ -2541,8 +2616,10 @@ function init() {
   renderPDPRelated();
   renderTabBars();
   updateAllUI();
-  // Activate home directly without animation on init
-  document.getElementById('screen-home').classList.add('active');
+  // Activate initial screen (supports ?screen= param for previews)
+  const initScreen = params.get('screen') || 'home';
+  document.getElementById(`screen-${initScreen}`).classList.add('active');
+  state.currentScreen = initScreen;
   initBannerCarousel();
   if (typeof bfProductCardInit === 'function') bfProductCardInit();
 }
