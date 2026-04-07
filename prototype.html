@@ -1015,12 +1015,16 @@ fetch('prototype/img/icons/icons.svg')
           <svg class="icon icon--md icon--secondary" style="cursor:pointer;"><use href="#icon-heart"></use></svg>
         </div>
       </div>
-      <div class="pdp-details-card">
-        <h4>Product details</h4>
-        <p id="pdpDesc">Product description.</p>
+      <div class="pdp-gray-section">
+        <div class="pdp-details-card-wrapper">
+          <div class="pdp-details-card">
+            <h4>Product details</h4>
+            <p id="pdpDesc">Product description.</p>
+          </div>
+        </div>
+        <div class="section-header pdp-related-header"><h3>Related products</h3></div>
+        <div class="h-scroll" id="pdpRelated" style="margin-bottom:var(--space-8);"></div>
       </div>
-      <div class="section-header"><h3>Related products</h3></div>
-      <div class="h-scroll" id="pdpRelated" style="margin-bottom:var(--space-6);"></div>
     </div>
 
     <div class="pdp-bottom-bar">
@@ -2253,7 +2257,7 @@ function updateBannerProgress() {
 }
 
 function showBanner(data) {
-  if (state.currentScreen === 'cart') return;
+  if (state.currentScreen === 'cart' || state.currentScreen === 'category') return;
   const banner = document.getElementById('loyaltyBanner');
   const titleEl = document.getElementById('bannerTitle');
   titleEl.classList.toggle('title-green', !!data.greenTitle);
