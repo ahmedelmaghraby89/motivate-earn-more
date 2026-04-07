@@ -2257,7 +2257,7 @@ function updateBannerProgress() {
 }
 
 function showBanner(data) {
-  if (state.currentScreen === 'cart' || state.currentScreen === 'category') return;
+  if (state.currentScreen === 'cart') return;
   const banner = document.getElementById('loyaltyBanner');
   const titleEl = document.getElementById('bannerTitle');
   titleEl.classList.toggle('title-green', !!data.greenTitle);
