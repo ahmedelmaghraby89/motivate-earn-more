@@ -1,0 +1,93 @@
+/* ============================================
+   BREADFAST DESIGN SYSTEM — UI LIBRARY
+   Version: 1.3.0
+   Source: Figma / Breadfast Design System
+   File: MVeQUACdqB9ao5K8XMBzB9
+
+   Import this single file to get the complete
+   Breadfast design system.
+   ============================================ */
+
+/* Tokens */
+@import './tokens/colors.css';
+@import './tokens/typography.css';
+@import './tokens/spacing.css';
+
+/* Components */
+@import './components/buttons.css';
+@import './components/inputs.css';
+@import './components/toast.css';
+@import './components/icons.css';
+@import './components/tabs.css';
+@import './components/product-card.css';
+@import './components/app-header.css';
+
+/* ── GLOBAL RESET & DEFAULTS ─────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-family-en);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-xxl);
+  color: var(--color-text-default);
+  background-color: var(--color-bg-default);
+}
+
+/* RTL Support */
+[dir="rtl"] body,
+[lang="ar"] body {
+  font-family: var(--font-family-ar);
+}
+
+/* ── UTILITY CLASSES ─────────────────────────── */
+
+/* Text Colors */
+.text-default { color: var(--color-text-default); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-tertiary { color: var(--color-text-tertiary); }
+.text-disabled { color: var(--color-text-disabled); }
+.text-inverse { color: var(--color-text-inverse); }
+.text-success { color: var(--color-text-success); }
+.text-error { color: var(--color-text-error); }
+.text-warning { color: var(--color-text-warning); }
+.text-highlight { color: var(--color-text-highlight); }
+.text-progress { color: var(--color-text-progress); }
+.text-premium { color: var(--color-text-premium); }
+.text-brand { color: var(--color-primary); }
+
+/* Background Colors */
+.bg-default { background-color: var(--color-bg-default); }
+.bg-secondary { background-color: var(--color-bg-secondary); }
+.bg-tertiary { background-color: var(--color-bg-tertiary); }
+.bg-success { background-color: var(--color-bg-success); }
+.bg-error { background-color: var(--color-bg-error); }
+.bg-warning { background-color: var(--color-bg-warning); }
+.bg-highlight { background-color: var(--color-bg-highlight); }
+.bg-brand { background-color: var(--color-bg-brand); }
+.bg-progress { background-color: var(--color-bg-progress); }
+.bg-premium { background-color: var(--color-bg-premium); }
+.bg-dark { background-color: var(--color-bg-dark); }
+
+/* Border Radius */
+.rounded-none { border-radius: var(--radius-none); }
+.rounded-xs { border-radius: var(--radius-xs); }
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.rounded-xl { border-radius: var(--radius-xl); }
+.rounded-2xl { border-radius: var(--radius-2xl); }
+.rounded-full { border-radius: var(--radius-full); }
