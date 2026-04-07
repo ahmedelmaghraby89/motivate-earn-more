@@ -1,0 +1,2061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Breadfast</title>
+<link rel="stylesheet" href="https://breadfast-ui-library.netlify.app/breadfast-ui.css" />
+<link rel="stylesheet" href="https://breadfast-ui-library.netlify.app/components/product-card.css" />
+<link rel="stylesheet" href="https://breadfast-ui-library.netlify.app/components/tabs.css" />
+<script src="https://breadfast-ui-library.netlify.app/icons.js"></script>
+<script src="https://breadfast-ui-library.netlify.app/product-card.js"></script>
+<style>
+  :root {
+    --color-primary: #AA0082;
+    --color-primary-dark: #9C0062;
+    --color-primary-light: #FFF0F7;
+    --color-primary-bg: #FFF0FA;
+    --color-green: #108723;
+    --color-green-light: #E8F5E9;
+    --color-red: #DA1E28;
+    --color-warning: #BA4E00;
+    --color-text-default: #212121;
+    --color-text-secondary: #6F6F6F;
+    --color-text-tertiary: #B7B7B7;
+    --color-bg-default: #fff;
+    --color-bg-secondary: #F3F4F5;
+    --color-bg-tertiary: #EBEBEB;
+    --color-border: #E0E0E0;
+    --color-badge-red: #DA1E28;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-12: 48px;
+    --radius-xs: 4px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-full: 9999px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 2px 8px rgba(0,0,0,0.12);
+    --shadow-lg: 0 4px 16px rgba(0,0,0,0.16);
+    --shadow-xl: 0 8px 24px rgba(0,0,0,0.2);
+  }
+
+  @font-face { font-family:'Faro'; src:local('Faro'); font-weight:100 900; font-style:normal; }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html, body {
+    font-family:'Faro',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    background:#E8E8E8; color:var(--color-text-default);
+    overflow:hidden; height:100%; -webkit-font-smoothing:antialiased;
+  }
+
+  /* Device frame */
+  .device-frame {
+    width:390px; max-width:100vw; height:100vh; margin:0 auto;
+    background:var(--color-bg-default); position:relative; overflow:hidden;
+    display:flex; flex-direction:column;
+  }
+
+  /* Status Bar */
+  .status-bar {
+    height:47px; padding:14px var(--space-4) 0;
+    display:flex; justify-content:space-between; align-items:center;
+    background:var(--color-bg-default); flex-shrink:0; z-index:100;
+    font-size:15px; font-weight:600;
+  }
+  .status-bar .time { font-weight:700; }
+  .status-bar .icons { display:flex; gap:5px; align-items:center; }
+  .status-icons svg { width:16px; height:16px; }
+
+  /* Screen container */
+  .screen {
+    display:none; flex-direction:column; height:100%;
+    position:absolute; top:0; left:0; right:0; bottom:0;
+    background:var(--color-bg-default); z-index:1;
+  }
+  .screen.active { display:flex; z-index:10; }
+
+  @keyframes slide-in-right {
+    from { transform:translateX(100%); }
+    to   { transform:translateX(0); }
+  }
+  @keyframes slide-out-left {
+    from { transform:translateX(0); }
+    to   { transform:translateX(-30%); }
+  }
+  @keyframes slide-in-left {
+    from { transform:translateX(-30%); }
+    to   { transform:translateX(0); }
+  }
+  @keyframes slide-out-right {
+    from { transform:translateX(0); }
+    to   { transform:translateX(100%); }
+  }
+  .screen.entering-forward  { animation:slide-in-right 0.28s cubic-bezier(0.4,0,0.2,1) forwards; }
+  .screen.leaving-forward   { display:flex; z-index:9; animation:slide-out-left 0.28s cubic-bezier(0.4,0,0.2,1) forwards; }
+  .screen.entering-back     { animation:slide-in-left 0.28s cubic-bezier(0.4,0,0.2,1) forwards; }
+  .screen.leaving-back      { display:flex; z-index:9; animation:slide-out-right 0.28s cubic-bezier(0.4,0,0.2,1) forwards; }
+
+  .screen-header {
+    padding:47px var(--space-4) 14px;
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--color-bg-default); flex-shrink:0;
+    border-bottom:1px solid var(--color-border); z-index:50;
+  }
+  .screen-header .left, .screen-header .right { display:flex; align-items:center; gap:var(--space-3); }
+  .screen-header .title { font-size:18px; font-weight:700; }
+
+  .screen-scroll {
+    flex:1; overflow-y:auto; overflow-x:hidden;
+    -webkit-overflow-scrolling:touch; padding-bottom:80px;
+  }
+  .screen-scroll.no-pad { padding-bottom:0; }
+
+  /* Points pill badge in header */
+  .points-pill {
+    display:flex; align-items:center; gap:4px;
+    background:var(--color-primary-light); padding:4px 10px;
+    border-radius:var(--radius-full); font-size:12px; font-weight:700;
+    color:var(--color-primary); white-space:nowrap; cursor:pointer;
+  }
+  .points-pill .star { font-size:14px; }
+
+  /* Tab Bar colors */
+  .tabbar-item { color: #B7B7B7; text-decoration: none; }
+  .tabbar-item.is-active { color: var(--color-primary, #AA0082); }
+  .tabbar-item svg { display: block; }
+  /* Legacy badge style for cart count in non-tabbar contexts */
+  .tab-badge, .tabbar-badge {
+    position:absolute; top:4px; right:calc(50% - 18px);
+    background:var(--color-badge-red); color:#fff; font-size:10px; font-weight:700;
+    min-width:16px; height:16px; border-radius:var(--radius-full);
+    display:flex; align-items:center; justify-content:center; padding:0 4px;
+  }
+  .tab-badge:empty, .tabbar-badge:empty { display:none; }
+
+  /* Icon helpers */
+  .icon { display:inline-block; vertical-align:middle; fill:currentColor; }
+  .icon--sm { width:16px; height:16px; }
+  .icon--md { width:24px; height:24px; }
+  .icon--lg { width:28px; height:28px; }
+  .icon--primary { color:var(--color-primary); }
+  .icon--white { color:#fff; }
+  .icon--secondary { color:var(--color-text-secondary); }
+  .icon--green { color:var(--color-green); }
+
+  /* Buttons */
+  .btn-primary {
+    background:var(--color-primary); color:#fff; border:none; border-radius:var(--radius-sm);
+    font-size:16px; font-weight:700; cursor:pointer; padding:var(--space-3) var(--space-4);
+    display:flex; align-items:center; justify-content:center; gap:var(--space-2);
+    font-family:inherit; width:100%;
+  }
+  .btn-primary:active { opacity:0.85; }
+
+  /* btn-add-circle removed - now using design system product-card__floating-action */
+
+  /* Quantity stepper */
+  .qty-stepper {
+    display:flex; align-items:center; gap:0;
+    background:var(--color-primary-light); border-radius:var(--radius-full); overflow:hidden;
+  }
+  .qty-stepper button {
+    width:32px; height:32px; border:none; background:transparent;
+    color:var(--color-primary); cursor:pointer; display:flex;
+    align-items:center; justify-content:center; font-size:18px; font-family:inherit;
+  }
+  .qty-stepper .qty-val {
+    min-width:24px; text-align:center; font-weight:700; font-size:14px; color:var(--color-primary);
+  }
+
+  /* Product card — grid overrides to make DS card fill 3-col layout */
+  .product-grid {
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:var(--space-3);
+    padding:0 var(--space-4);
+  }
+  .product-grid .product-card {
+    width:100% !important;
+  }
+  .product-grid .product-card__media {
+    width:100%;
+  }
+  .product-grid .product-card__image-wrap {
+    width:100% !important;
+    height:0 !important;
+    padding-bottom:100% !important;
+    position:relative !important;
+    overflow:hidden !important;
+  }
+  .product-grid .product-card__image {
+    position:absolute !important;
+    top:0 !important; left:0 !important;
+    width:100% !important;
+    height:100% !important;
+    object-fit:contain;
+  }
+  .product-grid .product-card__stepper {
+    width:calc(100% - 8px);
+    left:50%;
+    transform:translateX(-50%);
+  }
+  .product-grid .product-card__body {
+    width:100%;
+  }
+  .product-grid .product-card__name {
+    min-height:36px;
+  }
+  /* Ensure the favorite icon SVG renders */
+  .product-grid .product-card__favorite svg,
+  .product-grid .product-card__stepper-btn svg {
+    width:100%;
+    height:100%;
+  }
+  .product-card__floating-action svg {
+    width:20px !important;
+    height:20px !important;
+  }
+
+  /* Horizontal scroll */
+  .h-scroll {
+    display:flex; gap:var(--space-3); overflow-x:auto; padding:0 var(--space-4);
+    scrollbar-width:none; -ms-overflow-style:none;
+  }
+  .h-scroll::-webkit-scrollbar { display:none; }
+
+  /* Section headers */
+  .section-header {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:var(--space-4) var(--space-4) var(--space-2);
+  }
+  .section-header h3 { font-size:18px; font-weight:700; }
+  .section-header a { font-size:14px; color:var(--color-primary); text-decoration:none; font-weight:600; }
+
+  /* ===== LOYALTY BANNER ===== */
+  .loyalty-banner {
+    position:fixed; top:47px; left:50%; transform:translateX(-50%);
+    width:343px; height:56px;
+    background:#fff; border-radius:100px;
+    box-shadow:0 3px 5px rgba(33,33,33,0.10);
+    display:flex; align-items:center; gap:12px;
+    padding:8px 16px 8px 8px; z-index:10; cursor:pointer; opacity:0;
+    transition:top 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease; touch-action:pan-y;
+  }
+  .loyalty-banner.show { opacity:1; }
+  .loyalty-banner .ring-wrap {
+    width:40px; height:40px; position:relative; flex-shrink:0;
+  }
+  .loyalty-banner .ring-wrap svg { width:40px; height:40px; transform:rotate(-90deg); }
+  .loyalty-banner .ring-wrap .ring-img {
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:28px; height:28px; border-radius:6px; object-fit:cover;
+  }
+  .loyalty-banner .banner-text { flex:1; min-width:0; display:flex; flex-direction:column; gap:0; justify-content:center; }
+  .loyalty-banner .banner-text .b-title {
+    font-size:14px; font-weight:600; color:var(--color-text-default);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; height:18px; line-height:18px;
+  }
+  .loyalty-banner .banner-text .b-title.title-green { color:#108723; }
+  @keyframes pts-pop {
+    0%   { transform:scaleX(0.7); opacity:0.5; }
+    60%  { transform:scaleX(1.06); opacity:1; }
+    100% { transform:scaleX(1); opacity:1; }
+  }
+  .b-title.pts-anim {
+    animation:pts-pop 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    transform-origin: left center;
+    display:inline-block;
+  }
+  .loyalty-banner .banner-text .b-sub {
+    font-size:12px; font-weight:400; color:#6F6F6F;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; height:23px; line-height:23px;
+  }
+  .loyalty-banner .b-chevron { flex-shrink:0; color:var(--color-primary); }
+
+  /* ===== HOME SCREEN ===== */
+  .home-header {
+    padding:57px var(--space-4) 0; background:var(--color-bg-default); flex-shrink:0;
+  }
+  .home-header .top-row {
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .home-header .top-row .left { display:flex; align-items:center; gap:6px; }
+  .home-header .top-row .left .addr-label {
+    font-size:18px; font-weight:700; color:var(--color-primary);
+  }
+  .home-header .top-row .right { display:flex; align-items:center; gap:var(--space-4); position:relative; }
+  .home-header .delivery-row {
+    display:flex; align-items:center; gap:6px;
+    padding-bottom:var(--space-3); font-size:13px; color:var(--color-text-secondary);
+  }
+  .home-header .delivery-row .timer-pill {
+    background:var(--color-green-light); color:var(--color-green);
+    font-weight:600; font-size:13px; padding:2px 8px;
+    border-radius:var(--radius-xs); display:inline-flex; align-items:center; gap:4px;
+  }
+
+  /* Banner carousel */
+  .banner-carousel {
+    display:flex; gap:var(--space-2); overflow-x:auto;
+    padding:0 var(--space-4); scrollbar-width:none;
+    scroll-snap-type:x mandatory; scroll-padding:0 16px;
+  }
+  .banner-carousel::-webkit-scrollbar { display:none; }
+  .banner-carousel .banner-slide {
+    flex-shrink:0; width:calc(100% - 32px); aspect-ratio:358/171;
+    border-radius:var(--radius-md); overflow:hidden; scroll-snap-align:center;
+  }
+  .banner-carousel .banner-slide img { width:100%; height:100%; object-fit:cover; }
+  .banner-dots {
+    display:flex; justify-content:center; gap:6px; padding:var(--space-2) 0;
+  }
+  .banner-dots .bdot {
+    width:6px; height:6px; border-radius:var(--radius-full); background:var(--color-border);
+    transition:all 0.2s ease;
+  }
+  .banner-dots .bdot.active { background:var(--color-primary); width:18px; }
+
+  /* Explore Breadfast grid - full image entry points */
+  .explore-grid-2col {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:var(--space-2); padding:0 var(--space-4);
+  }
+  .entry-point {
+    cursor:pointer; border-radius:28px; overflow:hidden;
+    height:56px; position:relative;
+  }
+  .entry-point img {
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+
+  /* All categories grid */
+  .cat-grid {
+    display:grid; grid-template-columns:repeat(3, 1fr);
+    gap:12px; padding:0 var(--space-4);
+  }
+  .cat-tile {
+    border-radius:var(--radius-md); overflow:hidden; cursor:pointer;
+    background:var(--color-bg-secondary); aspect-ratio:3/4;
+  }
+
+  /* Reorder / horizontal scroll product cards */
+  .h-scroll .product-card {
+    flex-shrink: 0;
+    width: 120px !important;
+    cursor: pointer;
+  }
+  .h-scroll .product-card__media { width: 100%; }
+  .h-scroll .product-card__image-wrap {
+    width: 100% !important;
+    height: 0 !important;
+    padding-bottom: 100% !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  .h-scroll .product-card__image {
+    position: absolute !important;
+    top: 0 !important; left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain;
+  }
+  .h-scroll .product-card__stepper {
+    width: calc(100% - 8px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Category screen */
+  .category-header {
+    flex-shrink:0; background:var(--color-bg-default);
+    border-bottom:1px solid var(--color-border); z-index:20; position:relative;
+  }
+  .category-header .screen-header {
+    border-bottom:none; z-index:auto;
+  }
+  .sub-tabs {
+    display:flex; gap:8px; padding:10px 16px;
+    overflow-x:auto; scrollbar-width:none; flex-shrink:0;
+  }
+  .sub-tabs::-webkit-scrollbar { display:none; }
+  .sub-tab {
+    display:inline-flex; align-items:center; gap:6px;
+    padding:5px 12px 5px 6px; border-radius:128px;
+    font-size:14px; font-weight:600; white-space:nowrap; cursor:pointer;
+    border:1px solid #EBEBEB; background:#fff; color:#1A1A1A;
+    flex-shrink:0;
+  }
+  .sub-tab img {
+    width:28px; height:28px; border-radius:50%; object-fit:cover; flex-shrink:0;
+  }
+  .sub-tab.active {
+    background:#FFF0F7; color:#AA0082; border-color:#FFF0F7;
+  }
+
+  .cat-promo-banner {
+    margin:0 var(--space-4) var(--space-3); border-radius:var(--radius-md);
+    overflow:hidden; display:block; background:#F3F4F5;
+  }
+  .cat-promo-banner img {
+    width:100%; height:auto; display:block;
+  }
+
+  .cashback-bar {
+    background:var(--color-primary-light); margin:var(--space-3) var(--space-4);
+    padding:var(--space-3) var(--space-4); border-radius:var(--radius-sm);
+    display:flex; align-items:center; justify-content:space-between;
+    font-size:13px; font-weight:600; color:var(--color-primary);
+  }
+
+  /* PDP screen */
+  .pdp-img {
+    width:100%; height:300px; background:#FDF6EE;
+    display:flex; align-items:center; justify-content:center; font-size:64px; overflow:hidden;
+  }
+  .pdp-img img { width:100%; height:100%; object-fit:contain; }
+  .pdp-dots { display:flex; justify-content:center; gap:6px; padding:var(--space-3) 0; }
+  .pdp-dots .dot { width:8px; height:8px; border-radius:var(--radius-full); background:var(--color-border); }
+  .pdp-dots .dot.active { background:var(--color-primary); }
+  .pdp-info { padding:0 var(--space-4); }
+  .pdp-info .in-stock { color:var(--color-green); font-size:13px; font-weight:600; margin-bottom:var(--space-1); }
+  .pdp-info .product-name { font-size:22px; font-weight:700; margin-bottom:var(--space-1); }
+  .pdp-info .product-meta { font-size:13px; color:var(--color-text-secondary); display:flex; align-items:center; gap:var(--space-1); margin-bottom:var(--space-2); }
+  .pdp-info .brand-row { display:flex; align-items:center; justify-content:space-between; padding-bottom:var(--space-3); border-bottom:1px solid var(--color-border); margin-bottom:var(--space-3); }
+  .pdp-info .brand-row .brand { font-size:14px; color:var(--color-primary); font-weight:600; }
+  .pdp-2x-badge {
+    display:inline-flex; align-items:center; gap:4px;
+    background:var(--color-primary-light); color:var(--color-primary);
+    font-size:12px; font-weight:700; padding:4px 10px; border-radius:var(--radius-full);
+    margin-bottom:var(--space-2);
+  }
+  .pdp-details-card {
+    margin:0 var(--space-4) var(--space-4); padding:var(--space-4);
+    background:var(--color-bg-secondary); border-radius:var(--radius-md);
+  }
+  .pdp-details-card h4 { font-size:16px; font-weight:700; margin-bottom:var(--space-2); }
+  .pdp-details-card p { font-size:13px; color:var(--color-text-secondary); line-height:1.5; }
+
+  .pdp-bottom-bar {
+    display:flex; gap:var(--space-3); padding:var(--space-3) var(--space-4);
+    background:var(--color-bg-default); border-top:1px solid var(--color-border);
+    flex-shrink:0; padding-bottom:calc(var(--space-3) + env(safe-area-inset-bottom, 16px));
+  }
+  .pdp-bottom-bar .qty-stepper { flex-shrink:0; }
+  .pdp-bottom-bar .btn-primary { flex:1; }
+
+  /* Cart screen */
+  .cart-loyalty-bar {
+    display:flex; align-items:center; gap:var(--space-3);
+    padding:var(--space-3) var(--space-4); background:var(--color-primary-light); cursor:pointer;
+    margin:var(--space-3) var(--space-4) 0; border-radius:var(--radius-md);
+  }
+  .cart-loyalty-bar .coin { font-size:24px; flex-shrink:0; }
+  .cart-loyalty-bar .bar-text { flex:1; font-size:13px; color:var(--color-text-default); line-height:1.3; }
+  .cart-loyalty-bar .bar-text strong { color:var(--color-primary); }
+
+  .cart-item {
+    display:flex; gap:var(--space-3); padding:var(--space-3) var(--space-4);
+    border-bottom:1px solid var(--color-border); align-items:center;
+  }
+  .cart-item .ci-img {
+    width:64px; height:64px; border-radius:var(--radius-sm);
+    background:#FFF8E1; flex-shrink:0; display:flex;
+    align-items:center; justify-content:center; font-size:28px; overflow:hidden;
+  }
+  .cart-item .ci-img img { width:100%; height:100%; object-fit:cover; }
+  .cart-item .ci-info { flex:1; min-width:0; }
+  .cart-item .ci-info .ci-name { font-size:14px; font-weight:600; margin-bottom:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .cart-item .ci-info .ci-meta { font-size:11px; color:var(--color-text-secondary); }
+  .cart-item .ci-info .ci-price { font-size:14px; font-weight:700; margin-top:2px; }
+  .cart-item .ci-actions { flex-shrink:0; }
+
+  .cart-bottom {
+    padding:var(--space-3) var(--space-4); background:var(--color-bg-default);
+    border-top:1px solid var(--color-border); flex-shrink:0; padding-bottom:calc(var(--space-3) + 4px);
+  }
+  .cart-bottom .add-more {
+    display:flex; align-items:center; gap:var(--space-2);
+    font-size:13px; color:var(--color-text-secondary); margin-bottom:var(--space-3);
+  }
+
+  /* Checkout screen */
+  .checkout-section { padding:var(--space-3) var(--space-4); border-bottom:1px solid var(--color-border); }
+  .checkout-section .sec-title { font-size:16px; font-weight:700; margin-bottom:var(--space-2); }
+  .checkout-row { display:flex; align-items:center; justify-content:space-between; padding:var(--space-2) 0; }
+  .checkout-row .label { font-size:14px; color:var(--color-text-secondary); }
+  .checkout-row .value { font-size:14px; font-weight:600; }
+  .checkout-row .value.green { color:var(--color-green); }
+
+  .payment-option { display:flex; align-items:center; gap:var(--space-3); padding:var(--space-2) 0; cursor:pointer; }
+  .payment-radio {
+    width:20px; height:20px; border-radius:var(--radius-full);
+    border:2px solid var(--color-border); flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .payment-radio.selected { border-color:#1976D2; }
+  .payment-radio.selected::after { content:''; width:10px; height:10px; border-radius:var(--radius-full); background:#1976D2; }
+  .payment-label { font-size:14px; flex:1; }
+
+  .toggle-switch {
+    width:44px; height:24px; border-radius:var(--radius-full);
+    background:var(--color-primary); position:relative; cursor:pointer; flex-shrink:0;
+  }
+  .toggle-switch::after {
+    content:''; position:absolute; top:2px; right:2px;
+    width:20px; height:20px; border-radius:var(--radius-full); background:#fff;
+  }
+
+  .tip-pills { display:flex; gap:var(--space-2); flex-wrap:wrap; }
+  .tip-pill {
+    padding:var(--space-2) var(--space-4); border-radius:var(--radius-full);
+    border:1px solid var(--color-border); font-size:13px; cursor:pointer; background:#fff;
+  }
+  .tip-pill.active { border-color:var(--color-primary); background:var(--color-primary-light); color:var(--color-primary); font-weight:600; }
+
+  .promo-scroll-card {
+    flex-shrink:0; width:160px; border:1px solid var(--color-border);
+    border-radius:var(--radius-sm); padding:var(--space-3); font-size:12px;
+  }
+  .promo-scroll-card .pts { font-weight:700; color:var(--color-primary); font-size:13px; }
+
+  .promo-input-row { display:flex; gap:var(--space-2); margin-top:var(--space-2); }
+  .promo-input-row input {
+    flex:1; padding:var(--space-2) var(--space-3);
+    border:1px solid var(--color-border); border-radius:var(--radius-sm);
+    font-size:14px; font-family:inherit; outline:none;
+  }
+  .promo-input-row button {
+    padding:var(--space-2) var(--space-4); background:var(--color-primary); color:#fff; border:none;
+    border-radius:var(--radius-sm); font-weight:600; cursor:pointer; font-family:inherit; font-size:14px;
+  }
+  .note-input {
+    width:100%; padding:var(--space-2) var(--space-3);
+    border:1px solid var(--color-border); border-radius:var(--radius-sm);
+    font-size:13px; font-family:inherit; outline:none; margin-top:var(--space-2);
+  }
+
+  .checkout-bottom {
+    padding:var(--space-3) var(--space-4); background:var(--color-bg-default);
+    border-top:1px solid var(--color-border); flex-shrink:0;
+    padding-bottom:calc(var(--space-3) + env(safe-area-inset-bottom, 16px));
+  }
+  .grand-total-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--space-2); }
+  .grand-total-row .gt-label { font-size:16px; font-weight:700; }
+  .grand-total-row .gt-value { font-size:20px; font-weight:700; }
+  .earn-row {
+    display:flex; align-items:center; justify-content:center; gap:var(--space-1);
+    font-size:13px; color:var(--color-primary); margin-bottom:var(--space-3);
+  }
+
+  /* Order placed */
+  .order-hero { text-align:center; padding:var(--space-6) var(--space-4); background:var(--color-bg-secondary); }
+  .order-hero .celeb { font-size:48px; margin-bottom:var(--space-2); }
+  .order-hero .est-label { font-size:13px; color:var(--color-text-secondary); }
+  .order-hero .est-time { font-size:26px; font-weight:700; margin:var(--space-1) 0 var(--space-3); }
+  .order-hero .success-msg { font-size:16px; font-weight:600; }
+
+  .order-card {
+    margin:var(--space-3) var(--space-4); padding:var(--space-3) var(--space-4);
+    background:var(--color-bg-secondary); border-radius:var(--radius-md);
+  }
+  .order-card .oc-title { font-size:14px; font-weight:700; margin-bottom:var(--space-1); }
+  .order-card .oc-text { font-size:13px; color:var(--color-text-secondary); }
+
+  .refer-card {
+    margin:var(--space-3) var(--space-4); padding:var(--space-4);
+    border-radius:var(--radius-md); background:linear-gradient(135deg, #FFD54F, #FFB74D);
+    text-align:center;
+  }
+  .refer-card h4 { font-size:16px; font-weight:700; margin-bottom:var(--space-1); }
+  .refer-card p { font-size:13px; }
+
+  .order-summary { padding:var(--space-3) var(--space-4); }
+  .order-summary .os-row { display:flex; justify-content:space-between; padding:var(--space-1) 0; font-size:14px; }
+  .order-summary .os-row .os-label { color:var(--color-text-secondary); }
+  .order-summary .os-grand {
+    display:flex; justify-content:space-between;
+    padding:var(--space-3) 0 var(--space-1); border-top:1px solid var(--color-border);
+    font-size:16px; font-weight:700; margin-top:var(--space-2);
+  }
+  .order-summary .eligible { font-size:13px; color:var(--color-primary); text-align:center; margin-top:var(--space-2); }
+  .order-summary .cancel-note {
+    text-align:center; font-size:12px; color:var(--color-text-secondary);
+    margin-top:var(--space-4); padding-top:var(--space-3); border-top:1px solid var(--color-border);
+  }
+  .order-summary .cancel-btn { text-align:center; color:var(--color-primary); font-weight:600; font-size:14px; margin-top:var(--space-2); cursor:pointer; }
+
+  /* More screen */
+  /* More screen — spacing matches Figma node 6660:18282 */
+  .more-header { padding:47px var(--space-4) var(--space-2); display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--space-4); }
+  .more-header h1 { font-size:28px; font-weight:700; line-height:36px; }
+  .more-header .qr-btn {
+    width:40px; height:40px; border-radius:var(--radius-full);
+    background:var(--color-bg-default); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; border:none; flex-shrink:0;
+  }
+
+  /* Loyalty card: pl-16 pr-8 py-16, gap-16, rounded-xl (16px), bg #fff0f7 */
+  .loyalty-card {
+    margin:0 var(--space-4) var(--space-4); padding:var(--space-4) var(--space-2) var(--space-4) var(--space-4);
+    border-radius:var(--radius-xl); background:#fff0f7;
+    display:flex; align-items:center; gap:var(--space-4); cursor:pointer;
+  }
+  /* Ring: 48×48 with white inner circle and emoji centre */
+  .loyalty-card .lc-ring { width:48px; height:48px; position:relative; flex-shrink:0; }
+  .loyalty-card .lc-ring svg { width:48px; height:48px; transform:rotate(-90deg); }
+  .loyalty-card .lc-ring .lc-icon { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:18px; background:#fff; border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center; }
+  /* Info: gap-4 between label and title */
+  .loyalty-card .lc-info { flex:1; display:flex; flex-direction:column; gap:4px; }
+  .loyalty-card .lc-info .lc-label { font-size:14px; color:var(--color-text-secondary); font-weight:600; line-height:16px; }
+  .loyalty-card .lc-info .lc-title { display:flex; gap:4px; align-items:baseline; line-height:1; }
+  .loyalty-card .lc-info .lc-title .lc-pts { font-size:20px; font-weight:700; line-height:28px; color:var(--color-primary); }
+  .loyalty-card .lc-info .lc-title .lc-target { font-size:18px; font-weight:600; line-height:24px; color:var(--color-text-default); }
+  .loyalty-card .lc-info .lc-progress { display:none; }
+  /* Chevron wrapper: p-8 */
+  .loyalty-card .lc-chevron { flex-shrink:0; padding:var(--space-2); display:flex; align-items:center; color:var(--color-primary); }
+
+  /* Menu list: py-0, no border dividers */
+  .menu-list { padding:0; margin-bottom:var(--space-4); }
+  /* Each item: pl-16 pr-8 py-4, gap-16 between icon and label */
+  .menu-item {
+    display:flex; align-items:center;
+    padding:var(--space-1) var(--space-2) var(--space-1) var(--space-4);
+    cursor:pointer; gap:var(--space-4); min-height:48px;
+  }
+  /* Icon slot: 24×24, fixed */
+  .menu-item .mi-icon { flex-shrink:0; width:24px; height:24px; display:flex; align-items:center; justify-content:center; }
+  .menu-item .mi-icon svg.icon { width:24px; height:24px; }
+  .menu-item .mi-icon img { width:24px; height:24px; object-fit:contain; display:block; }
+  .menu-item .mi-label { flex:1; font-size:16px; font-weight:600; line-height:20px; color:var(--color-text-default); }
+  /* Badge: bg primary, pill, 12px semi-bold */
+  .menu-item .mi-badge { background:var(--color-primary); color:#fff; font-size:12px; font-weight:600; line-height:16px; padding:4px 8px; border-radius:var(--radius-full); white-space:nowrap; }
+  /* Value: 16px secondary, right-aligned */
+  .menu-item .mi-value { font-size:16px; font-weight:600; line-height:20px; color:var(--color-text-secondary); white-space:nowrap; }
+  /* Chevron wrapper: p-8 */
+  .menu-item .mi-chevron { flex-shrink:0; padding:var(--space-2); display:flex; align-items:center; color:var(--color-text-tertiary); }
+
+  /* Version string: centered, 14px default color */
+  .version-text { text-align:center; font-size:14px; line-height:16px; color:var(--color-text-default); padding:var(--space-4) 0 var(--space-6); }
+
+  .spotlight-card {
+    flex-shrink:0; width:240px; aspect-ratio:21/9; border-radius:var(--radius-md);
+    overflow:hidden; display:flex; align-items:flex-end; padding:var(--space-3);
+    color:#fff; font-size:14px; font-weight:700;
+  }
+
+  /* ===== LOYALTY HUB SCREEN ===== */
+  .hub-hero {
+    text-align:center; padding:var(--space-6) var(--space-4) var(--space-4);
+    background:linear-gradient(180deg, var(--color-primary-light) 0%, #fff 100%);
+  }
+  .hub-ring { width:120px; height:120px; margin:0 auto var(--space-3); position:relative; }
+  .hub-ring svg { width:120px; height:120px; transform:rotate(-90deg); }
+  .hub-ring .hub-pts {
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center;
+  }
+  .hub-ring .hub-pts .pts-num { font-size:24px; font-weight:700; color:var(--color-primary); }
+  .hub-ring .hub-pts .pts-label { font-size:11px; color:var(--color-text-secondary); }
+  .hub-next-reward {
+    font-size:14px; color:var(--color-text-default); font-weight:600;
+    margin-bottom:var(--space-1);
+  }
+  .hub-next-pts { font-size:12px; color:var(--color-text-secondary); }
+
+  .hub-pinned {
+    margin:var(--space-3) var(--space-4); padding:var(--space-4);
+    border:2px solid var(--color-primary); border-radius:var(--radius-lg);
+    background:#fff; display:flex; align-items:center; gap:var(--space-3);
+  }
+  .hub-pinned .pin-badge {
+    position:absolute; top:-10px; left:16px;
+    background:var(--color-primary); color:#fff; font-size:10px; font-weight:700;
+    padding:2px 8px; border-radius:var(--radius-xs);
+  }
+  .hub-pinned .pin-img {
+    width:56px; height:56px; border-radius:var(--radius-sm);
+    background:var(--color-bg-secondary); flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:28px;
+  }
+  .hub-pinned .pin-info { flex:1; }
+  .hub-pinned .pin-info .pin-name { font-size:14px; font-weight:700; margin-bottom:2px; }
+  .hub-pinned .pin-info .pin-pts { font-size:12px; color:var(--color-primary); font-weight:600; }
+  .hub-pinned .pin-info .pin-bar {
+    height:6px; background:var(--color-bg-tertiary); border-radius:3px; margin-top:6px; overflow:hidden;
+  }
+  .hub-pinned .pin-info .pin-bar-fill { height:100%; background:var(--color-primary); border-radius:3px; }
+
+  .hub-reward-item {
+    display:flex; align-items:center; gap:var(--space-3);
+    padding:var(--space-3) var(--space-4); border-bottom:1px solid var(--color-border);
+  }
+  .hub-reward-item .rw-img {
+    width:48px; height:48px; border-radius:var(--radius-sm);
+    background:var(--color-bg-secondary); flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:22px;
+  }
+  .hub-reward-item .rw-info { flex:1; }
+  .hub-reward-item .rw-info .rw-name { font-size:13px; font-weight:600; margin-bottom:2px; }
+  .hub-reward-item .rw-info .rw-pts { font-size:12px; color:var(--color-text-secondary); }
+  .hub-reward-item .rw-info .rw-bar {
+    height:4px; background:var(--color-bg-tertiary); border-radius:2px; margin-top:4px; overflow:hidden; max-width:120px;
+  }
+  .hub-reward-item .rw-info .rw-bar-fill { height:100%; border-radius:2px; }
+  .hub-reward-item .rw-status { flex-shrink:0; font-size:12px; font-weight:600; }
+  .rw-unlocked { color:var(--color-green); }
+  .rw-locked { color:var(--color-text-tertiary); }
+
+  .hub-section-title {
+    padding:var(--space-4) var(--space-4) var(--space-2);
+    font-size:16px; font-weight:700;
+  }
+</style>
+</head>
+<body>
+<script>
+fetch('prototype/img/icons/icons.svg')
+  .then(r => r.text())
+  .then(svg => {
+    const div = document.createElement('div');
+    div.style.display = 'none';
+    div.innerHTML = svg;
+    document.body.insertBefore(div, document.body.firstChild);
+  });
+</script>
+
+<div class="device-frame" id="app">
+  <!-- Status Bar -->
+  <div class="status-bar" id="statusBar">
+    <span class="time">10:50</span>
+    <div class="icons">
+      <svg width="17" height="12" viewBox="0 0 17 12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="#212121"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="#212121"/><rect x="9" y="0" width="3" height="12" rx="1" fill="#212121"/><rect x="13.5" y="0" width="3" height="12" rx="1" fill="#212121" opacity="0.3"/></svg>
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M8 2C5.5 2 3.2 2.9 1.5 4.5L0 3C2.1 1.1 4.9 0 8 0s5.9 1.1 8 3l-1.5 1.5C12.8 2.9 10.5 2 8 2z" fill="#212121"/><path d="M8 6c-1.7 0-3.2.7-4.3 1.8L2.2 6.3C3.7 4.9 5.7 4 8 4s4.3.9 5.8 2.3l-1.5 1.5C11.2 6.7 9.7 6 8 6z" fill="#212121"/><circle cx="8" cy="10" r="2" fill="#212121"/></svg>
+      <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0" y="1" width="22" height="10" rx="2" stroke="#212121" stroke-width="1"/><rect x="1.5" y="2.5" width="17" height="7" rx="1" fill="#212121"/><rect x="23" y="4" width="2" height="4" rx="1" fill="#212121"/></svg>
+    </div>
+  </div>
+
+  <!-- ==================== HOME SCREEN ==================== -->
+  <div class="screen" id="screen-home">
+    <div class="home-header">
+      <div class="top-row">
+        <div class="left">
+          <span class="addr-label">Home</span>
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.189959 0.189959C0.443238 -0.0633197 0.853884 -0.0633197 1.10716 0.189959L4.99997 4.08277L8.89278 0.189959C9.14606 -0.0633197 9.55671 -0.0633197 9.80999 0.189959C10.0633 0.443238 10.0633 0.853884 9.80999 1.10716L5.45858 5.45858C5.33695 5.5802 5.17198 5.64853 4.99997 5.64853C4.82796 5.64853 4.663 5.5802 4.54137 5.45858L0.189959 1.10716C-0.0633197 0.853884 -0.0633197 0.443238 0.189959 0.189959Z" fill="#AA0082"/></svg>
+        </div>
+        <div class="right">
+          <!-- Gift/referral icon from Figma -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="cursor:pointer;flex-shrink:0;">
+            <path d="M14.626 2C15.4441 2 16.2539 2.32284 16.8438 2.9248C17.422 3.50504 17.7616 4.30747 17.7617 5.13477C17.7617 5.95373 17.4381 6.76449 16.835 7.35449C16.813 7.37621 16.7894 7.39614 16.7666 7.41699H20.2764C21.184 7.41703 21.9178 8.14998 21.918 9.05762V12.0762C21.918 12.9378 21.2565 13.6406 20.4131 13.71V20.3584C20.4131 20.7886 20.2432 21.2179 19.917 21.5273C19.6154 21.8229 19.2038 22 18.7715 22H5.19434C4.76439 21.9999 4.33576 21.8307 4.02637 21.5049C3.73066 21.2033 3.55371 20.7908 3.55371 20.3584V13.71C2.71048 13.6404 2.04982 12.9376 2.0498 12.0762V9.05762C2.04993 8.14996 2.78372 7.41699 3.69141 7.41699H7.20117C7.17841 7.39614 7.1548 7.37621 7.13281 7.35449C6.52972 6.7645 6.20605 5.95371 6.20605 5.13477C6.20616 4.30754 6.54491 3.50503 7.12305 2.9248C7.71282 2.32279 8.52271 2.0001 9.34082 2C10.17 2 10.9751 2.34029 11.5557 2.9209L11.5586 2.92383C11.7249 3.09176 11.8639 3.28427 11.9834 3.48633C12.1029 3.28414 12.2428 3.09186 12.4092 2.92383L12.4121 2.9209C12.9926 2.34038 13.7969 2.00009 14.626 2ZM5.33203 20.2217H11.0947V13.7178H5.33203V20.2217ZM12.873 20.2217H18.6348V13.7178H12.873V20.2217ZM3.82812 11.9385H11.0947V9.19531H3.82812V11.9385ZM12.873 11.9385H20.1387V9.19531H12.873V11.9385ZM9.34082 3.77832C8.9822 3.77843 8.63563 3.92205 8.39258 4.1709L8.38477 4.17871C8.13214 4.43134 7.98448 4.78525 7.98438 5.13477C7.98438 5.49357 8.12796 5.84084 8.37695 6.08398L7.75586 6.7207L8.38184 6.08887C8.50721 6.21295 8.75482 6.35754 9.14746 6.48828C9.52531 6.61409 9.96374 6.70287 10.3955 6.76465C10.6239 6.79732 10.845 6.82213 11.0459 6.83984C11.0282 6.63899 11.0034 6.41786 10.9707 6.18945C10.9089 5.75768 10.8201 5.31925 10.6943 4.94141C10.564 4.55002 10.4197 4.30251 10.2959 4.17676C10.0433 3.92517 9.68961 3.77832 9.34082 3.77832ZM14.626 3.77832C14.2772 3.77841 13.9234 3.92512 13.6709 4.17676C13.5471 4.30255 13.4037 4.55017 13.2734 4.94141C13.1476 5.3193 13.0579 5.75762 12.9961 6.18945C12.9634 6.41786 12.9396 6.63899 12.9219 6.83984C13.1226 6.82214 13.343 6.79729 13.5713 6.76465C14.0032 6.70286 14.4424 6.61413 14.8203 6.48828C15.213 6.35751 15.4606 6.21296 15.5859 6.08887L16.2119 6.7207L15.5908 6.08398C15.8397 5.84085 15.9834 5.49351 15.9834 5.13477C15.9833 4.78531 15.8356 4.43133 15.583 4.17871L15.5752 4.1709C15.3321 3.92188 14.9848 3.77832 14.626 3.77832Z" fill="#AA0082"/>
+          </svg>
+          <!-- Chat/support icon from Figma -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="cursor:pointer;flex-shrink:0;">
+            <path d="M20.3545 2.88281C20.7361 2.8829 21.1048 3.01514 21.3975 3.25488L21.5176 3.36426L21.627 3.48535C21.8668 3.77808 21.9999 4.14659 22 4.52832V16.6797C22 17.1161 21.8262 17.5351 21.5176 17.8438C21.2091 18.1521 20.7907 18.3251 20.3545 18.3252H7.72852L4.71875 20.9639C4.71423 20.9678 4.7087 20.9717 4.7041 20.9756C4.46449 21.1771 4.17267 21.3063 3.8623 21.3477C3.55199 21.3889 3.23605 21.3408 2.95215 21.209C2.66827 21.077 2.42738 20.8663 2.25879 20.6025C2.09035 20.3387 2.00046 20.0317 2 19.7188V4.52832C2.00008 4.092 2.17292 3.67279 2.48145 3.36426L2.60254 3.25488C2.89524 3.01515 3.26385 2.88289 3.64551 2.88281H20.3545ZM3.77148 19.4365L6.60742 16.9512L6.62012 16.9404C6.91655 16.6909 7.29221 16.5539 7.67969 16.5537H20.2275V4.6543H3.77148V19.4365ZM15.0391 11.2383C15.5282 11.2386 15.9248 11.6349 15.9248 12.124C15.9245 12.613 15.528 13.0094 15.0391 13.0098H8.96289C8.47368 13.0098 8.07741 12.6132 8.07715 12.124C8.07715 11.6347 8.47352 11.2383 8.96289 11.2383H15.0391ZM15.0391 8.19922C15.528 8.19954 15.9246 8.59596 15.9248 9.08496C15.9248 9.57413 15.5282 9.97038 15.0391 9.9707H8.96289C8.47352 9.9707 8.07715 9.57433 8.07715 9.08496C8.07734 8.59576 8.47364 8.19922 8.96289 8.19922H15.0391Z" fill="#AA0082"/>
+          </svg>
+        </div>
+      </div>
+      <div class="delivery-row">
+        <span style="font-size:13px;">Delivery in</span>
+        <span class="timer-pill">35 minutes</span>
+      </div>
+    </div>
+
+    <div class="screen-scroll">
+      <!-- Banner carousel with real images -->
+      <div class="banner-carousel" style="margin-bottom:0;">
+        <div class="banner-slide"><img src="prototype/img/banner-1.png" alt="Pudding Sale"></div>
+        <div class="banner-slide"><img src="prototype/img/banner-2.png" alt="Dr Clean"></div>
+        <div class="banner-slide"><img src="prototype/img/banner-3.png" alt="Sprite"></div>
+        <div class="banner-slide"><img src="prototype/img/banner-4.png" alt="Dr Clean"></div>
+      </div>
+      <div class="banner-dots">
+        <div class="bdot active"></div>
+        <div class="bdot"></div>
+        <div class="bdot"></div>
+        <div class="bdot"></div>
+      </div>
+
+      <!-- The spotlight with real images -->
+      <div class="section-header"><h3>The spotlight</h3><a href="#">View all &gt;</a></div>
+      <div class="h-scroll" style="margin-bottom:var(--space-3);">
+        <div class="spotlight-card" style="padding:0;"><img src="prototype/img/spotlight-1.png" alt="Candy" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="spotlight-card" style="padding:0;"><img src="prototype/img/spotlight-2.png" alt="Marinades" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="spotlight-card" style="padding:0;"><img src="prototype/img/spotlight-3.png" alt="Burst of Flavors" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="spotlight-card" style="padding:0;"><img src="prototype/img/spotlight-4.png" alt="Chocolate Bar" style="width:100%;height:100%;object-fit:cover;"></div>
+      </div>
+
+      <!-- Explore Breadfast - entry point pills with real images -->
+      <div class="section-header"><h3>Explore Breadfast</h3></div>
+      <div class="explore-grid-2col" style="margin-bottom:var(--space-3);">
+        <div class="entry-point" onclick="navigateTo('category')"><img src="prototype/img/entry-supermarket.png" alt="Supermarket"></div>
+        <div class="entry-point"><img src="prototype/img/entry-ramadan.png" alt="Ramadan"></div>
+        <div class="entry-point"><img src="prototype/img/entry-restaurants.png" alt="Restaurants"></div>
+        <div class="entry-point"><img src="prototype/img/entry-coffee.png" alt="Coffee"></div>
+        <div class="entry-point"><img src="prototype/img/entry-shops.png" alt="Shops"></div>
+        <div class="entry-point"><img src="prototype/img/entry-beauty.png" alt="Beauty"></div>
+        <div class="entry-point"><img src="prototype/img/entry-chef.png" alt="Chef"></div>
+        <div class="entry-point"><img src="prototype/img/entry-travel.png" alt="Travel"></div>
+      </div>
+
+      <div class="section-header"><h3>Reorder</h3><a href="#">View all</a></div>
+      <div class="h-scroll" id="reorderScroll" style="margin-bottom:var(--space-4);"></div>
+
+      <div class="section-header"><h3>All categories</h3></div>
+      <div class="cat-grid" style="margin-bottom:var(--space-6);" id="allCatsGrid"></div>
+    </div>
+
+    <div class="tabbar" id="tabBar-home"></div>
+  </div>
+
+  <!-- ==================== CATEGORY SCREEN ==================== -->
+  <div class="screen" id="screen-category">
+    <div class="category-header">
+      <div class="screen-header">
+        <div class="left">
+          <svg class="icon icon--md" style="cursor:pointer;" onclick="goBack()"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.62854 0.26035C8.97567 0.607482 8.97567 1.1703 8.62854 1.51743L2.14597 8L8.62854 14.4826C8.97567 14.8297 8.97567 15.3925 8.62854 15.7397C8.28141 16.0868 7.71859 16.0868 7.37146 15.7397L0.26035 8.62854C-0.0867832 8.28141 -0.0867832 7.71859 0.26035 7.37146L7.37146 0.26035C7.71859 -0.0867832 8.28141 -0.0867832 8.62854 0.26035Z" fill="currentColor"/></svg></svg>
+          <span class="title">Supermarket</span>
+        </div>
+        <div class="right">
+          <div style="position:relative;cursor:pointer;" onclick="navigateTo('cart')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M4.50293 2C5.27823 2.00011 5.95337 2.55312 6.09082 3.32422V3.32715L6.5166 5.66602L21.2314 5.69531C21.4902 5.69583 21.7355 5.81113 21.9014 6.00977C22.0672 6.20835 22.1364 6.46997 22.0908 6.72461L21.0498 12.5342C20.8693 13.7794 19.8694 14.8031 18.5732 14.8164H8.1709L8.52734 16.7109H18.4658L18.7432 16.7246C20.1091 16.8633 21.1726 18.0151 21.1729 19.418C21.1727 20.3126 20.734 21.1091 20.0762 21.6025C19.5188 21.9611 19.0167 22.126 18.4658 22.126C16.9692 22.126 15.759 20.9145 15.7588 19.418C15.7588 19.0806 15.8231 18.7586 15.9355 18.4609H11.2432C11.3606 18.7642 11.4277 19.0934 11.4277 19.4385C11.4276 20.3333 10.988 21.1296 10.3301 21.623C9.77367 21.9816 9.27065 22.1465 8.71973 22.1465C7.22332 22.1463 6.01289 20.9349 6.0127 19.4385C6.01281 18.6518 6.34797 17.9444 6.88281 17.4502L4.38965 3.75H2.875C2.39175 3.75 2 3.35825 2 2.875C2 2.39175 2.39175 2 2.875 2H4.50293ZM8.71973 18.4814C8.18983 18.4817 7.76291 18.9086 7.7627 19.4385C7.76289 19.9684 8.18981 20.3963 8.71973 20.3965C9.24981 20.3965 9.67752 19.9684 9.67773 19.4385C9.67752 18.9084 9.24981 18.4814 8.71973 18.4814ZM18.4658 18.4609C17.9357 18.4609 17.509 18.8879 17.5088 19.418C17.509 19.948 17.9357 20.376 18.4658 20.376C18.9959 20.376 19.4226 18.888 18.4658 18.4609ZM7.86426 13.0371L18.5527 13.0664C18.8742 13.0636 19.2471 12.7918 19.3184 12.2754L20.1846 7.44336L6.84082 7.41699L7.86426 13.0371Z"/></svg>
+            <span class="tab-badge cart-count-badge"></span>
+          </div>
+        </div>
+      </div>
+      <div class="sub-tabs">
+        <div class="sub-tab active">All</div>
+        <div class="sub-tab">Pasta</div>
+        <div class="sub-tab">Oils</div>
+        <div class="sub-tab">Dairy</div>
+        <div class="sub-tab">Snacks</div>
+        <div class="sub-tab">Beverages</div>
+        <div class="sub-tab">Cleaning</div>
+      </div>
+    </div>
+
+    <div class="screen-scroll">
+      <div class="cat-promo-banner"><img src="prototype/img/promo-banner.png" alt="Promotional banner"></div>
+
+      <div class="product-grid" id="productGrid"></div>
+
+      <div class="cashback-bar" style="margin-top:var(--space-3);margin-bottom:var(--space-6);">
+        <span>&#11088; Earn points on every order</span>
+        <span>Learn more &gt;</span>
+      </div>
+    </div>
+
+    <div class="tabbar tab-bar-cat"></div>
+  </div>
+
+  <!-- ==================== PDP SCREEN ==================== -->
+  <div class="screen" id="screen-pdp">
+    <div class="screen-header" style="border-bottom:none;">
+      <div class="left">
+        <svg class="icon icon--md" style="cursor:pointer;" onclick="goBack()"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.62854 0.26035C8.97567 0.607482 8.97567 1.1703 8.62854 1.51743L2.14597 8L8.62854 14.4826C8.97567 14.8297 8.97567 15.3925 8.62854 15.7397C8.28141 16.0868 7.71859 16.0868 7.37146 15.7397L0.26035 8.62854C-0.0867832 8.28141 -0.0867832 7.71859 0.26035 7.37146L7.37146 0.26035C7.71859 -0.0867832 8.28141 -0.0867832 8.62854 0.26035Z" fill="currentColor"/></svg></svg>
+      </div>
+      <div class="right">
+        <div class="points-pill" onclick="navigateTo('loyaltyHub')">
+          <span class="star">&#11088;</span>
+          <span class="points-val-sync">1,200 pts</span>
+        </div>
+        <div style="position:relative;cursor:pointer;" onclick="navigateTo('cart')">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M4.50293 2C5.27823 2.00011 5.95337 2.55312 6.09082 3.32422V3.32715L6.5166 5.66602L21.2314 5.69531C21.4902 5.69583 21.7355 5.81113 21.9014 6.00977C22.0672 6.20835 22.1364 6.46997 22.0908 6.72461L21.0498 12.5342C20.8693 13.7794 19.8694 14.8031 18.5732 14.8164H8.1709L8.52734 16.7109H18.4658L18.7432 16.7246C20.1091 16.8633 21.1726 18.0151 21.1729 19.418C21.1727 20.3126 20.734 21.1091 20.0762 21.6025C19.5188 21.9611 19.0167 22.126 18.4658 22.126C16.9692 22.126 15.759 20.9145 15.7588 19.418C15.7588 19.0806 15.8231 18.7586 15.9355 18.4609H11.2432C11.3606 18.7642 11.4277 19.0934 11.4277 19.4385C11.4276 20.3333 10.988 21.1296 10.3301 21.623C9.77367 21.9816 9.27065 22.1465 8.71973 22.1465C7.22332 22.1463 6.01289 20.9349 6.0127 19.4385C6.01281 18.6518 6.34797 17.9444 6.88281 17.4502L4.38965 3.75H2.875C2.39175 3.75 2 3.35825 2 2.875C2 2.39175 2.39175 2 2.875 2H4.50293ZM8.71973 18.4814C8.18983 18.4817 7.76291 18.9086 7.7627 19.4385C7.76289 19.9684 8.18981 20.3963 8.71973 20.3965C9.24981 20.3965 9.67752 19.9684 9.67773 19.4385C9.67752 18.9084 9.24981 18.4814 8.71973 18.4814ZM18.4658 18.4609C17.9357 18.4609 17.509 18.8879 17.5088 19.418C17.509 19.948 17.9357 20.376 18.4658 20.376C18.9959 20.376 19.4226 18.888 18.4658 18.4609ZM7.86426 13.0371L18.5527 13.0664C18.8742 13.0636 19.2471 12.7918 19.3184 12.2754L20.1846 7.44336L6.84082 7.41699L7.86426 13.0371Z"/></svg>
+          <span class="tab-badge cart-count-badge"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="screen-scroll no-pad">
+      <div class="pdp-img" id="pdpImage">&#129370;</div>
+      <div class="pdp-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
+      <div class="pdp-info">
+        <div class="in-stock">In Stock</div>
+        <div id="pdp2xBadge" class="pdp-2x-badge" style="display:none;">&#11088; 2x Points</div>
+        <div class="product-name" id="pdpName">Product Name</div>
+        <div class="product-meta">
+          <span id="pdpWeight">400g</span>
+          <svg class="icon icon--sm icon--secondary"><use href="prototype/img/icons/icons.svg#icon-info"></use></svg>
+        </div>
+        <div class="brand-row">
+          <span class="brand" id="pdpBrand">Brand</span>
+          <svg class="icon icon--md icon--secondary" style="cursor:pointer;"><use href="prototype/img/icons/icons.svg#icon-heart"></use></svg>
+        </div>
+      </div>
+      <div class="pdp-details-card">
+        <h4>Product details</h4>
+        <p id="pdpDesc">Product description.</p>
+      </div>
+      <div class="section-header"><h3>Related products</h3></div>
+      <div class="h-scroll" id="pdpRelated" style="margin-bottom:var(--space-6);"></div>
+    </div>
+
+    <div class="pdp-bottom-bar">
+      <div class="qty-stepper">
+        <button onclick="pdpQtyChange(-1)">&#8722;</button>
+        <span class="qty-val" id="pdpQty">1</span>
+        <button onclick="pdpQtyChange(1)">&#43;</button>
+      </div>
+      <button class="btn-primary" id="pdpAddBtn" onclick="addToCartFromPDP()">
+        Add <span style="margin-left:auto;" id="pdpTotalPrice">EGP 25.00</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== CART SCREEN ==================== -->
+  <div class="screen" id="screen-cart">
+    <div class="screen-header">
+      <div class="left"><span class="title">Cart</span></div>
+      <div class="right"><a href="#" style="color:var(--color-primary);font-size:14px;font-weight:600;text-decoration:none;" onclick="event.preventDefault();clearCart();">Clear all</a></div>
+    </div>
+
+    <div class="screen-scroll">
+      <div class="cart-loyalty-bar" onclick="navigateTo('loyaltyHub')">
+        <span class="coin">&#11088;</span>
+        <div class="bar-text" id="cartLoyaltyText">You're <strong>300 points</strong> away from a free product</div>
+        <svg class="icon icon--md icon--secondary"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></svg>
+      </div>
+
+      <div id="cartItemsList"></div>
+
+      <div id="cartEmpty" style="display:none;text-align:center;padding:var(--space-12) var(--space-4);color:var(--color-text-secondary);">
+        <div style="font-size:48px;margin-bottom:var(--space-3);">&#128722;</div>
+        <div style="font-size:16px;font-weight:600;margin-bottom:var(--space-1);">Your cart is empty</div>
+        <div style="font-size:13px;">Browse products and add items to get started</div>
+      </div>
+
+      <div class="section-header"><h3>People also buy</h3></div>
+      <div class="h-scroll" style="margin-bottom:var(--space-4);" id="cartRecommend"></div>
+    </div>
+
+    <div class="cart-bottom" id="cartBottom">
+      <div class="add-more" id="cartAddMore">
+        <svg class="icon icon--sm icon--secondary"><use href="prototype/img/icons/icons.svg#icon-info"></use></svg>
+        <span>Add EGP 40.00 more for cheaper delivery</span>
+      </div>
+      <button class="btn-primary" onclick="navigateTo('checkout')" style="justify-content:space-between;padding:var(--space-3) var(--space-4);height:56px;">
+        <span style="font-size:16px;">Go to Checkout</span>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0;">
+          <div style="display:flex;align-items:baseline;gap:4px;">
+            <span style="font-size:12px;line-height:18px;">EGP</span>
+            <span id="cartAmountWhole" style="font-size:16px;line-height:20px;">0</span><span id="cartAmountDecimal" style="font-size:12px;line-height:18px;">.00</span>
+          </div>
+          <span style="font-size:12px;line-height:16px;color:#ffd6e8;">+ delivery &amp; service fees</span>
+        </div>
+      </button>
+    </div>
+
+    <div class="tabbar tab-bar-cart"></div>
+  </div>
+
+  <!-- ==================== CHECKOUT SCREEN ==================== -->
+  <div class="screen" id="screen-checkout">
+    <div class="screen-header">
+      <div class="left">
+        <svg class="icon icon--md" style="cursor:pointer;" onclick="goBack()"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.62854 0.26035C8.97567 0.607482 8.97567 1.1703 8.62854 1.51743L2.14597 8L8.62854 14.4826C8.97567 14.8297 8.97567 15.3925 8.62854 15.7397C8.28141 16.0868 7.71859 16.0868 7.37146 15.7397L0.26035 8.62854C-0.0867832 8.28141 -0.0867832 7.71859 0.26035 7.37146L7.37146 0.26035C7.71859 -0.0867832 8.28141 -0.0867832 8.62854 0.26035Z" fill="currentColor"/></svg></svg>
+        <span class="title">Checkout</span>
+      </div>
+    </div>
+    <div class="screen-scroll no-pad" style="padding-bottom:0;">
+      <div class="checkout-section">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div style="font-size:13px;color:var(--color-text-secondary);">Delivery time</div>
+            <div style="font-size:15px;font-weight:600;">Instant, Arrive by 12:01 PM</div>
+          </div>
+          <a href="#" style="color:var(--color-primary);font-size:14px;font-weight:600;text-decoration:none;">Schedule</a>
+        </div>
+      </div>
+      <div class="checkout-section">
+        <div style="display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-2);">
+          <svg class="icon icon--md"><use href="prototype/img/icons/icons.svg#icon-location-pin"></use></svg>
+          <div>
+            <div style="font-weight:600;font-size:15px;">Home</div>
+            <div style="font-size:12px;color:var(--color-text-secondary);">15 El-Tahrir St, Dokki, Giza</div>
+          </div>
+        </div>
+        <input class="note-input" type="text" placeholder="Add delivery note" />
+      </div>
+      <div class="checkout-section">
+        <div class="sec-title">Payment</div>
+        <div class="payment-option"><div class="payment-radio"></div><span class="payment-label">Cash on Delivery</span></div>
+        <div class="payment-option"><div class="payment-radio selected"></div><span class="payment-label">Mastercard ****4567</span></div>
+        <div class="payment-option"><div class="payment-radio"></div><span class="payment-label">Apple Pay</span></div>
+        <div class="payment-option" style="border-top:1px solid var(--color-border);padding-top:var(--space-3);margin-top:var(--space-2);">
+          <span class="payment-label">Use my balance <strong>EGP 100.00</strong></span>
+          <div class="toggle-switch"></div>
+        </div>
+      </div>
+      <div class="checkout-section">
+        <div class="sec-title">Say thanks with a tip</div>
+        <div class="tip-pills">
+          <div class="tip-pill">EGP 5</div><div class="tip-pill active">EGP 10</div>
+          <div class="tip-pill">EGP 20</div><div class="tip-pill">Custom</div>
+        </div>
+      </div>
+      <div class="checkout-section">
+        <div class="sec-title">Promo code</div>
+        <div class="promo-input-row"><input type="text" placeholder="Enter promo code" /><button>Apply</button></div>
+      </div>
+      <div class="checkout-section" style="border-bottom:none;">
+        <div class="checkout-row"><span class="label">Subtotal</span><span class="value" id="coSubtotal">EGP 0.00</span></div>
+        <div class="checkout-row"><span class="label">Delivery</span><span class="value">EGP 25.00</span></div>
+        <div class="checkout-row"><span class="label">Service fee</span><span class="value">EGP 3.00</span></div>
+      </div>
+    </div>
+    <div class="checkout-bottom">
+      <div class="grand-total-row"><span class="gt-label">Grand Total</span><span class="gt-value" id="coGrandTotal">EGP 28.00</span></div>
+      <div class="earn-row"><span>&#11088;</span><span id="coEarnPts">You'll earn 0 points</span></div>
+      <button class="btn-primary" onclick="navigateTo('orderPlaced')">Place order</button>
+    </div>
+  </div>
+
+  <!-- ==================== ORDER PLACED SCREEN ==================== -->
+  <div class="screen" id="screen-orderPlaced">
+    <div class="screen-header">
+      <div class="left"><svg class="icon icon--md" style="cursor:pointer;" onclick="navigateTo('home')"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.62854 0.26035C8.97567 0.607482 8.97567 1.1703 8.62854 1.51743L2.14597 8L8.62854 14.4826C8.97567 14.8297 8.97567 15.3925 8.62854 15.7397C8.28141 16.0868 7.71859 16.0868 7.37146 15.7397L0.26035 8.62854C-0.0867832 8.28141 -0.0867832 7.71859 0.26035 7.37146L7.37146 0.26035C7.71859 -0.0867832 8.28141 -0.0867832 8.62854 0.26035Z" fill="currentColor"/></svg></svg></div>
+      <div class="right"><a href="#" style="color:var(--color-primary);font-size:14px;font-weight:600;text-decoration:none;">Help</a></div>
+    </div>
+    <div class="screen-scroll no-pad" style="padding-bottom:var(--space-6);">
+      <div class="order-hero">
+        <div class="celeb">&#127881;</div>
+        <div class="est-label">Estimated arrival</div>
+        <div class="est-time">11:45 AM - 11:55 AM</div>
+        <div class="success-msg">Order placed successfully</div>
+      </div>
+      <div class="order-card"><div class="oc-title">Delivery address</div><div class="oc-text">Home - 15 El-Tahrir St, Dokki, Giza</div></div>
+      <div class="order-card"><div class="oc-title">Payment</div><div class="oc-text">Mastercard ****4567</div></div>
+      <div class="order-card" style="cursor:pointer;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div class="oc-title" style="margin-bottom:0;" id="orderItemCount">0 Order items</div>
+          <svg class="icon icon--sm icon--secondary"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></svg>
+        </div>
+      </div>
+      <div class="refer-card"><h4>Refer and Win</h4><p>Share with friends and earn rewards!</p></div>
+      <div class="order-summary">
+        <div class="os-row"><span class="os-label">Order #BF-20261234</span></div>
+        <div class="os-row"><span class="os-label">Subtotal</span><span id="osSubtotal">EGP 0.00</span></div>
+        <div class="os-row"><span class="os-label">Delivery</span><span>EGP 25.00</span></div>
+        <div class="os-row"><span class="os-label">Service fee</span><span>EGP 3.00</span></div>
+        <div class="os-grand"><span>Grand Total</span><span id="osGrandTotal">EGP 28.00</span></div>
+        <div class="eligible" id="osEligible">&#11088; Eligible for 0 points</div>
+        <div class="cancel-note">Order can be cancelled anytime before being prepared</div>
+        <div class="cancel-btn">Cancel Order</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MORE SCREEN ==================== -->
+  <div class="screen" id="screen-more">
+    <div class="screen-scroll" style="padding-bottom:80px;">
+      <div class="more-header"><h1>Ahmed Tarek</h1><button class="qr-btn"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="1" y="1" width="7" height="7" rx="1" stroke="#AA0082" stroke-width="1.5"/><rect x="12" y="1" width="7" height="7" rx="1" stroke="#AA0082" stroke-width="1.5"/><rect x="1" y="12" width="7" height="7" rx="1" stroke="#AA0082" stroke-width="1.5"/><rect x="13" y="13" width="2" height="2" fill="#AA0082"/><rect x="16" y="13" width="2" height="2" fill="#AA0082"/><rect x="13" y="16" width="2" height="2" fill="#AA0082"/><rect x="16" y="16" width="2" height="2" fill="#AA0082"/></svg></button></div>
+      <div class="loyalty-card" onclick="navigateTo('loyaltyHub')">
+        <div class="lc-ring">
+          <svg viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="20" fill="none" stroke="#F3E0F0" stroke-width="4"/>
+            <circle cx="24" cy="24" r="20" fill="none" stroke="#AA0082" stroke-width="4"
+              id="moreLoyaltyRing" stroke-dasharray="125.7" stroke-dashoffset="25" stroke-linecap="round"/>
+          </svg>
+          <div class="lc-icon">&#11088;</div>
+        </div>
+        <div class="lc-info">
+          <div class="lc-label">Breadfast Rewards</div>
+          <div class="lc-title" id="moreLoyaltyTitle"><span class="lc-pts" id="moreLoyaltyPts">1,200</span><span class="lc-target" id="moreLoyaltyTarget">/ 1,500</span></div>
+          <div class="lc-progress" id="moreLoyaltyProgress"></div>
+        </div>
+        <span class="lc-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span>
+      </div>
+      <div class="menu-list">
+        <div class="menu-item"><span class="mi-icon"><svg class="icon icon--md"><use href="prototype/img/icons/icons.svg#icon-activity-history"></use></svg></span><span class="mi-label">Activity History</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
+        <div class="menu-item"><span class="mi-icon"><svg class="icon icon--md"><use href="prototype/img/icons/icons.svg#icon-heart"></use></svg></span><span class="mi-label">Favorites</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
+        <div class="menu-item"><span class="mi-icon"><img src="prototype/img/icons/ic-bundleup.svg" alt=""></span><span class="mi-label">BundleUp</span><span class="mi-badge">NEW</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
+        <div class="menu-item"><span class="mi-icon"><img src="prototype/img/icons/ic-gift.svg" alt=""></span><span class="mi-label">Free Credit</span><span class="mi-value">EGP 100</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
+        <div class="menu-item"><span class="mi-icon"><svg class="icon icon--md"><use href="prototype/img/icons/icons.svg#icon-settings"></use></svg></span><span class="mi-label">Account Settings</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
+        <div class="menu-item"><span class="mi-icon"><svg class="icon icon--md"><use href="prototype/img/icons/icons.svg#icon-alert-circle"></use></svg></span><span class="mi-label">Help</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
+        <div class="menu-item"><span class="mi-icon"><img src="prototype/img/icons/ic-language.svg" alt=""></span><span class="mi-label">Language</span><span class="mi-value">English</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
+        <div class="menu-item"><span class="mi-icon"><img src="prototype/img/icons/ic-country.svg" alt=""></span><span class="mi-label">Country</span><span class="mi-value">Egypt</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
+        <div class="menu-item"><span class="mi-icon"><img src="prototype/img/icons/ic-chat.svg" alt=""></span><span class="mi-label">Talk to us</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
+        <div class="menu-item"><span class="mi-icon"><img src="prototype/img/icons/ic-logout.svg" alt=""></span><span class="mi-label">Logout</span><span class="mi-chevron"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></span></div>
+      </div>
+      <div class="version-text">Version 2.23.0 (1146)</div>
+    </div>
+    <div class="tabbar tab-bar-more"></div>
+  </div>
+
+  <!-- ==================== LOYALTY HUB SCREEN ==================== -->
+  <div class="screen" id="screen-loyaltyHub">
+    <div class="screen-header">
+      <div class="left">
+        <svg class="icon icon--md" style="cursor:pointer;" onclick="goBack()"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.62854 0.26035C8.97567 0.607482 8.97567 1.1703 8.62854 1.51743L2.14597 8L8.62854 14.4826C8.97567 14.8297 8.97567 15.3925 8.62854 15.7397C8.28141 16.0868 7.71859 16.0868 7.37146 15.7397L0.26035 8.62854C-0.0867832 8.28141 -0.0867832 7.71859 0.26035 7.37146L7.37146 0.26035C7.71859 -0.0867832 8.28141 -0.0867832 8.62854 0.26035Z" fill="currentColor"/></svg></svg>
+        <span class="title">Breadfast Rewards</span>
+      </div>
+      <div class="right">
+        <div class="points-pill" style="cursor:default;">
+          <span class="star">&#11088;</span>
+          <span class="points-val-sync">1,200 pts</span>
+        </div>
+      </div>
+    </div>
+    <div class="screen-scroll no-pad" style="padding-bottom:var(--space-8);">
+      <div class="hub-hero">
+        <div class="hub-ring">
+          <svg viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="52" fill="none" stroke="#F3E0F0" stroke-width="8"/>
+            <circle cx="60" cy="60" r="52" fill="none" stroke="#AA0082" stroke-width="8"
+              id="hubRing" stroke-dasharray="326.7" stroke-dashoffset="65" stroke-linecap="round"/>
+          </svg>
+          <div class="hub-pts">
+            <div class="pts-num" id="hubPtsNum">1,200</div>
+            <div class="pts-label">points</div>
+          </div>
+        </div>
+        <div class="hub-next-reward" id="hubNextReward">Next: Free V Super Soda Cola Can</div>
+        <div class="hub-next-pts" id="hubNextPts">300 more points to unlock</div>
+      </div>
+
+      <div style="position:relative;">
+        <div class="hub-pinned" id="hubPinned">
+          <div class="pin-img">&#127867;</div>
+          <div class="pin-info">
+            <div class="pin-name" id="hubPinName">Free V Super Soda Cola Can (300ml)</div>
+            <div class="pin-pts" id="hubPinPts">1,200 / 1,500 points</div>
+            <div class="pin-bar"><div class="pin-bar-fill" id="hubPinBar" style="width:80%;"></div></div>
+          </div>
+        </div>
+        <div style="position:absolute;top:6px;left:28px;background:var(--color-primary);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:var(--radius-xs);">Next reward</div>
+      </div>
+
+      <div class="hub-section-title">All rewards</div>
+      <div id="hubRewardsList"></div>
+    </div>
+  </div>
+
+  <!-- ==================== LOYALTY BANNER ==================== -->
+  <div class="loyalty-banner" id="loyaltyBanner" onclick="navigateTo('loyaltyHub')">
+    <div class="ring-wrap">
+      <svg viewBox="0 0 40 40">
+        <circle cx="20" cy="20" r="18" fill="none" stroke="#EBEBEB" stroke-width="3"/>
+        <circle cx="20" cy="20" r="18" fill="none" stroke="#AA0082" stroke-width="3"
+          id="bannerRing" stroke-dasharray="113.1" stroke-dashoffset="104" stroke-linecap="round"
+          style="transition:stroke-dashoffset 0.5s ease"/>
+      </svg>
+      <img class="ring-img" id="bannerRewardImg" src="prototype/img/products/soda-cola.png" alt="reward">
+    </div>
+    <div class="banner-text">
+      <div class="b-title" id="bannerTitle">Almost there!</div>
+      <div class="b-sub" id="bannerSub">Add 50 EGP more to unlock a free product</div>
+    </div>
+    <svg width="16" height="16" viewBox="0 0 9 16" fill="none" class="b-chevron"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="#AA0082"/></svg>
+  </div>
+
+</div>
+
+<script>
+// ==================== CONFIG ====================
+const params = new URLSearchParams(window.location.search);
+const mode = (params.get('mode') || 'b').toLowerCase();
+const STARTING_POINTS = 1200;
+const AUTO_DISMISS_MS = 5000;
+
+// Mode B: NEAR fires when this many EGP remain to the reward
+// Reward target set at 1320 pts (gap=120) so 2 low-priced products
+// (pasta 24 + magnum 26 = 50 pts) leaves exactly 70 EGP remaining.
+const B_REWARD_PTS  = 1320;
+const B_NEAR_EGP    = 70;
+
+// ==================== REWARDS CATALOG ====================
+const rewards = [
+  { name:'Free V Super Soda Cola Can (300ml)', pts:1500, emoji:'&#127867;', type:'free product' },
+  { name:'Free V7 Pink Lemonade x Dara\'s (300ml)', pts:1500, emoji:'&#127864;', type:'free product' },
+  { name:'Free Shipping', pts:2500, emoji:'&#128666;', type:'free shipping' },
+  { name:'Free Corona Milk Chocolate (27g)', pts:2500, emoji:'&#127851;', type:'free product' },
+  { name:'Free Simply 3 Ply Facial Tissue Pack', pts:2900, emoji:'&#129531;', type:'free product' },
+  { name:'Free Sway Hand Wash Lavender (500ml)', pts:5500, emoji:'&#129532;', type:'free product' },
+  { name:'Free Juhayna Full Cream Milk (1.5L)', pts:7200, emoji:'&#129472;', type:'free product' },
+  { name:'Free Juhayna Skimmed Milk (1.5L)', pts:7200, emoji:'&#129472;', type:'free product' },
+  { name:'Free Breadfast Classic Millefeuille Cup', pts:7500, emoji:'&#127856;', type:'free product' },
+  { name:'Free Breadfast Belgian 70% Dark Chocolate (75g)', pts:13300, emoji:'&#127851;', type:'free product' },
+  { name:'Free Breadfast Trail Mixed Raw Nuts (100g)', pts:14300, emoji:'&#129372;', type:'free product' },
+  { name:'Juhayna Full Cream Milk Multipack x6 (1L)', pts:32500, emoji:'&#129472;', type:'free product' },
+  { name:'Free Girogio Black Special Edition For Him (100ml)', pts:79000, emoji:'&#129524;', type:'free product' },
+  { name:'Free Asdaf Ameerat Al Arab EDP For Her (100ml)', pts:99000, emoji:'&#129524;', type:'free product' },
+];
+
+// ==================== PRODUCT DATA (12+ products) ====================
+const products = [
+  { id:1, name:'Italiano Big Rings Pasta (400g)', brand:'Sante', price:24, oldPrice:16.75, weight:'400g', img:'prototype/img/products/italiano-pasta.png', bg:'#FFF8E1', isPrivateLabel:false, badge:'new', desc:'Premium Italian pasta made with 100% durum wheat semolina.' },
+  { id:2, name:'Molto Mini Magnum Chocolate Hazelnut (84g)', brand:'Molto', price:26, oldPrice:28, weight:'84g', img:'prototype/img/products/molto-magnum.png', bg:'#FFF3E0', isPrivateLabel:false, badge:null, desc:'Rich chocolate hazelnut cream-filled cake bar.' },
+  { id:3, name:'Afia Sunflower Oil (800ml)', brand:'Afia', price:45, oldPrice:null, weight:'800ml', img:'prototype/img/products/afia-oil.png', bg:'#FFFDE7', isPrivateLabel:false, badge:null, desc:'Pure sunflower oil for everyday cooking and frying.' },
+  { id:4, name:'Iced Cinnamon White Mocha', brand:'Breadfast Coffee', price:75, oldPrice:null, weight:'400ml', img:'prototype/img/products/cinnamon-mocha.png', bg:'#EFEBE9', isPrivateLabel:true, badge:'2x', desc:'Smooth iced white mocha with cinnamon and full cream milk.' },
+  { id:5, name:'Iced Matcha Spanish Latte', brand:'Breadfast Coffee', price:70, oldPrice:null, weight:'400ml', img:'prototype/img/products/matcha-latte.png', bg:'#E8F5E9', isPrivateLabel:true, badge:'2x', desc:'Premium Japanese matcha blended with sweetened condensed milk.' },
+  { id:6, name:'Classic Chicken Caesar Salad', brand:'Breadfast Kitchen', price:65, oldPrice:null, weight:'350g', img:'prototype/img/products/caesar-salad.png', bg:'#F1F8E9', isPrivateLabel:false, badge:null, desc:'Grilled chicken, romaine lettuce, croutons, and Caesar dressing.' },
+  { id:7, name:'Signature Tuna Sandwich', brand:'Breadfast Kitchen', price:55, oldPrice:null, weight:'250g', img:'prototype/img/products/tuna-sandwich.png', bg:'#FFF8E1', isPrivateLabel:false, badge:null, desc:'Tuna salad with fresh vegetables in toasted bread.' },
+  { id:8, name:'Turkey & Cheese Sandwich', brand:'Breadfast Kitchen', price:45, oldPrice:null, weight:'220g', img:'prototype/img/products/turkey-cheese-sandwich.png', bg:'#FFF3E0', isPrivateLabel:false, badge:null, desc:'Smoked turkey breast with Swiss cheese in artisan bread.' },
+  { id:9, name:'Juhayna Full Cream Milk (1.5L)', brand:'Juhayna', price:35, oldPrice:null, weight:'1.5L', img:'prototype/img/products/italiano-pasta.png', bg:'#E3F2FD', isPrivateLabel:false, badge:null, desc:'Fresh full cream milk from Juhayna.' },
+  { id:10, name:'Simply 3 Ply Facial Tissue Pack', brand:'Simply', price:25, oldPrice:null, weight:'550 sheets', img:'prototype/img/products/molto-magnum.png', bg:'#F5F5F5', isPrivateLabel:false, badge:null, desc:'Soft 3-ply facial tissues for everyday use.' },
+  { id:11, name:'Breadfast Classic Millefeuille Cup', brand:'Breadfast', price:50, oldPrice:null, weight:'150g', img:'prototype/img/products/afia-oil.png', bg:'#FFF8E1', isPrivateLabel:true, badge:'2x', desc:'Handcrafted millefeuille with layers of flaky pastry and cream.' },
+  { id:12, name:'Breadfast Belgian Dark Chocolate (75g)', brand:'Breadfast', price:50, oldPrice:null, weight:'75g', img:'prototype/img/products/molto-magnum.png', bg:'#EFEBE9', isPrivateLabel:true, badge:'2x', desc:'Premium 70% dark Belgian chocolate bar.' },
+  { id:13, name:'Pink Lemonade', brand:'V7', price:35, oldPrice:null, weight:'300ml', img:'prototype/img/products/pink-lemonade.png', bg:'#FCE4EC', isPrivateLabel:false, badge:null, desc:'Refreshing pink lemonade by Dara\'s.' },
+  { id:14, name:'Smoked Salmon Bagel', brand:'Breadfast Kitchen', price:65, oldPrice:null, weight:'280g', img:'prototype/img/products/smoked-salmon-bagel.png', bg:'#FFF3E0', isPrivateLabel:false, badge:null, desc:'Smoked salmon with cream cheese and capers on a fresh bagel.' },
+];
+
+// ==================== STATE ====================
+let cart = {}; // { productId: quantity }
+let state = {
+  addToCartCount: 0,
+  currentScreen: 'home',
+  history: [],
+  pdpQty: 1,
+  pdpProductIndex: null,
+  bannerDismissTimeout: null,
+  bannerFirstTime: true,
+  triggeredBanners: new Set(),
+  lastAddedPts: 0,
+  sessionEarnedPts: 0,
+};
+
+// ==================== CATEGORIES ====================
+const allCategories = [
+  { name:'Ramadan', img:'cat-ramadan.png' },
+  { name:'Deals', img:'cat-deals.png' },
+  { name:'By Breadfast', img:'cat-by_breadfast.png' },
+  { name:'Breadfast Coffee', img:'cat-breadfast_coffee.png' },
+  { name:'Ready to Eat', img:'cat-ready_to_eat.png' },
+  { name:'Bakeries & Pastries', img:'cat-bakeries-pastries.png' },
+  { name:'Snacks', img:'cat-snacks.png' },
+  { name:'Beverages', img:'cat-beverages.png' },
+  { name:'Desserts & Ice Cream', img:'cat-desserts-ice_cream.png' },
+  { name:'Dairy', img:'cat-dairy.png' },
+  { name:'Eggs, Cheese & Cold Cuts', img:'cat-eggs_cheese-cold_cuts.png' },
+  { name:'Food Cupboard', img:'cat-food_cupboard.png' },
+  { name:'Frozen', img:'cat-frozen.png' },
+  { name:'Meat, Poultry & Seafood', img:'cat-meat_poultry-seafood.png' },
+  { name:'Fruits & Vegetables', img:'cat-fruits-vegetables.png' },
+  { name:'Home', img:'cat-home.png' },
+  { name:'Laundry Detergents', img:'cat-laundry_detergents.png' },
+  { name:'Household Cleaning', img:'cat-household_cleaning.png' },
+  { name:'Tissues', img:'cat-tissues.png' },
+  { name:'Stationary & Games', img:'cat-stationary-games.png' },
+  { name:'Pet Supplies', img:'cat-pet_supplies.png' },
+  { name:'Beauty', img:'cat-beauty.png' },
+  { name:'Personal Care', img:'cat-personal_care.png' },
+  { name:'Health & Wellness', img:'cat-health-wellness.png' },
+  { name:'Pharmacy', img:'cat-pharmacy.png' },
+  { name:'Baby Products', img:'cat-baby_products.png' },
+];
+
+// ==================== HELPERS ====================
+function fmt(n) { return n.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+function fmtPts(n) { return n.toLocaleString('en-US'); }
+
+function getCartTotal() {
+  let total = 0;
+  for (const [id, qty] of Object.entries(cart)) {
+    const p = products.find(x => x.id === parseInt(id));
+    if (p) total += p.price * qty;
+  }
+  return total;
+}
+
+function getCartItemCount() {
+  return Object.values(cart).reduce((a, b) => a + b, 0);
+}
+
+function getProjectedPoints() {
+  let pts = STARTING_POINTS;
+  for (const [id, qty] of Object.entries(cart)) {
+    const p = products.find(x => x.id === parseInt(id));
+    if (p) pts += Math.floor(p.price * qty * (p.isPrivateLabel ? 2 : 1));
+  }
+  return pts;
+}
+
+function getCartPoints() {
+  let pts = 0;
+  for (const [id, qty] of Object.entries(cart)) {
+    const p = products.find(x => x.id === parseInt(id));
+    if (p) pts += Math.floor(p.price * qty * (p.isPrivateLabel ? 2 : 1));
+  }
+  return pts;
+}
+
+function getNextReward(pts) {
+  for (const r of rewards) {
+    if (pts < r.pts) return r;
+  }
+  return null;
+}
+
+// ==================== UI UPDATES ====================
+function updateAllUI() {
+  const projected = getProjectedPoints();
+  const cartCount = getCartItemCount();
+  const cartTotal = getCartTotal();
+  const nextReward = getNextReward(projected);
+
+  // Points pills
+  const homePointsVal = document.getElementById('homePointsVal');
+  if (homePointsVal) homePointsVal.textContent = fmtPts(projected) + ' pts';
+  document.querySelectorAll('.points-val-sync').forEach(el => {
+    el.textContent = fmtPts(projected) + ' pts';
+  });
+
+  // Cart badges
+  document.querySelectorAll('.cart-count-badge').forEach(el => {
+    el.textContent = cartCount > 0 ? cartCount : '';
+  });
+
+  // Cart screen
+  renderCartItems();
+
+  // Cart loyalty bar
+  if (nextReward) {
+    const remaining = nextReward.pts - projected;
+    document.getElementById('cartLoyaltyText').innerHTML =
+      remaining > 0
+        ? `You're <strong>${fmtPts(remaining)} points</strong> away from ${nextReward.type}`
+        : `<strong>${nextReward.type} unlocked!</strong> Redeem on next order`;
+  }
+  const fmtTotal = fmt(cartTotal); const totalParts = fmtTotal.split('.');
+  document.getElementById('cartAmountWhole').textContent = totalParts[0];
+  document.getElementById('cartAmountDecimal').textContent = '.' + (totalParts[1] || '00');
+
+  // Checkout
+  document.getElementById('coSubtotal').textContent = `EGP ${fmt(cartTotal)}`;
+  document.getElementById('coGrandTotal').textContent = `EGP ${fmt(cartTotal + 28)}`;
+  document.getElementById('coEarnPts').textContent = `You'll earn ${fmtPts(getCartPoints())} points`;
+
+  // Order placed
+  document.getElementById('orderItemCount').textContent = `${cartCount} Order items`;
+  document.getElementById('osSubtotal').textContent = `EGP ${fmt(cartTotal)}`;
+  document.getElementById('osGrandTotal').textContent = `EGP ${fmt(cartTotal + 28)}`;
+  document.getElementById('osEligible').innerHTML = `&#11088; Eligible for ${fmtPts(getCartPoints())} points`;
+
+  // More screen loyalty card
+  if (nextReward) {
+    const remaining = nextReward.pts - projected;
+    const progress = Math.min(projected / nextReward.pts, 1);
+    const circumference = 125.7;
+    document.getElementById('moreLoyaltyRing').setAttribute('stroke-dashoffset', circumference * (1 - progress));
+    document.getElementById('moreLoyaltyPts').textContent = fmtPts(projected);
+    document.getElementById('moreLoyaltyTarget').textContent = `/ ${fmtPts(nextReward.pts)}`;
+  }
+
+  // Loyalty Hub
+  updateLoyaltyHub(projected);
+}
+
+function updateLoyaltyHub(projected) {
+  const nextReward = getNextReward(projected);
+
+  if (nextReward) {
+    const remaining = nextReward.pts - projected;
+    const progress = Math.min(projected / nextReward.pts, 1);
+    const circumference = 326.7;
+    document.getElementById('hubRing').setAttribute('stroke-dashoffset', circumference * (1 - progress));
+    document.getElementById('hubPtsNum').textContent = fmtPts(projected);
+    document.getElementById('hubNextReward').textContent = `Next: ${nextReward.name}`;
+    document.getElementById('hubNextPts').textContent =
+      remaining > 0 ? `${fmtPts(remaining)} more points to unlock` : 'Ready to redeem!';
+    document.getElementById('hubPinName').textContent = nextReward.name;
+    document.getElementById('hubPinPts').textContent = `${fmtPts(projected)} / ${fmtPts(nextReward.pts)} points`;
+    document.getElementById('hubPinBar').style.width = (progress * 100) + '%';
+    document.querySelector('#hubPinned .pin-img').innerHTML = nextReward.emoji;
+  }
+
+  // Rewards list
+  const list = document.getElementById('hubRewardsList');
+  list.innerHTML = rewards.map(r => {
+    const progress = Math.min(projected / r.pts, 1);
+    const unlocked = projected >= r.pts;
+    const remaining = r.pts - projected;
+    return `
+      <div class="hub-reward-item">
+        <div class="rw-img">${r.emoji}</div>
+        <div class="rw-info">
+          <div class="rw-name">${r.name}</div>
+          <div class="rw-pts">${fmtPts(r.pts)} points</div>
+          <div class="rw-bar"><div class="rw-bar-fill" style="width:${progress*100}%;background:${unlocked ? 'var(--color-green)' : 'var(--color-primary)'};"></div></div>
+        </div>
+        <div class="rw-status ${unlocked ? 'rw-unlocked' : 'rw-locked'}">${unlocked ? '&#10003; Redeem' : fmtPts(remaining) + ' left'}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderCartItems() {
+  const list = document.getElementById('cartItemsList');
+  const empty = document.getElementById('cartEmpty');
+  const bottom = document.getElementById('cartBottom');
+  const entries = Object.entries(cart).filter(([_, qty]) => qty > 0);
+
+  if (entries.length === 0) {
+    list.innerHTML = '';
+    empty.style.display = 'block';
+    bottom.style.display = 'none';
+    return;
+  }
+
+  empty.style.display = 'none';
+  bottom.style.display = 'block';
+
+  list.innerHTML = entries.map(([id, qty]) => {
+    const p = products.find(x => x.id === parseInt(id));
+    if (!p) return '';
+    return `
+      <div class="cart-item">
+        <div class="ci-img" style="background:#F8F8F8;"><img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:contain;"></div>
+        <div class="ci-info">
+          <div class="ci-name">${p.brand} ${p.name}</div>
+          <div class="ci-meta">${p.weight}${p.isPrivateLabel ? ' &middot; 2x Points' : ''}</div>
+          <div class="ci-price">EGP ${fmt(p.price * qty)}</div>
+        </div>
+        <div class="ci-actions">
+          <div class="qty-stepper">
+            <button onclick="changeCartQty(${p.id},-1)">&#8722;</button>
+            <span class="qty-val">${qty}</span>
+            <button onclick="changeCartQty(${p.id},1)">&#43;</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ==================== NAVIGATION ====================
+function navigateTo(screen) {
+  if (state.currentScreen === screen) return;
+  state.history.push(state.currentScreen);
+  showScreen(screen, 'forward');
+}
+
+function navigateInstant(screen) {
+  if (state.currentScreen === screen) return;
+  state.history = [];
+  showScreen(screen, null);
+}
+
+function goBack() {
+  if (state.history.length > 0) {
+    const prev = state.history.pop();
+    showScreen(prev, 'back');
+  }
+}
+
+function showScreen(screen, direction) {
+  const outgoing = document.getElementById('screen-' + state.currentScreen);
+  const incoming = document.getElementById('screen-' + screen);
+  if (!incoming || outgoing === incoming) return;
+
+  // Scroll incoming to top before it appears
+  const scroll = incoming.querySelector('.screen-scroll');
+  if (scroll) scroll.scrollTop = 0;
+
+  if (!direction) {
+    // Instant swap — no animation
+    if (outgoing) outgoing.classList.remove('active');
+    incoming.classList.add('active');
+    state.currentScreen = screen;
+    return;
+  }
+
+  const leaveClass = direction === 'back' ? 'leaving-back' : 'leaving-forward';
+  const enterClass = direction === 'back' ? 'entering-back' : 'entering-forward';
+
+  // Animate outgoing
+  if (outgoing) {
+    outgoing.classList.add(leaveClass);
+    outgoing.addEventListener('animationend', () => {
+      outgoing.classList.remove('active', leaveClass);
+    }, { once: true });
+  }
+
+  // Animate incoming
+  incoming.classList.add('active', enterClass);
+  incoming.addEventListener('animationend', () => {
+    incoming.classList.remove(enterClass);
+  }, { once: true });
+
+  state.currentScreen = screen;
+}
+
+// ==================== PRODUCT ACTIONS ====================
+function renderAllCards() {
+  renderProductGrid();
+  renderReorder();
+  renderCartRecommend();
+  renderPDPRelated();
+}
+
+function addProductToCart(index) {
+  const p = products[index];
+  if (!p || p.badge === 'sold') return;
+  cart[p.id] = (cart[p.id] || 0) + 1;
+  state.addToCartCount++;
+  renderAllCards();
+  updateAllUI();
+  checkBannerTrigger(p);
+  updateBannerProgress();
+}
+
+function changeProductQty(index, delta) {
+  const p = products[index];
+  if (!p) return;
+  const newQty = Math.max(0, (cart[p.id] || 0) + delta);
+  if (newQty === 0) {
+    delete cart[p.id];
+  } else {
+    cart[p.id] = newQty;
+  }
+  if (delta > 0) {
+    state.addToCartCount++;
+    checkBannerTrigger(p);
+    updateBannerProgress();
+  } else {
+    updateBannerProgress();
+  }
+  renderAllCards();
+  updateAllUI();
+}
+
+function changeCartQty(productId, delta) {
+  const newQty = Math.max(0, (cart[productId] || 0) + delta);
+  if (newQty === 0) {
+    delete cart[productId];
+  } else {
+    cart[productId] = newQty;
+  }
+  if (delta > 0) {
+    state.addToCartCount++;
+    const p = products.find(x => x.id === productId);
+    checkBannerTrigger(p);
+    updateBannerProgress();
+  } else {
+    updateBannerProgress();
+  }
+  renderAllCards();
+  updateAllUI();
+}
+
+function clearCart() {
+  cart = {};
+  renderAllCards();
+  updateAllUI();
+}
+
+function openPDP(index) {
+  const p = products[index];
+  if (!p || p.badge === 'sold') return;
+  state.pdpProductIndex = index;
+  state.pdpQty = 1;
+  document.getElementById('pdpQty').textContent = '1';
+  document.getElementById('pdpName').textContent = p.brand + ' ' + p.name;
+  document.getElementById('pdpBrand').textContent = p.brand;
+  document.getElementById('pdpWeight').textContent = p.weight;
+  document.getElementById('pdpDesc').textContent = p.desc;
+  document.getElementById('pdpImage').innerHTML = `<img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:contain;">`;
+  document.getElementById('pdpImage').style.background = '#F8F8F8';
+  document.getElementById('pdpTotalPrice').textContent = `EGP ${fmt(p.price)}`;
+  document.getElementById('pdp2xBadge').style.display = p.isPrivateLabel ? 'inline-flex' : 'none';
+  navigateTo('pdp');
+}
+
+function pdpQtyChange(delta) {
+  state.pdpQty = Math.max(1, state.pdpQty + delta);
+  document.getElementById('pdpQty').textContent = state.pdpQty;
+  const p = products[state.pdpProductIndex];
+  if (p) document.getElementById('pdpTotalPrice').textContent = `EGP ${fmt(p.price * state.pdpQty)}`;
+}
+
+function addToCartFromPDP() {
+  const p = products[state.pdpProductIndex];
+  if (!p) return;
+  cart[p.id] = (cart[p.id] || 0) + state.pdpQty;
+  state.addToCartCount++;
+  updateAllUI();
+  renderAllCards();
+  checkBannerTrigger(p);
+  updateBannerProgress();
+  goBack();
+}
+
+// ==================== BANNER LOGIC ====================
+function checkBannerTrigger(product) {
+  if (mode === 'a') return;
+
+  if (product) {
+    const pts = Math.floor(product.price * (product.isPrivateLabel ? 2 : 1));
+    state.lastAddedPts = pts;
+    state.sessionEarnedPts += pts;
+  }
+
+  const projected = getProjectedPoints();
+
+  // Mode B uses a tighter reward target (B_REWARD_PTS) so 2 cheap products
+  // bring the user within B_NEAR_EGP of the reward.
+  const nextReward = mode === 'b'
+    ? { pts: B_REWARD_PTS, type: 'free product', name: 'Free Molto Mini Magnum Chocolate Hazelnut (84g)' }
+    : getNextReward(STARTING_POINTS);
+  if (!nextReward) return;
+
+  const gap = nextReward.pts - STARTING_POINTS;
+  const cartEarned = projected - STARTING_POINTS;
+
+  if (mode === 'b') {
+    // NEAR: fires once when ≤ B_NEAR_EGP remaining to the reward
+    const remaining = nextReward.pts - projected;
+    if (!state.triggeredBanners.has('NEAR') && remaining <= B_NEAR_EGP && projected < nextReward.pts) {
+      state.triggeredBanners.add('NEAR');
+      showBanner({
+        title: 'Almost there!',
+        sub: `Add ${remaining} EGP more to unlock a ${nextReward.type}`,
+        progress: projected / nextReward.pts,
+      });
+    } else if (!state.triggeredBanners.has('ACHIEVED_B') && projected >= nextReward.pts) {
+      state.triggeredBanners.add('ACHIEVED_B');
+      showBanner({
+        title: 'Reward points achieved!',
+        greenTitle: true,
+        sub: 'Complete this order to unlock free product',
+        progress: 1,
+      });
+    }
+  } else if (mode === 'c') {
+    // Ring progress = how far through the gap (session earnings / total needed)
+    const sessionProgress = Math.min(cartEarned / gap, 1);
+    const threshold80 = Math.floor(gap * 0.8);
+
+    // Three triggers: Start on 1st add, Near when close, Achieved when crossed
+    if (state.addToCartCount === 1 && !state.triggeredBanners.has('START')) {
+      state.triggeredBanners.add('START');
+      showBanner({
+        title: `+${state.sessionEarnedPts} points earned!`,
+        greenTitle: true,
+        animatePoints: state.sessionEarnedPts,
+        sub: `You've started earning toward a free product`,
+        progress: sessionProgress,
+      });
+    } else if (!state.triggeredBanners.has('NEAR') && cartEarned >= threshold80 && projected < nextReward.pts) {
+      state.triggeredBanners.add('NEAR');
+      const remaining = nextReward.pts - projected;
+      showBanner({
+        title: 'Almost there!',
+        sub: `Add ${remaining} EGP more to unlock a ${nextReward.type}`,
+        progress: sessionProgress,
+      });
+    } else if (!state.triggeredBanners.has('ACHIEVED') && projected >= nextReward.pts) {
+      state.triggeredBanners.add('ACHIEVED');
+      showBanner({
+        title: 'Reward points achieved!',
+        greenTitle: true,
+        sub: 'Complete this order to unlock free product',
+        progress: 1,
+      });
+    }
+  }
+}
+
+function animatePointsTitle(el, targetPts) {
+  // Parse current displayed value as starting point for smooth increment
+  const match = el.innerHTML.match(/\+(\d+)/);
+  const from = match ? parseInt(match[1], 10) : 0;
+  const duration = 400;
+  const start = performance.now();
+  el.classList.remove('pts-anim');
+  void el.offsetWidth; // reflow to restart animation
+  el.classList.add('pts-anim');
+  function step(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
+    const current = Math.round(from + (targetPts - from) * eased);
+    el.innerHTML = `+${current} points earned!`;
+    if (t < 1) requestAnimationFrame(step);
+    else el.innerHTML = `+${targetPts} points earned!`;
+  }
+  requestAnimationFrame(step);
+}
+
+function updateBannerProgress() {
+  const banner = document.getElementById('loyaltyBanner');
+  if (!banner.classList.contains('show')) return;
+
+  const projected = getProjectedPoints();
+  const nextReward = mode === 'b'
+    ? { pts: B_REWARD_PTS, type: 'free product', name: 'Free Molto Mini Magnum Chocolate Hazelnut (84g)' }
+    : getNextReward(STARTING_POINTS);
+  if (!nextReward) return;
+
+  const circumference = 113.1;
+  const gap = nextReward.pts - STARTING_POINTS;
+  const cartEarned = Math.max(0, projected - STARTING_POINTS);
+  const threshold80 = Math.floor(gap * 0.8);
+  // Mode C: ring shows session progress; Mode B: ring shows total progress
+  const sessionProgress = Math.min(cartEarned / gap, 1);
+  const ringProgress = mode === 'c' ? sessionProgress : Math.min(projected / nextReward.pts, 1);
+  document.getElementById('bannerRing').setAttribute('stroke-dashoffset', circumference * (1 - ringProgress));
+
+  const titleEl = document.getElementById('bannerTitle');
+  const sub = document.getElementById('bannerSub');
+
+  if (mode === 'b') {
+    const remaining = nextReward.pts - projected;
+    if (projected >= nextReward.pts) {
+      titleEl.innerHTML = 'Reward points achieved!';
+      titleEl.classList.add('title-green');
+      sub.textContent = 'Complete this order to unlock free product';
+    } else {
+      titleEl.innerHTML = 'Almost there!';
+      titleEl.classList.remove('title-green');
+      sub.textContent = `Add ${remaining} EGP more to unlock a ${nextReward.type}`;
+      if (remaining > B_NEAR_EGP) state.triggeredBanners.delete('NEAR');
+    }
+  } else if (mode === 'c') {
+    if (projected >= nextReward.pts) {
+      titleEl.innerHTML = 'Reward points achieved!';
+      titleEl.classList.add('title-green');
+      sub.textContent = 'Complete this order to unlock free product';
+    } else if (state.triggeredBanners.has('NEAR') || cartEarned >= threshold80) {
+      titleEl.innerHTML = 'Almost there!';
+      titleEl.classList.remove('title-green');
+      const remaining = nextReward.pts - projected;
+      sub.textContent = `Add ${remaining} EGP more to unlock a ${nextReward.type}`;
+      if (cartEarned < threshold80) state.triggeredBanners.delete('NEAR');
+    } else {
+      // START state — animate accumulated session points
+      titleEl.classList.add('title-green');
+      animatePointsTitle(titleEl, state.sessionEarnedPts);
+      sub.textContent = `You've started earning toward a free product`;
+    }
+    if (projected < nextReward.pts) state.triggeredBanners.delete('ACHIEVED');
+  }
+}
+
+function showBanner(data) {
+  const banner = document.getElementById('loyaltyBanner');
+  const titleEl = document.getElementById('bannerTitle');
+  titleEl.classList.toggle('title-green', !!data.greenTitle);
+  if (data.animatePoints) {
+    animatePointsTitle(titleEl, data.animatePoints);
+  } else {
+    titleEl.innerHTML = data.title;
+  }
+  document.getElementById('bannerSub').innerHTML = data.sub;
+
+  // Update ring progress (r=18, circumference=2π×18≈113.1)
+  const circumference = 113.1;
+  const offset = circumference * (1 - Math.min(data.progress, 1));
+  document.getElementById('bannerRing').setAttribute('stroke-dasharray', circumference);
+  document.getElementById('bannerRing').setAttribute('stroke-dashoffset', offset);
+
+  if (state.bannerDismissTimeout) clearTimeout(state.bannerDismissTimeout);
+
+  // Position banner just below the active screen's header
+  const activeScreen = document.querySelector('.screen.active');
+  const header = activeScreen && (activeScreen.querySelector('.category-header') || activeScreen.querySelector('.screen-header') || activeScreen.querySelector('.home-header'));
+  const headerBottom = header ? header.getBoundingClientRect().bottom : 47;
+  banner.style.top = (headerBottom + 12) + 'px';
+
+  banner.classList.add('show');
+
+  if (state.bannerFirstTime) {
+    state.bannerFirstTime = false;
+    // First-time: persist longer but still auto-dismiss
+    state.bannerDismissTimeout = setTimeout(dismissBanner, AUTO_DISMISS_MS + 3000);
+  } else {
+    state.bannerDismissTimeout = setTimeout(dismissBanner, AUTO_DISMISS_MS);
+  }
+}
+
+function dismissBanner() {
+  const banner = document.getElementById('loyaltyBanner');
+  banner.classList.remove('show');
+  if (state.bannerDismissTimeout) {
+    clearTimeout(state.bannerDismissTimeout);
+    state.bannerDismissTimeout = null;
+  }
+}
+
+// Swipe up to dismiss
+(function() {
+  const banner = document.getElementById('loyaltyBanner');
+  let startY = 0, currentY = 0;
+  banner.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive:true });
+  banner.addEventListener('touchmove', e => {
+    currentY = e.touches[0].clientY;
+    const diff = currentY - startY;
+    if (diff < 0) { banner.style.transition = 'none'; banner.style.top = Math.max(-80, 58 + diff) + 'px'; }
+  }, { passive:true });
+  banner.addEventListener('touchend', () => {
+    banner.style.transition = 'top 0.3s ease-out';
+    if (currentY - startY < -30) { dismissBanner(); }
+    else if (banner.classList.contains('show')) { banner.style.top = ''; }
+  });
+})();
+
+// ==================== RENDER FUNCTIONS ====================
+function renderProductGrid() {
+  // Use short refs — inline sprite is loaded at page start
+  const S = '';
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = products.map((p, i) => {
+    const isSold = p.badge === 'sold';
+    const qty = cart[p.id] || 0;
+
+    // Badge
+    let badge = '';
+    if (p.badge === '2x')   badge = `<span class="product-card__badge product-card__badge--loyalty">2x Points</span>`;
+    if (p.badge === 'new')  badge = `<span class="product-card__badge product-card__badge--new">New</span>`;
+    if (p.badge === 'sold') badge = `<span class="product-card__badge product-card__badge--sold-out">Sold out</span>`;
+    // If no badge, we still need a spacer so the header flex layout works
+    if (!badge) badge = `<span></span>`;
+
+    // Price
+    const priceInt = Math.floor(p.price);
+    const priceDec = (p.price % 1 === 0) ? '00' : String(Math.round((p.price % 1) * 100)).padStart(2, '0');
+
+    // Action: add button or stepper
+    let action = '';
+    if (!isSold && qty === 0) {
+      action = `
+        <button class="product-card__floating-action" type="button" aria-label="Add to cart"
+                onclick="event.stopPropagation();addProductToCart(${i})">
+          <svg width="20" height="20" viewBox="0 0 14 14" fill="white"><rect x="6" y="0" width="2" height="14" rx="1"/><rect x="0" y="6" width="14" height="2" rx="1"/></svg>
+        </button>`;
+    } else if (!isSold && qty > 0) {
+      action = `
+        <div class="product-card__stepper">
+          <div class="product-card__stepper-shell">
+            <button class="product-card__stepper-btn product-card__stepper-btn--minus" type="button" aria-label="Decrease"
+                    onclick="event.stopPropagation();changeProductQty(${i},-1)">
+              <svg width="14" height="2" viewBox="0 0 14 2" fill="currentColor"><rect width="14" height="2" rx="1"/></svg>
+            </button>
+            <span class="product-card__stepper-value">${qty}</span>
+            <button class="product-card__stepper-btn product-card__stepper-btn--plus" type="button" aria-label="Increase"
+                    onclick="event.stopPropagation();changeProductQty(${i},1)">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="6" y="0" width="2" height="14" rx="1"/><rect x="0" y="6" width="14" height="2" rx="1"/></svg>
+            </button>
+          </div>
+        </div>`;
+    }
+
+    return `<article class="product-card" onclick="${isSold ? '' : 'openPDP('+i+')'}" style="${isSold ? 'opacity:.45;pointer-events:none;' : 'cursor:pointer;'}">
+  <div class="product-card__media">
+    <div class="product-card__header">
+      ${badge}
+      <button class="product-card__favorite" type="button" aria-label="Add to favorites" onclick="event.stopPropagation();">
+        <span class="icon icon-md icon-tertiary">
+          <svg viewBox="0 0 20.05 17.85"><use href="prototype/img/icons/icons.svg#icon-heart"></use></svg>
+        </span>
+      </button>
+    </div>
+    <div class="product-card__image-wrap">
+      <img class="product-card__image" src="${p.img}" alt="${p.name}">
+      ${action}
+    </div>
+  </div>
+  <div class="product-card__body">
+    <div class="product-card__price">
+      <span class="product-card__price-main">${priceInt}</span>
+      <span class="product-card__price-decimal">.${priceDec}</span>
+    </div>
+    <p class="product-card__name">${p.name}</p>
+  </div>
+</article>`;
+  }).join('');
+
+  // Re-init DS interactive behavior
+  if (typeof bfProductCardInit === 'function') bfProductCardInit();
+}
+
+function renderAllCategories() {
+  document.getElementById('allCatsGrid').innerHTML = allCategories.map((c, i) => `
+    <div class="cat-tile" onclick="navigateTo('category')">
+      <img src="prototype/img/${c.img}" alt="${c.name}" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-md);">
+    </div>
+  `).join('');
+}
+
+function renderMiniCard(p, idx) {
+  const qty = cart[p.id] || 0;
+  const isSold = p.badge === 'sold';
+  const priceInt = Math.floor(p.price);
+  const priceDec = (p.price % 1 === 0) ? '00' : String(Math.round((p.price % 1) * 100)).padStart(2, '0');
+  let badge = '';
+  if (p.badge === '2x')   badge = `<span class="product-card__badge product-card__badge--loyalty">2x Points</span>`;
+  if (p.badge === 'new')  badge = `<span class="product-card__badge product-card__badge--new">New</span>`;
+  if (p.badge === 'sold') badge = `<span class="product-card__badge product-card__badge--sold-out">Sold out</span>`;
+  if (!badge) badge = `<span></span>`;
+  let action = '';
+  if (!isSold && qty === 0) {
+    action = `
+      <button class="product-card__floating-action" type="button" aria-label="Add to cart"
+              onclick="event.stopPropagation();addProductToCart(${idx})">
+        <svg width="20" height="20" viewBox="0 0 14 14" fill="white"><rect x="6" y="0" width="2" height="14" rx="1"/><rect x="0" y="6" width="14" height="2" rx="1"/></svg>
+      </button>`;
+  } else if (!isSold && qty > 0) {
+    action = `
+      <div class="product-card__stepper">
+        <div class="product-card__stepper-shell">
+          <button class="product-card__stepper-btn product-card__stepper-btn--minus" type="button" aria-label="Decrease"
+                  onclick="event.stopPropagation();changeProductQty(${idx},-1)">
+            <svg width="14" height="2" viewBox="0 0 14 2" fill="currentColor"><rect width="14" height="2" rx="1"/></svg>
+          </button>
+          <span class="product-card__stepper-value">${qty}</span>
+          <button class="product-card__stepper-btn product-card__stepper-btn--plus" type="button" aria-label="Increase"
+                  onclick="event.stopPropagation();changeProductQty(${idx},1)">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="6" y="0" width="2" height="14" rx="1"/><rect x="0" y="6" width="14" height="2" rx="1"/></svg>
+          </button>
+        </div>
+      </div>`;
+  }
+  return `<article class="product-card" onclick="${isSold ? '' : 'openPDP('+idx+')'}" style="${isSold ? 'opacity:.45;pointer-events:none;' : 'cursor:pointer;'}">
+  <div class="product-card__media">
+    <div class="product-card__header">
+      ${badge}
+      <button class="product-card__favorite" type="button" aria-label="Add to favorites" onclick="event.stopPropagation();">
+        <span class="icon icon-md icon-tertiary">
+          <svg viewBox="0 0 20.05 17.85"><use href="prototype/img/icons/icons.svg#icon-heart"></use></svg>
+        </span>
+      </button>
+    </div>
+    <div class="product-card__image-wrap">
+      <img class="product-card__image" src="${p.img}" alt="${p.name}">
+      ${action}
+    </div>
+  </div>
+  <div class="product-card__body">
+    <div class="product-card__price">
+      <span class="product-card__price-main">${priceInt}</span>
+      <span class="product-card__price-decimal">.${priceDec}</span>
+    </div>
+    <p class="product-card__name">${p.name}</p>
+  </div>
+</article>`;
+}
+
+function renderReorder() {
+  const reorderProducts = products.slice(0, 10);
+  document.getElementById('reorderScroll').innerHTML = reorderProducts.map((p, i) => renderMiniCard(p, i)).join('');
+  if (typeof bfProductCardInit === 'function') bfProductCardInit();
+}
+
+function renderCartRecommend() {
+  const recs = products.slice(8, 12);
+  document.getElementById('cartRecommend').innerHTML = recs.map((p, i) => renderMiniCard(p, i + 8)).join('');
+  if (typeof bfProductCardInit === 'function') bfProductCardInit();
+}
+
+function renderPDPRelated() {
+  const related = products.slice(4, 8);
+  document.getElementById('pdpRelated').innerHTML = related.map((p, i) => renderMiniCard(p, i + 4)).join('');
+  if (typeof bfProductCardInit === 'function') bfProductCardInit();
+}
+
+const TAB_ICONS = {
+  home: `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.1911 2.42097C12.5403 1.83321 11.552 1.83321 10.9013 2.42097L2.48681 10.2511C2.13062 10.5706 1.92432 11.0308 1.92432 11.5129V19.8837C1.92432 21.1204 2.93714 22.019 4.10054 22.019H7.94273C8.8581 22.019 9.64764 21.3073 9.64764 20.3345V14.8059H14.0144V20.3264C13.9987 21.3122 14.8015 22.019 15.7091 22.019H19.8996C21.0818 22.019 22.0758 21.0817 22.0758 19.8632V11.4924C22.0758 11.0111 21.8702 10.5515 21.5149 10.2321L13.1973 2.42656L13.1911 2.42097Z"/></svg>`,
+  search: `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M9.88281 2C14.2364 2 17.7655 5.52924 17.7656 9.88281C17.7656 11.7386 17.1228 13.4433 16.0498 14.79L21.7393 20.4795C22.0871 20.8273 22.0871 21.3915 21.7393 21.7393C21.3915 22.087 20.8273 22.087 20.4795 21.7393L14.79 16.0498C13.4433 17.1228 11.7386 17.7656 9.88281 17.7656C5.52924 17.7655 2 14.2364 2 9.88281C2.00008 5.52929 5.52929 2.00008 9.88281 2ZM9.88281 3.78125C6.51301 3.78133 3.78133 6.51301 3.78125 9.88281C3.78125 13.2527 6.51296 15.9843 9.88281 15.9844C13.2527 15.9844 15.9844 13.2527 15.9844 9.88281C15.9843 6.51296 13.2527 3.78125 9.88281 3.78125Z"/></svg>`,
+  cart: `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.50293 2C5.27823 2.00011 5.95337 2.55312 6.09082 3.32422V3.32715L6.5166 5.66602L21.2314 5.69531C21.4902 5.69583 21.7355 5.81113 21.9014 6.00977C22.0672 6.20835 22.1364 6.46997 22.0908 6.72461L21.0498 12.5342C20.8693 13.7794 19.8694 14.8031 18.5732 14.8164C18.5682 14.8165 18.5627 14.8164 18.5576 14.8164L8.1709 14.7549L8.52734 16.7109H18.4658L18.7432 16.7246C20.1091 16.8633 21.1726 18.0151 21.1729 19.418C21.1727 20.3126 20.734 21.1091 20.0762 21.6025C20.0333 21.6347 19.9877 21.6624 19.9414 21.6855C19.5188 21.9611 19.0167 22.126 18.4658 22.126C16.9692 22.126 15.759 20.9145 15.7588 19.418C15.7588 19.0806 15.8231 18.7586 15.9355 18.4609H11.2432C11.3606 18.7642 11.4277 19.0934 11.4277 19.4385C11.4276 20.3333 10.988 21.1296 10.3301 21.623C10.2873 21.6551 10.2425 21.6829 10.1963 21.7061C9.77367 21.9816 9.27065 22.1465 8.71973 22.1465C7.22332 22.1463 6.01289 20.9349 6.0127 19.4385C6.01281 18.6518 6.34797 17.9444 6.88281 17.4502L4.38965 3.75H2.875C2.39175 3.75 2 3.35825 2 2.875C2 2.39175 2.39175 2 2.875 2H4.50293ZM8.71973 18.4814C8.18983 18.4817 7.76291 18.9086 7.7627 19.4385C7.76289 19.9684 8.18981 20.3963 8.71973 20.3965C8.93142 20.3965 9.12146 20.3292 9.28809 20.207C9.30837 20.1922 9.3295 20.1779 9.35059 20.165C9.55235 19.9827 9.67763 19.7199 9.67773 19.4385C9.67752 18.9084 9.24981 18.4814 8.71973 18.4814ZM18.4658 18.4609C17.9357 18.4609 17.509 18.8879 17.5088 19.418C17.509 19.948 17.9357 20.376 18.4658 20.376C18.6775 20.376 18.8666 20.3087 19.0332 20.1865C19.0536 20.1716 19.0745 20.1575 19.0957 20.1445C19.2976 19.9622 19.4227 19.6995 19.4229 19.418C19.4226 18.888 18.9959 18.461 18.4658 18.4609ZM7.86426 13.0371L18.5527 13.0664C18.8742 13.0636 19.2471 12.7918 19.3184 12.2754C19.3199 12.2639 19.3222 12.2526 19.3242 12.2412L20.1846 7.44336L6.84082 7.41699L7.86426 13.0371Z"/></svg>`,
+  pay: `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M18.9533 4.42246C18.7853 3.33043 17.6977 2.61746 16.6241 2.91217L4.27301 6.3979L4.26697 6.39965C3.4754 6.62879 2.92456 7.3461 2.92456 8.18417V9.25533V10.0145V18.844C2.92456 20.1069 3.93355 21.1543 5.21404 21.1543H18.7859C20.0664 21.1543 21.0754 20.1069 21.0754 18.844V9.25533C21.0754 8.18445 20.3499 7.26855 19.3486 7.01477L18.9533 4.42246ZM17.4413 6.94505L17.1028 4.72529L9.23755 6.94505H17.4413ZM4.79956 9.25533V10.0145V18.844C4.79956 19.0995 4.99696 19.2793 5.21404 19.2793H18.7859C19.003 19.2793 19.2004 19.0995 19.2004 18.844V9.25533C19.2004 8.99986 19.003 8.82005 18.7859 8.82005H5.21404C4.99696 8.82005 4.79956 8.99986 4.79956 9.25533ZM16.8619 15.1001C17.442 15.1001 17.9123 14.6298 17.9123 14.0497C17.9123 13.4696 17.442 12.9993 16.8619 12.9993C16.2818 12.9993 15.8115 13.4696 15.8115 14.0497C15.8115 14.6298 16.2818 15.1001 16.8619 15.1001Z"/></svg>`,
+  more: `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M21.2603 18.2754C21.7434 18.2755 22.1353 18.6672 22.1353 19.1504C22.1352 19.6335 21.7434 20.0253 21.2603 20.0254H2.73975C2.25654 20.0254 1.86481 19.6336 1.86475 19.1504C1.86475 18.6671 2.2565 18.2754 2.73975 18.2754H21.2603ZM21.2603 11.1416C21.7434 11.1417 22.1353 11.5334 22.1353 12.0166C22.1352 12.4998 21.7434 12.8915 21.2603 12.8916H2.73975C2.25652 12.8916 1.86478 12.4998 1.86475 12.0166C1.86475 11.5334 2.2565 11.1416 2.73975 11.1416H21.2603ZM21.2603 4.00781C21.7434 4.00793 22.1353 4.39964 22.1353 4.88281C22.1353 5.36599 21.7434 5.75769 21.2603 5.75781H2.73975C2.2565 5.75781 1.86475 5.36606 1.86475 4.88281C1.86475 4.39956 2.2565 4.00781 2.73975 4.00781H21.2603Z"/></svg>`,
+};
+
+function renderTabBars() {
+  const tabs = [
+    { id:'home', label:'Home', hasBadge:false },
+    { id:'search', label:'Search', hasBadge:false },
+    { id:'cart', label:'Cart', hasBadge:true },
+    { id:'pay', label:'Pay', hasBadge:false },
+    { id:'more', label:'More', hasBadge:false },
+  ];
+
+  document.querySelectorAll('.tabbar').forEach(bar => {
+    const parentScreen = bar.closest('.screen');
+    const screenId = parentScreen ? parentScreen.id.replace('screen-', '') : '';
+
+    const itemsHTML = tabs.map(t => {
+      const isActive = t.id === screenId || (screenId === 'category' && t.id === 'home');
+      const onclick = t.id === 'search' || t.id === 'pay' ? '' : `onclick="event.preventDefault();navigateInstant('${t.id}')"`;
+      return `
+        <a class="tabbar-item ${isActive ? 'is-active' : ''}" role="tab" href="#" ${onclick}>
+          ${TAB_ICONS[t.id]}
+          <span class="tabbar-label">${t.label}</span>
+          ${t.hasBadge ? '<span class="tabbar-badge cart-count-badge"></span>' : ''}
+        </a>`;
+    }).join('');
+
+    bar.innerHTML = `
+      <div class="tabbar-items">${itemsHTML}</div>
+      <div class="tabbar-home-indicator"><div class="tabbar-home-indicator-bar"></div></div>`;
+  });
+}
+
+// ==================== BANNER CAROUSEL DOTS + AUTO-PLAY ====================
+function initBannerCarousel() {
+  const carousel = document.querySelector('.banner-carousel');
+  const dots = document.querySelectorAll('.banner-dots .bdot');
+  if (!carousel || dots.length === 0) return;
+
+  const slides = carousel.querySelectorAll('.banner-slide');
+  const count = slides.length;
+  let currentIndex = 0;
+  let autoTimer = null;
+  let userInteracting = false;
+
+  function getSlideWidth() {
+    return slides[0].offsetWidth + 8; // width + gap (--space-2 = 8px)
+  }
+
+  function goTo(index) {
+    currentIndex = (index + count) % count;
+    carousel.scrollTo({ left: currentIndex * getSlideWidth(), behavior: 'smooth' });
+    dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
+  }
+
+  function startAuto() {
+    clearInterval(autoTimer);
+    autoTimer = setInterval(() => {
+      if (!userInteracting) goTo(currentIndex + 1);
+    }, 3000);
+  }
+
+  // Sync dots on manual scroll
+  carousel.addEventListener('scroll', () => {
+    const index = Math.round(carousel.scrollLeft / getSlideWidth());
+    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+    currentIndex = index;
+  });
+
+  // Pause on touch, resume after lift
+  carousel.addEventListener('touchstart', () => { userInteracting = true; }, { passive: true });
+  carousel.addEventListener('touchend', () => {
+    userInteracting = false;
+    clearInterval(autoTimer);
+    startAuto();
+  }, { passive: true });
+
+  startAuto();
+}
+
+// ==================== INIT ====================
+function init() {
+  renderAllCategories();
+  renderProductGrid();
+  renderReorder();
+  renderCartRecommend();
+  renderPDPRelated();
+  renderTabBars();
+  updateAllUI();
+  // Activate home directly without animation on init
+  document.getElementById('screen-home').classList.add('active');
+  initBannerCarousel();
+  if (typeof bfProductCardInit === 'function') bfProductCardInit();
+}
+
+init();
+</script>
+</body>
+</html>
