@@ -452,144 +452,206 @@
 
   /* Cart screen */
   .cart-loyalty-bar {
-    display:flex; align-items:center; gap:var(--space-3);
-    padding:var(--space-3) var(--space-4); background:var(--color-primary-light); cursor:pointer;
-    margin:var(--space-3) var(--space-4) 0; border-radius:var(--radius-md);
+    display:flex; align-items:center; gap:8px;
+    padding:8px; background:#fff0f7; cursor:pointer;
+    margin:12px 16px 0; border-radius:128px;
   }
-  .cart-loyalty-bar .coin { font-size:24px; flex-shrink:0; }
-  .cart-loyalty-bar .bar-text { flex:1; font-size:13px; color:var(--color-text-default); line-height:1.3; }
-  .cart-loyalty-bar .bar-text strong { color:var(--color-primary); }
+  .cart-loyalty-bar .clb-icon { width:24px; height:24px; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center; }
+  .cart-loyalty-bar .clb-icon .clb-img { position:absolute; inset:16.67%; border-radius:4px; overflow:hidden; }
+  .cart-loyalty-bar .clb-icon .clb-img img { width:100%; height:100%; object-fit:cover; display:block; }
+  .cart-loyalty-bar .clb-icon .clb-ring { position:absolute; inset:0; pointer-events:none; }
+  .cart-loyalty-bar .clb-text { flex:1; font-size:12px; font-weight:600; color:var(--color-primary); line-height:16px; }
+  .cart-loyalty-bar .clb-chevron { width:16px; height:16px; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:var(--color-primary); }
 
+  .cart-items-list { padding:0 16px; }
   .cart-item {
-    display:flex; gap:var(--space-3); padding:var(--space-3) var(--space-4);
-    border-bottom:1px solid var(--color-border); align-items:center;
+    display:flex; gap:8px; padding:4px 0; align-items:center;
   }
   .cart-item .ci-img {
-    width:64px; height:64px; border-radius:var(--radius-sm);
-    background:#FFF8E1; flex-shrink:0; display:flex;
-    align-items:center; justify-content:center; font-size:28px; overflow:hidden;
+    width:48px; height:48px; border-radius:4px;
+    background:#F8F8F8; flex-shrink:0; overflow:hidden;
   }
-  .cart-item .ci-img img { width:100%; height:100%; object-fit:cover; }
-  .cart-item .ci-info { flex:1; min-width:0; }
-  .cart-item .ci-info .ci-name { font-size:14px; font-weight:600; margin-bottom:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .cart-item .ci-info .ci-meta { font-size:11px; color:var(--color-text-secondary); }
-  .cart-item .ci-info .ci-price { font-size:14px; font-weight:700; margin-top:2px; }
+  .cart-item .ci-img img { width:100%; height:100%; object-fit:contain; display:block; }
+  .cart-item .ci-info { flex:1; min-width:0; display:flex; flex-direction:column; gap:4px; }
+  .cart-item .ci-info .ci-name { font-size:14px; font-weight:400; line-height:20px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--color-text-default); }
+  .cart-item .ci-info .ci-price { font-size:12px; font-weight:600; line-height:18px; color:var(--color-text-secondary); }
   .cart-item .ci-actions { flex-shrink:0; }
+  .cart-qty-stepper {
+    display:flex; align-items:center; gap:8px; padding:8px;
+    border:1px solid #ebebeb; border-radius:4px; background:#fff;
+  }
+  .cart-qty-stepper button {
+    width:16px; height:16px; border:none; background:transparent;
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+    padding:0; flex-shrink:0;
+  }
+  .cart-qty-stepper .cqs-val {
+    min-width:20px; text-align:center; font-weight:600; font-size:14px; line-height:16px; color:var(--color-text-default);
+  }
+
+  .cart-people-buy { padding:16px 16px 8px; }
+  .cart-people-buy h3 { font-size:20px; font-weight:700; line-height:28px; color:rgba(0,0,0,0.8); }
+
+  .cart-delivery-bar {
+    background:#fcf4d6; border-radius:16px 16px 0 0; flex-shrink:0;
+  }
+  .cart-delivery-bar .cdb-row {
+    display:flex; align-items:center; gap:4px; padding:12px 16px 8px;
+  }
+  .cart-delivery-bar .cdb-icon { width:20px; height:20px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+  .cart-delivery-bar .cdb-text {
+    flex:1; font-size:14px; line-height:20px; color:var(--color-text-default);
+    display:flex; gap:4px; align-items:baseline; flex-wrap:wrap;
+  }
+  .cart-delivery-bar .cdb-text strong { font-weight:600; }
+  .cart-delivery-bar .cdb-info { width:16px; height:16px; flex-shrink:0; }
+  .cart-delivery-bar .cdb-progress { height:4px; background:#f3f4f5; position:relative; overflow:hidden; }
+  .cart-delivery-bar .cdb-progress-fill { position:absolute; left:0; top:0; bottom:0; background:#b28600; border-radius:0 8px 8px 0; }
 
   .cart-bottom {
-    padding:var(--space-3) var(--space-4); background:var(--color-bg-default);
-    border-top:1px solid var(--color-border); flex-shrink:0; padding-bottom:calc(var(--space-3) + 4px);
+    padding:0; background:var(--color-bg-default); flex-shrink:0;
   }
-  .cart-bottom .add-more {
-    display:flex; align-items:center; gap:var(--space-2);
-    font-size:13px; color:var(--color-text-secondary); margin-bottom:var(--space-3);
+  .cart-checkout-wrap {
+    padding:12px 16px 16px; background:var(--color-bg-default);
   }
 
   /* Checkout screen */
-  .checkout-section { padding:var(--space-3) var(--space-4); border-bottom:1px solid var(--color-border); }
-  .checkout-section .sec-title { font-size:16px; font-weight:700; margin-bottom:var(--space-2); }
-  .checkout-row { display:flex; align-items:center; justify-content:space-between; padding:var(--space-2) 0; }
-  .checkout-row .label { font-size:14px; color:var(--color-text-secondary); }
-  .checkout-row .value { font-size:14px; font-weight:600; }
-  .checkout-row .value.green { color:var(--color-green); }
+  .checkout-section { padding:16px 16px 24px; }
+  .checkout-section .sec-title { font-size:20px; font-weight:700; margin-bottom:12px; color:#212121; }
+  .checkout-divider { height:16px; background:var(--color-bg-secondary); flex-shrink:0; }
+  .checkout-row { display:flex; align-items:flex-start; justify-content:space-between; padding:8px 0; }
+  .checkout-row .label { font-size:14px; color:var(--color-text-secondary); font-weight:400; }
+  .checkout-row .value { font-size:14px; font-weight:400; color:#212121; }
 
-  .payment-option { display:flex; align-items:center; gap:var(--space-3); padding:var(--space-2) 0; cursor:pointer; }
+  .payment-option {
+    display:flex; align-items:center; gap:12px;
+    border:1px solid #ebebeb; border-radius:8px; height:56px;
+    padding:0 16px; cursor:pointer; margin-bottom:8px; background:#fff;
+  }
+  .payment-option.selected { border:2px solid var(--color-primary); }
   .payment-radio {
     width:20px; height:20px; border-radius:var(--radius-full);
-    border:2px solid var(--color-border); flex-shrink:0;
+    border:1.5px solid #d8d8d8; flex-shrink:0;
     display:flex; align-items:center; justify-content:center;
   }
-  .payment-radio.selected { border-color:#1976D2; }
-  .payment-radio.selected::after { content:''; width:10px; height:10px; border-radius:var(--radius-full); background:#1976D2; }
-  .payment-label { font-size:14px; flex:1; }
+  .payment-radio.selected { border-color:var(--color-primary); }
+  .payment-radio.selected::after { content:''; width:10px; height:10px; border-radius:var(--radius-full); background:var(--color-primary); }
+  .payment-label { font-size:14px; font-weight:400; flex:1; color:#212121; }
 
   .toggle-switch {
-    width:44px; height:24px; border-radius:var(--radius-full);
+    width:36px; height:20px; border-radius:var(--radius-full);
     background:var(--color-primary); position:relative; cursor:pointer; flex-shrink:0;
   }
   .toggle-switch::after {
     content:''; position:absolute; top:2px; right:2px;
-    width:20px; height:20px; border-radius:var(--radius-full); background:#fff;
+    width:16px; height:16px; border-radius:var(--radius-full); background:#fff;
   }
 
-  .tip-pills { display:flex; gap:var(--space-2); flex-wrap:wrap; }
+  .tip-pills { display:flex; gap:16px; flex-wrap:wrap; }
   .tip-pill {
-    padding:var(--space-2) var(--space-4); border-radius:var(--radius-full);
-    border:1px solid var(--color-border); font-size:13px; cursor:pointer; background:#fff;
+    padding:0 12px; border-radius:8px; height:40px;
+    border:1px solid #ebebeb; font-size:14px; font-weight:400; cursor:pointer; background:#fff;
+    display:flex; align-items:center; justify-content:center;
   }
   .tip-pill.active { border-color:var(--color-primary); background:var(--color-primary-light); color:var(--color-primary); font-weight:600; }
 
   .promo-scroll-card {
-    flex-shrink:0; width:160px; border:1px solid var(--color-border);
-    border-radius:var(--radius-sm); padding:var(--space-3); font-size:12px;
+    flex-shrink:0; width:148px; border:1.25px solid #d8d8d8;
+    border-radius:8px; padding:16px; font-size:12px; position:relative;
   }
   .promo-scroll-card .pts { font-weight:700; color:var(--color-primary); font-size:13px; }
 
-  .promo-input-row { display:flex; gap:var(--space-2); margin-top:var(--space-2); }
+  .promo-input-row { display:flex; position:relative; margin-top:8px; }
   .promo-input-row input {
-    flex:1; padding:var(--space-2) var(--space-3);
-    border:1px solid var(--color-border); border-radius:var(--radius-sm);
-    font-size:14px; font-family:inherit; outline:none;
+    flex:1; height:56px; padding:0 70px 0 16px;
+    border:1px solid #d8d8d8; border-radius:8px;
+    font-size:16px; font-weight:600; font-family:inherit; outline:none; color:#212121;
   }
+  .promo-input-row input::placeholder { font-size:14px; font-weight:400; color:#b0b0b0; }
   .promo-input-row button {
-    padding:var(--space-2) var(--space-4); background:var(--color-primary); color:#fff; border:none;
-    border-radius:var(--radius-sm); font-weight:600; cursor:pointer; font-family:inherit; font-size:14px;
+    position:absolute; right:16px; top:50%; transform:translateY(-50%);
+    background:none; color:var(--color-text-secondary); border:none;
+    font-weight:600; cursor:pointer; font-family:inherit; font-size:14px; padding:0;
   }
   .note-input {
-    width:100%; padding:var(--space-2) var(--space-3);
-    border:1px solid var(--color-border); border-radius:var(--radius-sm);
-    font-size:13px; font-family:inherit; outline:none; margin-top:var(--space-2);
+    width:100%; height:48px; padding:0 12px; box-sizing:border-box;
+    border:1.25px solid #d8d8d8; border-radius:8px;
+    font-size:14px; font-family:inherit; outline:none; margin-top:8px; color:#212121;
   }
 
   .checkout-bottom {
-    padding:var(--space-3) var(--space-4); background:var(--color-bg-default);
+    padding:16px 16px; background:var(--color-bg-default);
     border-top:1px solid var(--color-border); flex-shrink:0;
-    padding-bottom:calc(var(--space-3) + env(safe-area-inset-bottom, 16px));
+    padding-bottom:calc(16px + env(safe-area-inset-bottom, 16px));
   }
-  .grand-total-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--space-2); }
-  .grand-total-row .gt-label { font-size:16px; font-weight:700; }
-  .grand-total-row .gt-value { font-size:20px; font-weight:700; }
+  .grand-total-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; }
+  .grand-total-row .gt-label { font-size:18px; font-weight:600; line-height:24px; color:#212121; }
+  .grand-total-row .gt-value { font-size:18px; font-weight:600; line-height:24px; color:#212121; }
   .earn-row {
-    display:flex; align-items:center; justify-content:center; gap:var(--space-1);
-    font-size:13px; color:var(--color-primary); margin-bottom:var(--space-3);
+    display:flex; align-items:center; justify-content:flex-end; gap:4px;
+    font-size:14px; font-weight:400; color:var(--color-text-secondary); margin-bottom:12px;
   }
 
-  /* Order placed */
-  .order-hero { text-align:center; padding:var(--space-6) var(--space-4); background:var(--color-bg-secondary); }
-  .order-hero .celeb { font-size:48px; margin-bottom:var(--space-2); }
-  .order-hero .est-label { font-size:13px; color:var(--color-text-secondary); }
-  .order-hero .est-time { font-size:26px; font-weight:700; margin:var(--space-1) 0 var(--space-3); }
-  .order-hero .success-msg { font-size:16px; font-weight:600; }
-
-  .order-card {
-    margin:var(--space-3) var(--space-4); padding:var(--space-3) var(--space-4);
-    background:var(--color-bg-secondary); border-radius:var(--radius-md);
-  }
-  .order-card .oc-title { font-size:14px; font-weight:700; margin-bottom:var(--space-1); }
-  .order-card .oc-text { font-size:13px; color:var(--color-text-secondary); }
-
-  .refer-card {
-    margin:var(--space-3) var(--space-4); padding:var(--space-4);
-    border-radius:var(--radius-md); background:linear-gradient(135deg, #FFD54F, #FFB74D);
-    text-align:center;
-  }
-  .refer-card h4 { font-size:16px; font-weight:700; margin-bottom:var(--space-1); }
-  .refer-card p { font-size:13px; }
-
-  .order-summary { padding:var(--space-3) var(--space-4); }
-  .order-summary .os-row { display:flex; justify-content:space-between; padding:var(--space-1) 0; font-size:14px; }
-  .order-summary .os-row .os-label { color:var(--color-text-secondary); }
-  .order-summary .os-grand {
-    display:flex; justify-content:space-between;
-    padding:var(--space-3) 0 var(--space-1); border-top:1px solid var(--color-border);
-    font-size:16px; font-weight:700; margin-top:var(--space-2);
-  }
-  .order-summary .eligible { font-size:13px; color:var(--color-primary); text-align:center; margin-top:var(--space-2); }
-  .order-summary .cancel-note {
-    text-align:center; font-size:12px; color:var(--color-text-secondary);
-    margin-top:var(--space-4); padding-top:var(--space-3); border-top:1px solid var(--color-border);
-  }
-  .order-summary .cancel-btn { text-align:center; color:var(--color-primary); font-weight:600; font-size:14px; margin-top:var(--space-2); cursor:pointer; }
+  /* ===== ORDER PLACED SCREEN ===== */
+  .op-nav { height:56px; padding:0 16px; display:flex; align-items:center; justify-content:space-between; background:#fff; flex-shrink:0; }
+  .op-nav-back { background:none; border:none; cursor:pointer; padding:0; width:40px; height:40px; display:flex; align-items:center; justify-content:center; margin-left:-8px; }
+  .op-nav-help { font-size:14px; font-weight:600; color:#aa0082; text-decoration:none; }
+  .op-content { padding:8px 16px 48px; display:flex; flex-direction:column; gap:24px; }
+  .op-status-section { display:flex; flex-direction:column; gap:16px; }
+  .op-status-top { display:flex; align-items:flex-start; justify-content:space-between; }
+  .op-status-left { display:flex; flex-direction:column; gap:8px; }
+  .op-est-label { font-size:14px; font-weight:400; color:#6f6f6f; line-height:16px; }
+  .op-est-time { font-size:20px; font-weight:700; color:#212121; line-height:28px; }
+  .op-success-msg { font-size:16px; font-weight:400; color:#212121; line-height:24px; }
+  .op-artwork { width:72px; height:72px; position:relative; overflow:clip; flex-shrink:0; }
+  .op-artwork img { position:absolute; display:block; max-width:none; width:100%; height:100%; }
+  .op-progress { display:flex; gap:8px; }
+  .op-progress-seg { flex:1; height:4px; background:#ebebeb; border-radius:8px; }
+  .op-card { background:#fff; border:1px solid #ebebeb; border-radius:8px; padding:16px; }
+  .op-cards-section { display:flex; flex-direction:column; gap:16px; }
+  .op-info-row { display:flex; align-items:center; gap:12px; }
+  .op-icon { width:24px; height:24px; position:relative; flex-shrink:0; overflow:clip; }
+  .op-icon img { position:absolute; display:block; max-width:none; width:100%; height:100%; }
+  .op-info-text { flex:1; display:flex; flex-direction:column; gap:4px; min-width:0; }
+  .op-info-label { font-size:16px; font-weight:600; color:#212121; line-height:20px; }
+  .op-info-value { font-size:12px; font-weight:400; color:#6f6f6f; line-height:18px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .op-section-header { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+  .op-section-title { font-size:16px; font-weight:600; color:#212121; line-height:20px; }
+  .op-items-list { display:flex; flex-direction:column; gap:16px; }
+  .op-item { display:flex; align-items:center; gap:8px; position:relative; }
+  .op-item-img { width:48px; height:48px; position:relative; flex-shrink:0; border-radius:4px; overflow:hidden; background:#fff; }
+  .op-item-img img { width:100%; height:100%; object-fit:cover; }
+  .op-item-qty { position:absolute; top:-4px; left:-4px; width:24px; height:24px; border-radius:50%; background:#fff; box-shadow:0 10px 18px rgba(33,33,33,0.10); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; color:#212121; z-index:1; }
+  .op-item-name { flex:1; font-size:14px; color:#212121; line-height:20px; overflow:hidden; text-overflow:ellipsis; }
+  .op-item-price { font-size:14px; color:#212121; line-height:20px; white-space:nowrap; flex-shrink:0; }
+  .op-referral { border-radius:8px; height:156px; padding:16px; position:relative; overflow:hidden; display:flex; align-items:center; flex-shrink:0; }
+  .op-referral-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; }
+  .op-referral-content { position:relative; z-index:1; width:209px; display:flex; flex-direction:column; gap:4px; }
+  .op-referral-title { font-size:16px; font-weight:600; color:#212121; line-height:20px; white-space:nowrap; }
+  .op-referral-desc { font-size:12px; color:#212121; line-height:18px; width:170px; }
+  .op-referral-link { font-size:14px; font-weight:600; color:#aa0082; text-decoration:none; line-height:16px; padding:4px 0; display:inline-block; }
+  .op-summary-rows { display:flex; flex-direction:column; gap:16px; }
+  .op-sum-row { display:flex; align-items:flex-start; justify-content:space-between; }
+  .op-sum-label { font-size:14px; color:#212121; line-height:20px; white-space:nowrap; }
+  .op-sum-val { font-size:14px; color:#212121; line-height:20px; text-align:right; white-space:nowrap; }
+  .op-sum-val-col { display:flex; flex-direction:column; align-items:flex-end; gap:4px; }
+  .op-sum-ordnum { display:flex; align-items:center; gap:4px; }
+  .op-copy-icon { width:16px; height:16px; position:relative; flex-shrink:0; overflow:clip; }
+  .op-copy-icon img { position:absolute; display:block; max-width:none; width:100%; height:100%; }
+  .op-divider { height:1px; background:#ebebeb; }
+  .op-saved-badge { background:#e8ffed; border-radius:4px; padding:4px; font-size:12px; font-weight:600; color:#108723; display:inline-block; line-height:16px; }
+  .op-grand { display:flex; justify-content:space-between; align-items:center; }
+  .op-grand-label { font-size:18px; font-weight:600; color:#212121; line-height:24px; }
+  .op-grand-val { font-size:18px; font-weight:600; color:#212121; line-height:24px; }
+  .op-eligible { display:flex; align-items:center; justify-content:flex-end; gap:4px; margin-top:8px; }
+  .op-coin-icon { width:16px; height:16px; position:relative; overflow:hidden; flex-shrink:0; }
+  .op-coin-icon img.coin-bg { position:absolute; display:block; max-width:none; width:100%; height:100%; }
+  .op-coin-b { position:absolute; bottom:29.16%; top:25%; left:37.5%; right:37.5%; display:flex; align-items:center; justify-content:center; }
+  .op-coin-b img { width:4px; height:7.33px; transform:scaleY(-1); flex-shrink:0; }
+  .op-eligible-text { font-size:14px; font-weight:600; color:#aa0082; line-height:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .op-cancel-section { display:flex; flex-direction:column; gap:12px; }
+  .op-cancel-note { font-size:12px; color:#6f6f6f; text-align:center; line-height:16px; }
+  .op-cancel-btn { background:#fff1f1; border:none; border-radius:8px; height:56px; width:100%; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:600; color:#da1e28; cursor:pointer; font-family:inherit; }
 
   /* More screen */
   /* More screen — spacing matches Figma node 6660:18282 */
@@ -714,6 +776,64 @@
   .hub-section-title {
     padding:var(--space-4) var(--space-4) var(--space-2);
     font-size:16px; font-weight:700;
+  }
+
+  /* ===== ORDER COMPLETION BOTTOM SHEET ===== */
+  .order-bs-overlay {
+    display:none; position:absolute; inset:0; z-index:300;
+    background:rgba(0,0,0,0); align-items:flex-end;
+    transition:background 0.3s ease;
+  }
+  .order-bs-overlay.open { background:rgba(0,0,0,0.5); }
+  .order-bs {
+    width:100%; background:#fff;
+    border-radius:var(--radius-xl) var(--radius-xl) 0 0;
+    transform:translateY(100%);
+    transition:transform 0.38s cubic-bezier(0.32,0.72,0,1);
+  }
+  .order-bs-overlay.open .order-bs { transform:translateY(0); }
+  .order-bs-handle {
+    width:36px; height:4px; background:var(--color-border);
+    border-radius:2px; margin:12px auto 0; flex-shrink:0;
+  }
+  .order-bs-title {
+    font-size:24px; font-weight:700; line-height:32px;
+    padding:0 var(--space-5) 0; text-align:center; color:#212121;
+  }
+  .order-bs-reward {
+    padding:0 var(--space-5);
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .order-bs-reward-meta {
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .order-bs-reward-name { font-size:12px; font-weight:600; color:#212121; }
+  .order-bs-reward-pts { font-size:12px; font-weight:600; color:#212121; }
+  .order-bs-bar {
+    height:4px; background:#f3f4f5; border-radius:4px; overflow:hidden;
+  }
+  .order-bs-bar-fill {
+    height:100%; background:#088A86; border-radius:4px;
+    width:0%; transition:width 0.7s cubic-bezier(0.4,0,0.2,1) 0.3s;
+  }
+  .order-bs-desc {
+    padding:0 var(--space-5);
+    font-size:14px; font-weight:400; line-height:20px; color:#212121;
+    text-align:center;
+  }
+  .order-bs-pts-row {
+    display:flex; align-items:center; justify-content:center; gap:4px;
+    padding:0 var(--space-5);
+  }
+  .order-bs-pts-row img { width:24px; height:24px; flex-shrink:0; }
+  .order-bs-pts-row span { font-size:14px; font-weight:600; color:#212121; white-space:nowrap; }
+  .order-bs-cta { padding:0 var(--space-5); }
+  .order-bs-home-indicator {
+    display:flex; align-items:center; justify-content:center;
+    padding:8px 0;
+  }
+  .order-bs-home-indicator-bar {
+    width:135px; height:5px; background:#212121; border-radius:2.5px;
   }
 </style>
 </head>
@@ -915,12 +1035,27 @@ fetch('prototype/img/icons/icons.svg')
 
     <div class="screen-scroll">
       <div class="cart-loyalty-bar" onclick="navigateTo('loyaltyHub')">
-        <span class="coin">&#11088;</span>
-        <div class="bar-text" id="cartLoyaltyText">You're <strong>300 points</strong> away from a free product</div>
-        <svg class="icon icon--md icon--secondary"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></svg>
+        <div class="clb-icon">
+          <div class="clb-img">
+            <img src="prototype/img/product-card-1.png" alt="">
+          </div>
+          <svg class="clb-ring" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10.5" stroke="#AA0082" stroke-width="1"/>
+            <circle cx="12" cy="2" r="1.5" fill="#AA0082"/>
+            <circle cx="20.5" cy="7.5" r="1.5" fill="#AA0082"/>
+            <circle cx="20.5" cy="16.5" r="1.5" fill="#AA0082"/>
+            <circle cx="12" cy="22" r="1.5" fill="#AA0082"/>
+            <circle cx="3.5" cy="16.5" r="1.5" fill="#AA0082"/>
+            <circle cx="3.5" cy="7.5" r="1.5" fill="#AA0082"/>
+          </svg>
+        </div>
+        <div class="clb-text" id="cartLoyaltyText">You're 300 points away from free product</div>
+        <div class="clb-chevron">
+          <svg width="6" height="10" viewBox="0 0 6 10" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.232 0.163C0.015 0.38 0.015 0.732 0.232 0.949L4.283 5L0.232 9.051C0.015 9.268 0.015 9.62 0.232 9.837C0.449 10.054 0.801 10.054 1.018 9.837L5.468 5.388C5.685 5.171 5.685 4.819 5.468 4.602L1.018 0.163C0.801 -0.054 0.449 -0.054 0.232 0.163Z" fill="currentColor"/></svg>
+        </div>
       </div>
 
-      <div id="cartItemsList"></div>
+      <div class="cart-items-list" id="cartItemsList"></div>
 
       <div id="cartEmpty" style="display:none;text-align:center;padding:var(--space-12) var(--space-4);color:var(--color-text-secondary);">
         <div style="font-size:48px;margin-bottom:var(--space-3);">&#128722;</div>
@@ -928,25 +1063,39 @@ fetch('prototype/img/icons/icons.svg')
         <div style="font-size:13px;">Browse products and add items to get started</div>
       </div>
 
-      <div class="section-header"><h3>People also buy</h3></div>
-      <div class="h-scroll" style="margin-bottom:var(--space-4);" id="cartRecommend"></div>
+      <div class="cart-people-buy"><h3>People also buy</h3></div>
+      <div class="h-scroll" style="padding:0 16px;margin-bottom:var(--space-4);" id="cartRecommend"></div>
     </div>
 
     <div class="cart-bottom" id="cartBottom">
-      <div class="add-more" id="cartAddMore">
-        <svg class="icon icon--sm icon--secondary"><use href="prototype/img/icons/icons.svg#icon-info"></use></svg>
-        <span>Add EGP 40.00 more for cheaper delivery</span>
-      </div>
-      <button class="btn-primary" onclick="navigateTo('checkout')" style="justify-content:space-between;padding:var(--space-3) var(--space-4);height:56px;">
-        <span style="font-size:16px;">Go to Checkout</span>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0;">
-          <div style="display:flex;align-items:baseline;gap:4px;">
-            <span style="font-size:12px;line-height:18px;">EGP</span>
-            <span id="cartAmountWhole" style="font-size:16px;line-height:20px;">0</span><span id="cartAmountDecimal" style="font-size:12px;line-height:18px;">.00</span>
+      <div class="cart-delivery-bar" id="cartAddMore">
+        <div class="cdb-row">
+          <div class="cdb-icon">
+            <img src="prototype/img/icons/ic-motorbike.svg" width="20" height="20" alt="">
           </div>
-          <span style="font-size:12px;line-height:16px;color:#ffd6e8;">+ delivery &amp; service fees</span>
+          <div class="cdb-text">
+            <span>Add</span><strong id="cartAddMoreAmt">40.00</strong><span>to get a cheaper delivery fees.</span>
+          </div>
+          <div class="cdb-info">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#6F6F6F" stroke-width="1.25"/><path d="M8 7v4.5" stroke="#6F6F6F" stroke-width="1.25" stroke-linecap="round"/><circle cx="8" cy="5" r="0.75" fill="#6F6F6F"/></svg>
+          </div>
         </div>
-      </button>
+        <div class="cdb-progress">
+          <div class="cdb-progress-fill" id="cartDeliveryProgress" style="width:50%;"></div>
+        </div>
+      </div>
+      <div class="cart-checkout-wrap">
+        <button class="btn-primary" onclick="navigateTo('checkout')" style="justify-content:space-between;padding:var(--space-3) var(--space-4);height:56px;">
+          <span style="font-size:16px;line-height:20px;font-weight:600;">Go to Checkout</span>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0;">
+            <div style="display:flex;align-items:baseline;gap:4px;">
+              <span style="font-size:12px;line-height:18px;font-weight:600;">EGP</span>
+              <span id="cartAmountWhole" style="font-size:16px;line-height:20px;font-weight:600;">0</span><span id="cartAmountDecimal" style="font-size:12px;line-height:18px;font-weight:600;">.00</span>
+            </div>
+            <span style="font-size:12px;line-height:16px;color:#ffd6e8;">+ delivery &amp; service fees</span>
+          </div>
+        </button>
+      </div>
     </div>
 
     <div class="tabbar tab-bar-cart"></div>
@@ -961,90 +1110,349 @@ fetch('prototype/img/icons/icons.svg')
       </div>
     </div>
     <div class="screen-scroll no-pad" style="padding-bottom:0;">
-      <div class="checkout-section">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <div>
-            <div style="font-size:13px;color:var(--color-text-secondary);">Delivery time</div>
-            <div style="font-size:15px;font-weight:600;">Instant, Arrive by 12:01 PM</div>
-          </div>
-          <a href="#" style="color:var(--color-primary);font-size:14px;font-weight:600;text-decoration:none;">Schedule</a>
+
+      <!-- Delivery time -->
+      <div class="checkout-section" style="padding:16px 16px 24px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div style="font-size:20px;font-weight:700;color:#212121;">Delivery time</div>
+          <a href="#" style="color:var(--color-primary);font-size:16px;font-weight:600;text-decoration:none;">Schedule</a>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="flex-shrink:0;color:var(--color-text-secondary);"><circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.4"/><path d="M10 5.5V10L12.5 12.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="font-size:16px;font-weight:600;color:#212121;">Instant, <span style="color:var(--color-green);">Arrive by 12:01 PM</span></span>
         </div>
       </div>
+
+      <div class="checkout-divider"></div>
+
+      <!-- Delivery address -->
       <div class="checkout-section">
-        <div style="display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-2);">
-          <svg class="icon icon--md"><use href="prototype/img/icons/icons.svg#icon-location-pin"></use></svg>
+        <div class="sec-title">Delivery address</div>
+        <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:12px;">
+          <svg class="icon icon--md" style="flex-shrink:0;margin-top:2px;"><use href="prototype/img/icons/icons.svg#icon-location-pin"></use></svg>
           <div>
-            <div style="font-weight:600;font-size:15px;">Home</div>
-            <div style="font-size:12px;color:var(--color-text-secondary);">15 El-Tahrir St, Dokki, Giza</div>
+            <div style="font-weight:700;font-size:16px;line-height:24px;color:#212121;">Home</div>
+            <div style="font-size:14px;font-weight:400;color:var(--color-text-secondary);line-height:20px;">115 S, Hadayek El Ahram, Giza, Floor 2, Apt. 3</div>
           </div>
         </div>
         <input class="note-input" type="text" placeholder="Add delivery note" />
       </div>
+
+      <div class="checkout-divider"></div>
+
+      <!-- Payment -->
       <div class="checkout-section">
         <div class="sec-title">Payment</div>
-        <div class="payment-option"><div class="payment-radio"></div><span class="payment-label">Cash on Delivery</span></div>
-        <div class="payment-option"><div class="payment-radio selected"></div><span class="payment-label">Mastercard ****4567</span></div>
-        <div class="payment-option"><div class="payment-radio"></div><span class="payment-label">Apple Pay</span></div>
-        <div class="payment-option" style="border-top:1px solid var(--color-border);padding-top:var(--space-3);margin-top:var(--space-2);">
-          <span class="payment-label">Use my balance <strong>EGP 100.00</strong></span>
+
+        <!-- Cash on Delivery -->
+        <div class="payment-option">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="flex-shrink:0;color:var(--color-text-secondary);"><rect x="2.5" y="5.5" width="15" height="9" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M2.5 8.5h15" stroke="currentColor" stroke-width="1.4"/><circle cx="6.5" cy="12" r="1" fill="currentColor"/></svg>
+          <span class="payment-label">Cash on Delivery</span>
+          <div class="payment-radio"></div>
+        </div>
+
+        <!-- Mastercard (selected) -->
+        <div class="payment-option selected">
+          <svg width="34" height="22" viewBox="0 0 34 22" fill="none" style="flex-shrink:0;"><circle cx="13" cy="11" r="11" fill="#EB001B"/><circle cx="21" cy="11" r="11" fill="#F79E1B" fill-opacity="0.9"/><path d="M17 3.8a11 11 0 0 1 0 14.4A11 11 0 0 1 17 3.8z" fill="#FF5F00"/></svg>
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:600;color:#212121;line-height:20px;">Mastercard</div>
+            <div style="font-size:12px;color:var(--color-text-secondary);line-height:16px;">••••4567</div>
+          </div>
+          <a href="#" style="color:var(--color-primary);font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;margin-right:12px;">Change</a>
+          <div class="payment-radio selected"></div>
+        </div>
+
+        <!-- Apple Pay -->
+        <div class="payment-option">
+          <svg width="32" height="20" viewBox="0 0 32 20" fill="none" style="flex-shrink:0;"><rect width="32" height="20" rx="4" fill="#000"/><path d="M10.3 7.1c.4-.5.7-1.2.6-1.9-.6 0-1.3.4-1.7.9-.4.4-.7 1.1-.6 1.8.6 0 1.3-.4 1.7-.8zM11 8.1c-.9-.1-1.7.5-2.2.5-.5 0-1.2-.5-2-.5-1 0-1.9.6-2.4 1.5-1 1.8-.3 4.5.7 5.9.5.7 1 1.4 1.8 1.4.7 0 1-.5 1.9-.5.9 0 1.2.5 1.9.5.8 0 1.3-.7 1.8-1.4.5-.8.8-1.6.8-1.6s-1.5-.6-1.5-2.3c0-1.4 1.1-2.1 1.2-2.1-.7-1-1.7-1-2-1z" fill="#fff"/><path d="M18.8 6h-2.4v10.5h1.5v-3.7h2.1c1.9 0 3.2-1.3 3.2-3.4 0-2.1-1.3-3.4-3-3.4h.1zM21 9.4c0 1.3-.9 2.1-2.2 2.1h-1.6v-4h1.6c1.3 0 2.2.8 2.2 1.9z" fill="#fff"/><path d="M24 14.4c0 1.3.9 2.2 2.3 2.2.9 0 1.6-.4 1.9-1.1h.1v1h1.4V11c0-1.5-1-2.4-2.7-2.4-1.5 0-2.6.9-2.7 2.2h1.4c.1-.6.6-1 1.3-1 .8 0 1.3.5 1.3 1.3v.5l-1.7.1c-1.6.1-2.5.8-2.5 2.1l-.1.5zm1.5-.1c0-.7.5-1.1 1.4-1.1l1.5-.1v.5c0 .9-.7 1.5-1.6 1.5-.8 0-1.3-.4-1.3-1v.2z" fill="#fff"/></svg>
+          <span class="payment-label">Apple Pay</span>
+          <div class="payment-radio"></div>
+        </div>
+
+        <!-- Use my balance -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding-top:16px;margin-top:8px;border-top:1px solid #ebebeb;">
+          <div>
+            <div style="font-size:14px;font-weight:600;color:#212121;line-height:20px;">Use my balance</div>
+            <div style="font-size:12px;color:var(--color-text-secondary);line-height:16px;">EGP 100.00</div>
+          </div>
           <div class="toggle-switch"></div>
         </div>
       </div>
+
+      <div class="checkout-divider"></div>
+
+      <!-- Say thanks with a tip -->
       <div class="checkout-section">
-        <div class="sec-title">Say thanks with a tip</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
+          <div style="font-size:20px;font-weight:700;color:#212121;">Say thanks with a tip</div>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;color:var(--color-text-secondary);"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 7v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="5.5" r=".8" fill="currentColor"/></svg>
+        </div>
+        <div style="font-size:14px;font-weight:400;color:var(--color-text-secondary);margin-bottom:16px;line-height:20px;">The entire tip goes to your delivery associate.</div>
         <div class="tip-pills">
-          <div class="tip-pill">EGP 5</div><div class="tip-pill active">EGP 10</div>
-          <div class="tip-pill">EGP 20</div><div class="tip-pill">Custom</div>
+          <div class="tip-pill">EGP 5</div>
+          <div class="tip-pill">EGP 10</div>
+          <div class="tip-pill">EGP 20</div>
+          <div class="tip-pill">Custom</div>
         </div>
       </div>
+
+      <div class="checkout-divider"></div>
+
+      <!-- Promo code -->
       <div class="checkout-section">
-        <div class="sec-title">Promo code</div>
-        <div class="promo-input-row"><input type="text" placeholder="Enter promo code" /><button>Apply</button></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <div class="sec-title" style="margin-bottom:0;">Promo code</div>
+          <a href="#" style="color:var(--color-primary);font-size:14px;font-weight:600;text-decoration:none;">Hide rewards</a>
+        </div>
+        <!-- Reward cards horizontal scroll -->
+        <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin:0 -16px;padding-left:16px;padding-right:16px;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin-bottom:16px;">
+          <div class="promo-scroll-card">
+            <div style="position:absolute;top:8px;left:8px;background:#edf5ff;border-radius:4px;padding:2px 6px;font-size:10px;font-weight:600;color:#088a86;line-height:14px;">New</div>
+            <div style="width:100%;height:76px;background:var(--color-bg-secondary);border-radius:6px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+              <img src="prototype/img/products/pink-lemonade.png" style="width:56px;height:56px;object-fit:contain;" onerror="this.parentElement.innerHTML='🥤'" alt="">
+            </div>
+            <div class="pts">1,500 Points</div>
+            <div style="color:var(--color-text-secondary);margin-top:4px;font-size:11px;line-height:14px;">Free V Super Soda Cola Can (200ml)</div>
+          </div>
+          <div class="promo-scroll-card">
+            <div style="width:100%;height:76px;background:var(--color-bg-secondary);border-radius:6px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;">
+              <img src="prototype/img/icons/ic-motorbike.svg" style="width:44px;height:44px;object-fit:contain;" onerror="this.parentElement.innerHTML='🛵'" alt="">
+            </div>
+            <div class="pts">2,500 Points</div>
+            <div style="color:var(--color-text-secondary);margin-top:4px;font-size:11px;line-height:14px;">Free shipping</div>
+          </div>
+          <div class="promo-scroll-card">
+            <div style="width:100%;height:76px;background:var(--color-bg-secondary);border-radius:6px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+              <img src="prototype/img/products/molto-magnum.png" style="width:56px;height:56px;object-fit:contain;" onerror="this.parentElement.innerHTML='🍫'" alt="">
+            </div>
+            <div class="pts">2,500 Points</div>
+            <div style="color:var(--color-text-secondary);margin-top:4px;font-size:11px;line-height:14px;">Free Corona Milk Chocolate (27g)</div>
+          </div>
+        </div>
+        <!-- Promo input -->
+        <div class="promo-input-row">
+          <input type="text" placeholder="Type your promo code here" />
+          <button>Apply</button>
+        </div>
       </div>
-      <div class="checkout-section" style="border-bottom:none;">
-        <div class="checkout-row"><span class="label">Subtotal</span><span class="value" id="coSubtotal">EGP 0.00</span></div>
-        <div class="checkout-row"><span class="label">Delivery</span><span class="value">EGP 25.00</span></div>
-        <div class="checkout-row"><span class="label">Service fee</span><span class="value">EGP 3.00</span></div>
+
+      <div class="checkout-divider"></div>
+
+      <!-- Order summary -->
+      <div class="checkout-section" style="padding-bottom:16px;">
+        <div class="sec-title">Order summary</div>
+        <div class="checkout-row">
+          <span class="label">Subtotal</span>
+          <div style="text-align:right;">
+            <div class="value" id="coSubtotal">EGP 0.00</div>
+            <div style="font-size:12px;font-weight:600;color:var(--color-green);line-height:16px;margin-top:2px;background:#e8ffed;border-radius:4px;padding:2px 6px;display:inline-block;">You saved EGP 16</div>
+          </div>
+        </div>
+        <div class="checkout-row"><span class="label">Delivery</span><span class="value">EGP 25</span></div>
+        <div class="checkout-row">
+          <span class="label" style="display:flex;align-items:center;gap:4px;">
+            Service fee
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="color:var(--color-text-secondary);"><circle cx="7" cy="7" r="5.7" stroke="currentColor" stroke-width="1.3"/><path d="M7 6.2v3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="7" cy="4.8" r=".7" fill="currentColor"/></svg>
+          </span>
+          <span class="value">EGP 3</span>
+        </div>
+        <div class="checkout-row"><span class="label">Breadfast balance</span><span class="value" style="color:var(--color-green);">- EGP 100.00</span></div>
       </div>
     </div>
+
     <div class="checkout-bottom">
-      <div class="grand-total-row"><span class="gt-label">Grand Total</span><span class="gt-value" id="coGrandTotal">EGP 28.00</span></div>
-      <div class="earn-row"><span>&#11088;</span><span id="coEarnPts">You'll earn 0 points</span></div>
-      <button class="btn-primary" onclick="navigateTo('orderPlaced')">Place order</button>
+      <div class="grand-total-row"><span class="gt-label">Grand Total</span><span class="gt-value" id="coGrandTotal">EGP 0.00</span></div>
+      <div class="earn-row">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;"><path d="M7 1l1.5 3.2H12L9.3 6.6l1 3.4L7 8.2l-3.3 1.8 1-3.4L2 4.2h3.5L7 1z" fill="#F5A623"/></svg>
+        <span id="coEarnPts">You'll earn 0 points</span>
+      </div>
+      <button class="btn-primary" onclick="navigateTo('orderPlaced')" style="height:56px;border-radius:8px;">Place order</button>
     </div>
   </div>
 
   <!-- ==================== ORDER PLACED SCREEN ==================== -->
   <div class="screen" id="screen-orderPlaced">
-    <div class="screen-header">
-      <div class="left"><svg class="icon icon--md" style="cursor:pointer;" onclick="navigateTo('home')"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.62854 0.26035C8.97567 0.607482 8.97567 1.1703 8.62854 1.51743L2.14597 8L8.62854 14.4826C8.97567 14.8297 8.97567 15.3925 8.62854 15.7397C8.28141 16.0868 7.71859 16.0868 7.37146 15.7397L0.26035 8.62854C-0.0867832 8.28141 -0.0867832 7.71859 0.26035 7.37146L7.37146 0.26035C7.71859 -0.0867832 8.28141 -0.0867832 8.62854 0.26035Z" fill="currentColor"/></svg></svg></div>
-      <div class="right"><a href="#" style="color:var(--color-primary);font-size:14px;font-weight:600;text-decoration:none;">Help</a></div>
+    <!-- Nav bar (47px spacer for status bar + 56px nav) -->
+    <div style="height:47px;flex-shrink:0;background:#fff;"></div>
+    <div class="op-nav">
+      <button class="op-nav-back" onclick="navigateToHomeAfterOrder()">
+        <img src="prototype/img/order-placed/ic-back.svg" style="width:9px;height:16px;" alt="">
+      </button>
+      <a href="#" class="op-nav-help">Help</a>
     </div>
-    <div class="screen-scroll no-pad" style="padding-bottom:var(--space-6);">
-      <div class="order-hero">
-        <div class="celeb">&#127881;</div>
-        <div class="est-label">Estimated arrival</div>
-        <div class="est-time">11:45 AM - 11:55 AM</div>
-        <div class="success-msg">Order placed successfully</div>
-      </div>
-      <div class="order-card"><div class="oc-title">Delivery address</div><div class="oc-text">Home - 15 El-Tahrir St, Dokki, Giza</div></div>
-      <div class="order-card"><div class="oc-title">Payment</div><div class="oc-text">Mastercard ****4567</div></div>
-      <div class="order-card" style="cursor:pointer;">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <div class="oc-title" style="margin-bottom:0;" id="orderItemCount">0 Order items</div>
-          <svg class="icon icon--sm icon--secondary"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="currentColor"/></svg></svg>
+    <!-- Scrollable content -->
+    <div class="screen-scroll no-pad">
+      <div class="op-content">
+        <!-- Order status & progress -->
+        <div class="op-status-section">
+          <div class="op-status-top">
+            <div class="op-status-left">
+              <div>
+                <p class="op-est-label">Estimated arrival</p>
+                <p class="op-est-time">11:45 PM - 11:55 PM</p>
+              </div>
+              <p class="op-success-msg">Order placed successfully</p>
+            </div>
+            <!-- Order status artwork (composite SVG illustration) -->
+            <div class="op-artwork">
+              <img src="prototype/img/order-placed/artwork-g6.svg" style="inset:3.13% 19.38% 17.71% 10.97%" alt="">
+              <img src="prototype/img/order-placed/artwork-v10.svg" style="inset:17.5% 39.86% 7.03% 8.68%" alt="">
+              <img src="prototype/img/order-placed/artwork-v9.svg" style="inset:18.9% 24.04% 21.42% 40.2%" alt="">
+              <img src="prototype/img/order-placed/artwork-v1.svg" style="inset:54.69% 22.57% 18.75% 49.31%" alt="">
+              <img src="prototype/img/order-placed/artwork-v2.svg" style="inset:55.06% 8.78% 3.12% 55.84%" alt="">
+              <img src="prototype/img/order-placed/artwork-g1.svg" style="inset:24.32% 36.03% 21.2% 40.39%" alt="">
+              <img src="prototype/img/order-placed/artwork-g2.svg" style="inset:19.81% 46.22% 55.64% 44.87%" alt="">
+              <img src="prototype/img/order-placed/artwork-g3.svg" style="inset:19.12% 42.89% 56.67% 48.7%" alt="">
+              <img src="prototype/img/order-placed/artwork-g4.svg" style="inset:20.78% 36.86% 57.1% 51.38%" alt="">
+              <img src="prototype/img/order-placed/artwork-g5.svg" style="inset:33.73% 23.84% 35.36% 52.91%" alt="">
+              <img src="prototype/img/order-placed/artwork-vline.svg" style="inset:58.62% 22.99% 19.98% 59.6%" alt="">
+              <img src="prototype/img/order-placed/artwork-v3.svg" style="inset:71.53% 32.42% 15.05% 55.29%" alt="">
+              <img src="prototype/img/order-placed/artwork-v4.svg" style="inset:54.28% 18.83% 33.33% 69.78%" alt="">
+              <img src="prototype/img/order-placed/artwork-v5.svg" style="inset:84.49% 24.04% 4.19% 64.33%" alt="">
+              <img src="prototype/img/order-placed/artwork-v6.svg" style="inset:61.6% 8.43% 23.93% 80.46%" alt="">
+              <img src="prototype/img/order-placed/artwork-v7.svg" style="inset:71.89% 16.26% 13.48% 76.28%" alt="">
+              <img src="prototype/img/order-placed/artwork-v8.svg" style="inset:81.7% 15.52% 14.67% 82.32%" alt="">
+              <img src="prototype/img/order-placed/artwork-g7.svg" style="inset:25.69% 66.02% 23.59% 7.81%" alt="">
+              <img src="prototype/img/order-placed/artwork-g8.svg" style="inset:19.42% 60.28% 53.59% 29.3%" alt="">
+              <img src="prototype/img/order-placed/artwork-g9.svg" style="inset:16.63% 54.81% 50.68% 34.23%" alt="">
+              <img src="prototype/img/order-placed/artwork-g10.svg" style="inset:17.38% 49.64% 42.42% 39.98%" alt="">
+              <img src="prototype/img/order-placed/artwork-g11.svg" style="inset:42.66% 39.5% 6.61% 22.26%" alt="">
+              <img src="prototype/img/order-placed/artwork-v11.svg" style="inset:48.01% 67.84% 50.96% 28.81%" alt="">
+              <img src="prototype/img/order-placed/artwork-v12.svg" style="inset:48.62% 63.44% 50.63% 34.29%" alt="">
+              <img src="prototype/img/order-placed/artwork-v13.svg" style="inset:47.95% 57.76% 51.16% 38.67%" alt="">
+            </div>
+          </div>
+          <!-- Progress bar: 3 gray segments (order just placed, no progress yet) -->
+          <div class="op-progress">
+            <div class="op-progress-seg"></div>
+            <div class="op-progress-seg"></div>
+            <div class="op-progress-seg"></div>
+          </div>
         </div>
-      </div>
-      <div class="refer-card"><h4>Refer and Win</h4><p>Share with friends and earn rewards!</p></div>
-      <div class="order-summary">
-        <div class="os-row"><span class="os-label">Order #BF-20261234</span></div>
-        <div class="os-row"><span class="os-label">Subtotal</span><span id="osSubtotal">EGP 0.00</span></div>
-        <div class="os-row"><span class="os-label">Delivery</span><span>EGP 25.00</span></div>
-        <div class="os-row"><span class="os-label">Service fee</span><span>EGP 3.00</span></div>
-        <div class="os-grand"><span>Grand Total</span><span id="osGrandTotal">EGP 28.00</span></div>
-        <div class="eligible" id="osEligible">&#11088; Eligible for 0 points</div>
-        <div class="cancel-note">Order can be cancelled anytime before being prepared</div>
-        <div class="cancel-btn">Cancel Order</div>
+
+        <!-- Cards section -->
+        <div class="op-cards-section">
+          <!-- Delivery address card -->
+          <div class="op-card op-info-row">
+            <div class="op-icon" style="overflow:visible">
+              <img src="prototype/img/order-placed/ic-location-pin.svg" style="inset:8.44% 17.19%" alt="">
+            </div>
+            <div class="op-info-text">
+              <p class="op-info-label">Home</p>
+              <p class="op-info-value">115 S, Hadayek El Ahram, Giza, Floor 2, Apt. 3</p>
+            </div>
+          </div>
+
+          <!-- Payment card -->
+          <div class="op-card op-info-row">
+            <div class="op-icon">
+              <img src="prototype/img/order-placed/ic-mastercard-group.svg" style="inset:20% 8.33% 20.17% 8.33%" alt="">
+            </div>
+            <div class="op-info-text">
+              <p class="op-info-label">EGP 155.00</p>
+              <p class="op-info-value">Paid with **** 2468</p>
+            </div>
+          </div>
+
+          <!-- Order items card -->
+          <div class="op-card">
+            <div class="op-section-header">
+              <div class="op-icon">
+                <img src="prototype/img/order-placed/ic-cart-lg.svg" style="inset:8.33% 7.9% 7.73% 8.33%" alt="">
+              </div>
+              <p class="op-section-title">2 Order items</p>
+            </div>
+            <div class="op-items-list">
+              <div class="op-item">
+                <div class="op-item-img">
+                  <img src="prototype/img/order-placed/iced-latte.png" alt="Iced Latte">
+                  <div class="op-item-qty">1</div>
+                </div>
+                <span class="op-item-name">Iced Latte - Full Cream Milk</span>
+                <span class="op-item-price">EGP 105</span>
+              </div>
+              <div class="op-item">
+                <div class="op-item-img">
+                  <img src="prototype/img/order-placed/turkey-sandwich.png" alt="Turkey Sandwich">
+                  <div class="op-item-qty">1</div>
+                </div>
+                <span class="op-item-name">Turkey &amp; Cheese Sandwich</span>
+                <span class="op-item-price">EGP 120</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Referral banner -->
+          <div class="op-referral">
+            <img class="op-referral-bg" src="prototype/img/order-placed/referral-banner.png" alt="">
+            <div class="op-referral-content">
+              <div>
+                <p class="op-referral-title">Refer and Win</p>
+                <p class="op-referral-desc">Earn 10% cashback (up to EGP 50) for every friend who place their first order</p>
+              </div>
+              <a href="#" class="op-referral-link">Learn more</a>
+            </div>
+          </div>
+
+          <!-- Order summary card -->
+          <div class="op-card">
+            <div class="op-section-header">
+              <div class="op-icon" style="overflow:visible">
+                <img src="prototype/img/order-placed/ic-receipt-union.svg" style="inset:14.58% 8.33%" alt="">
+              </div>
+              <p class="op-section-title">Order summary</p>
+            </div>
+            <div class="op-summary-rows">
+              <div class="op-sum-row">
+                <span class="op-sum-label">Order number</span>
+                <div class="op-sum-ordnum">
+                  <div class="op-copy-icon">
+                    <img src="prototype/img/order-placed/ic-copy.svg" style="inset:12.5%" alt="">
+                  </div>
+                  <span class="op-sum-val">#123-123456789012</span>
+                </div>
+              </div>
+              <div class="op-divider"></div>
+              <div class="op-sum-row">
+                <span class="op-sum-label">Subtotal</span>
+                <div class="op-sum-val-col">
+                  <span class="op-sum-val">EGP 125</span>
+                  <span class="op-saved-badge">You saved EGP 100.00</span>
+                </div>
+              </div>
+              <div class="op-sum-row">
+                <span class="op-sum-label">Delivery</span>
+                <span class="op-sum-val">EGP 25</span>
+              </div>
+              <div class="op-sum-row">
+                <span class="op-sum-label">Service fee</span>
+                <span class="op-sum-val">EGP 5</span>
+              </div>
+              <div class="op-divider"></div>
+              <div>
+                <div class="op-grand">
+                  <span class="op-grand-label">Grand Total</span>
+                  <span class="op-grand-val">EGP 155.00</span>
+                </div>
+                <div class="op-eligible">
+                  <div class="op-coin-icon">
+                    <img class="coin-bg" src="prototype/img/order-placed/star-coin.png" style="inset:8.34% 8.33% 8.33% 8.33%" alt="">
+                    <div class="op-coin-b">
+                      <img src="prototype/img/order-placed/ic-star-coin-b.svg" alt="">
+                    </div>
+                  </div>
+                  <span class="op-eligible-text">Eligible for 225 points</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cancel section -->
+        <div class="op-cancel-section">
+          <p class="op-cancel-note">Order can be cancelled anytime before being prepared</p>
+          <button class="op-cancel-btn">Cancel Order</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1150,6 +1558,34 @@ fetch('prototype/img/icons/icons.svg')
       <div class="b-sub" id="bannerSub">Add 50 EGP more to unlock a free product</div>
     </div>
     <svg width="16" height="16" viewBox="0 0 9 16" fill="none" class="b-chevron"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.371459 0.26035C0.0243268 0.607482 0.0243268 1.1703 0.371459 1.51743L6.85403 8L0.371459 14.4826C0.0243268 14.8297 0.0243268 15.3925 0.371459 15.7397C0.718591 16.0868 1.28141 16.0868 1.62854 15.7397L8.73965 8.62854C9.08678 8.28141 9.08678 7.71859 8.73965 7.37146L1.62854 0.26035C1.28141 -0.0867832 0.718591 -0.0867832 0.371459 0.26035Z" fill="#AA0082"/></svg>
+  </div>
+
+  <!-- ===== ORDER COMPLETION BOTTOM SHEET ===== -->
+  <div class="order-bs-overlay" id="orderBsOverlay" onclick="if(event.target===this)dismissOrderBottomSheet()">
+    <div class="order-bs" style="display:flex;flex-direction:column;gap:24px;padding-bottom:0;">
+      <div class="order-bs-handle"></div>
+      <div class="order-bs-title" id="bsTitle">Your recent order added 200 points to your balance!</div>
+      <div style="display:flex;flex-direction:column;gap:16px;padding:0 16px;">
+        <div class="order-bs-reward">
+          <div class="order-bs-reward-meta">
+            <span class="order-bs-reward-name" id="bsRewardName">Free Chocolate Muffin</span>
+            <span class="order-bs-reward-pts" id="bsRewardPts">11,500 Points</span>
+          </div>
+          <div class="order-bs-bar"><div class="order-bs-bar-fill" id="bsBarFill"></div></div>
+        </div>
+        <div class="order-bs-desc" id="bsDesc">You've unlocked Free Chocolate Muffin and two other rewards! Redeem during checkout next time</div>
+      </div>
+      <div class="order-bs-pts-row">
+        <img src="prototype/img/order-placed/star-coin.png" alt="">
+        <span id="bsBadgeText">You have 11,510 points</span>
+      </div>
+      <div style="padding:0 16px;">
+        <button class="btn-primary" onclick="dismissOrderBottomSheet()" style="width:100%">Continue shopping</button>
+      </div>
+      <div class="order-bs-home-indicator">
+        <div class="order-bs-home-indicator-bar"></div>
+      </div>
+    </div>
   </div>
 
 </div>
@@ -1312,13 +1748,16 @@ function updateAllUI() {
   // Cart screen
   renderCartItems();
 
-  // Cart loyalty bar
-  if (nextReward) {
-    const remaining = nextReward.pts - projected;
+  // Cart loyalty bar — uses same reward target as the banner
+  const bannerReward = mode === 'b'
+    ? { pts: B_REWARD_PTS, type: 'free product' }
+    : getNextReward(STARTING_POINTS);
+  if (bannerReward) {
+    const remaining = bannerReward.pts - projected;
     document.getElementById('cartLoyaltyText').innerHTML =
       remaining > 0
-        ? `You're <strong>${fmtPts(remaining)} points</strong> away from ${nextReward.type}`
-        : `<strong>${nextReward.type} unlocked!</strong> Redeem on next order`;
+        ? `You're ${fmtPts(remaining)} points away from ${bannerReward.type}`
+        : `${bannerReward.type} unlocked! Redeem on next order`;
   }
   const fmtTotal = fmt(cartTotal); const totalParts = fmtTotal.split('.');
   document.getElementById('cartAmountWhole').textContent = totalParts[0];
@@ -1329,11 +1768,11 @@ function updateAllUI() {
   document.getElementById('coGrandTotal').textContent = `EGP ${fmt(cartTotal + 28)}`;
   document.getElementById('coEarnPts').textContent = `You'll earn ${fmtPts(getCartPoints())} points`;
 
-  // Order placed
-  document.getElementById('orderItemCount').textContent = `${cartCount} Order items`;
-  document.getElementById('osSubtotal').textContent = `EGP ${fmt(cartTotal)}`;
-  document.getElementById('osGrandTotal').textContent = `EGP ${fmt(cartTotal + 28)}`;
-  document.getElementById('osEligible').innerHTML = `&#11088; Eligible for ${fmtPts(getCartPoints())} points`;
+  // Order placed (IDs removed in redesign — skip if absent)
+  const _oic = document.getElementById('orderItemCount'); if (_oic) _oic.textContent = `${cartCount} Order items`;
+  const _oss = document.getElementById('osSubtotal'); if (_oss) _oss.textContent = `EGP ${fmt(cartTotal)}`;
+  const _osg = document.getElementById('osGrandTotal'); if (_osg) _osg.textContent = `EGP ${fmt(cartTotal + 28)}`;
+  const _ose = document.getElementById('osEligible'); if (_ose) _ose.innerHTML = `&#11088; Eligible for ${fmtPts(getCartPoints())} points`;
 
   // More screen loyalty card
   if (nextReward) {
@@ -1406,19 +1845,27 @@ function renderCartItems() {
   list.innerHTML = entries.map(([id, qty]) => {
     const p = products.find(x => x.id === parseInt(id));
     if (!p) return '';
+    const decreaseBtn = qty === 1
+      ? `<button onclick="changeCartQty(${p.id},-1)" title="Remove">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 4h10M5 4V3a1 1 0 011-1h4a1 1 0 011 1v1M6 7v5M10 7v5M4 4l.5 9.5a1 1 0 001 .5h5a1 1 0 001-.5L12 4" stroke="#212121" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+         </button>`
+      : `<button onclick="changeCartQty(${p.id},-1)" title="Decrease">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12" stroke="#212121" stroke-width="1.5" stroke-linecap="round"/></svg>
+         </button>`;
     return `
       <div class="cart-item">
-        <div class="ci-img" style="background:#F8F8F8;"><img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:contain;"></div>
+        <div class="ci-img"><img src="${p.img}" alt="${p.brand} ${p.name}"></div>
         <div class="ci-info">
           <div class="ci-name">${p.brand} ${p.name}</div>
-          <div class="ci-meta">${p.weight}${p.isPrivateLabel ? ' &middot; 2x Points' : ''}</div>
-          <div class="ci-price">EGP ${fmt(p.price * qty)}</div>
+          <div class="ci-price">EGP ${fmt(p.price)}</div>
         </div>
         <div class="ci-actions">
-          <div class="qty-stepper">
-            <button onclick="changeCartQty(${p.id},-1)">&#8722;</button>
-            <span class="qty-val">${qty}</span>
-            <button onclick="changeCartQty(${p.id},1)">&#43;</button>
+          <div class="cart-qty-stepper">
+            ${decreaseBtn}
+            <span class="cqs-val">${qty}</span>
+            <button onclick="changeCartQty(${p.id},1)" title="Increase">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="#212121" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
           </div>
         </div>
       </div>
@@ -1481,6 +1928,7 @@ function showScreen(screen, direction) {
   }, { once: true });
 
   state.currentScreen = screen;
+  if (screen === 'cart') dismissBanner();
 }
 
 // ==================== PRODUCT ACTIONS ====================
@@ -1735,6 +2183,7 @@ function updateBannerProgress() {
 }
 
 function showBanner(data) {
+  if (state.currentScreen === 'cart') return;
   const banner = document.getElementById('loyaltyBanner');
   const titleEl = document.getElementById('bannerTitle');
   titleEl.classList.toggle('title-green', !!data.greenTitle);
@@ -2038,6 +2487,61 @@ function initBannerCarousel() {
   }, { passive: true });
 
   startAuto();
+}
+
+// ==================== ORDER COMPLETION BOTTOM SHEET ====================
+function navigateToHomeAfterOrder() {
+  navigateTo('home');
+  setTimeout(showOrderBottomSheet, 2000);
+}
+
+function showOrderBottomSheet() {
+  const cartPts = getCartPoints();
+  const totalPts = getProjectedPoints();
+
+  // Rewards crossed from this order (above starting balance)
+  const justUnlocked = rewards.filter(r => r.pts <= totalPts && r.pts > STARTING_POINTS);
+  // Reward to display: highest just-unlocked, or next upcoming
+  const shownReward = justUnlocked.length > 0
+    ? justUnlocked[justUnlocked.length - 1]
+    : rewards.find(r => r.pts > totalPts);
+
+  const earnedLabel = fmtPts(cartPts > 0 ? cartPts : 0);
+  document.getElementById('bsTitle').textContent =
+    `Your recent order added ${earnedLabel} points to your balance!`;
+
+  if (shownReward) {
+    const displayName = shownReward.name.replace(/^Free\s/, '');
+    document.getElementById('bsRewardName').textContent = shownReward.name;
+    document.getElementById('bsRewardPts').textContent = fmtPts(shownReward.pts) + ' Points';
+
+    const pct = Math.min(100, Math.round(totalPts / shownReward.pts * 100));
+    document.getElementById('bsBarFill').style.width = '0%';
+    setTimeout(() => { document.getElementById('bsBarFill').style.width = pct + '%'; }, 50);
+
+    if (justUnlocked.length > 0) {
+      const extra = justUnlocked.length - 1;
+      const extraStr = extra > 0 ? ` and ${extra} other reward${extra > 1 ? 's' : ''}` : '';
+      document.getElementById('bsDesc').textContent =
+        `You've unlocked ${displayName}${extraStr}! Redeem during checkout next time`;
+    } else {
+      const remaining = shownReward.pts - totalPts;
+      document.getElementById('bsDesc').textContent =
+        `You're ${fmtPts(remaining)} points away from your next reward. Keep shopping to earn more!`;
+    }
+  }
+
+  document.getElementById('bsBadgeText').textContent = `You have ${fmtPts(totalPts)} points`;
+
+  const overlay = document.getElementById('orderBsOverlay');
+  overlay.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('open')));
+}
+
+function dismissOrderBottomSheet() {
+  const overlay = document.getElementById('orderBsOverlay');
+  overlay.classList.remove('open');
+  setTimeout(() => { overlay.style.display = 'none'; }, 400);
 }
 
 // ==================== INIT ====================
