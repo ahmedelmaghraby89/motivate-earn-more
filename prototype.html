@@ -111,7 +111,7 @@
 
   .screen-scroll {
     flex:1; overflow-y:auto; overflow-x:hidden;
-    -webkit-overflow-scrolling:touch; padding-bottom:80px;
+    -webkit-overflow-scrolling:touch; padding-bottom:116px;
   }
   .screen-scroll.no-pad { padding-bottom:0; }
 
@@ -124,7 +124,8 @@
   }
   .points-pill .star { font-size:14px; }
 
-  /* Tab Bar colors */
+  /* Tab Bar */
+  .tabbar { padding-bottom: 36px; }
   .tabbar-item { color: #B7B7B7; text-decoration: none; }
   .tabbar-item.is-active { color: var(--color-primary, #AA0082); }
   .tabbar-item svg { display: block; }
@@ -1438,7 +1439,7 @@ fetch('prototype/img/icons/icons.svg')
 
   <!-- ==================== MORE SCREEN ==================== -->
   <div class="screen" id="screen-more">
-    <div class="screen-scroll" style="padding-bottom:80px;">
+    <div class="screen-scroll" style="padding-bottom:116px;">
       <div class="more-header"><h1>Hey, There</h1><button class="qr-btn"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="1" y="1" width="7" height="7" rx="1" stroke="#AA0082" stroke-width="1.5"/><rect x="12" y="1" width="7" height="7" rx="1" stroke="#AA0082" stroke-width="1.5"/><rect x="1" y="12" width="7" height="7" rx="1" stroke="#AA0082" stroke-width="1.5"/><rect x="13" y="13" width="2" height="2" fill="#AA0082"/><rect x="16" y="13" width="2" height="2" fill="#AA0082"/><rect x="13" y="16" width="2" height="2" fill="#AA0082"/><rect x="16" y="16" width="2" height="2" fill="#AA0082"/></svg></button></div>
       <div class="loyalty-card" onclick="navigateTo('loyaltyHub')">
         <div class="lc-ring">
