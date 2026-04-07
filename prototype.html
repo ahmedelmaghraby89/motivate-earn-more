@@ -62,16 +62,6 @@
     display:flex; flex-direction:column;
   }
 
-  /* Status Bar */
-  .status-bar {
-    height:47px; padding:14px var(--space-4) 0;
-    display:flex; justify-content:space-between; align-items:center;
-    background:var(--color-bg-default); flex-shrink:0; z-index:100;
-    font-size:15px; font-weight:600;
-  }
-  .status-bar .time { font-weight:700; }
-  .status-bar .icons { display:flex; gap:5px; align-items:center; }
-  .status-icons svg { width:16px; height:16px; }
 
   /* Screen container */
   .screen {
@@ -828,13 +818,6 @@
   .order-bs-pts-row img { width:24px; height:24px; flex-shrink:0; }
   .order-bs-pts-row span { font-size:14px; font-weight:600; color:#212121; white-space:nowrap; }
   .order-bs-cta { padding:0 var(--space-5); }
-  .order-bs-home-indicator {
-    display:flex; align-items:center; justify-content:center;
-    padding:8px 0;
-  }
-  .order-bs-home-indicator-bar {
-    width:135px; height:5px; background:#212121; border-radius:2.5px;
-  }
 </style>
 </head>
 <body>
@@ -850,15 +833,6 @@ fetch('prototype/img/icons/icons.svg')
 </script>
 
 <div class="device-frame" id="app">
-  <!-- Status Bar -->
-  <div class="status-bar" id="statusBar">
-    <span class="time">10:50</span>
-    <div class="icons">
-      <svg width="17" height="12" viewBox="0 0 17 12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="#212121"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="#212121"/><rect x="9" y="0" width="3" height="12" rx="1" fill="#212121"/><rect x="13.5" y="0" width="3" height="12" rx="1" fill="#212121" opacity="0.3"/></svg>
-      <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M8 2C5.5 2 3.2 2.9 1.5 4.5L0 3C2.1 1.1 4.9 0 8 0s5.9 1.1 8 3l-1.5 1.5C12.8 2.9 10.5 2 8 2z" fill="#212121"/><path d="M8 6c-1.7 0-3.2.7-4.3 1.8L2.2 6.3C3.7 4.9 5.7 4 8 4s4.3.9 5.8 2.3l-1.5 1.5C11.2 6.7 9.7 6 8 6z" fill="#212121"/><circle cx="8" cy="10" r="2" fill="#212121"/></svg>
-      <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0" y="1" width="22" height="10" rx="2" stroke="#212121" stroke-width="1"/><rect x="1.5" y="2.5" width="17" height="7" rx="1" fill="#212121"/><rect x="23" y="4" width="2" height="4" rx="1" fill="#212121"/></svg>
-    </div>
-  </div>
 
   <!-- ==================== HOME SCREEN ==================== -->
   <div class="screen" id="screen-home">
@@ -1581,9 +1555,6 @@ fetch('prototype/img/icons/icons.svg')
       </div>
       <div style="padding:0 16px;">
         <button class="btn-primary" onclick="dismissOrderBottomSheet()" style="width:100%">Continue shopping</button>
-      </div>
-      <div class="order-bs-home-indicator">
-        <div class="order-bs-home-indicator-bar"></div>
       </div>
     </div>
   </div>
@@ -2437,8 +2408,7 @@ function renderTabBars() {
     }).join('');
 
     bar.innerHTML = `
-      <div class="tabbar-items">${itemsHTML}</div>
-      <div class="tabbar-home-indicator"><div class="tabbar-home-indicator-bar"></div></div>`;
+      <div class="tabbar-items">${itemsHTML}</div>`;
   });
 }
 
